@@ -20,13 +20,12 @@
 
   <body>
     <script src="{{asset('public/assets/static/js/initTheme.js')}}"></script>
-    <div id="auth">
-      <div class="row h-100">
+    <div>
+      <div class="row">
         @yield('content')
       </div>
     </div>
   </body>
-  
 		<script src="http://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
         <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
         {!! Toastr::message() !!}

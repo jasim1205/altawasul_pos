@@ -16,24 +16,24 @@ class AuthenticationController extends Controller
     public function signUpForm(){
         return view('authentication.register');
     }
-
     public function signUpStore(SignupRequest $request){
         try{
+            // dd($request->all());
             $user=new User;
-            $user->name_en=$request->FullName;
-            $user->contact_no_en=$request->contact_no_en;
+            $user->name=$request->FullName;
+            $user->contact_no=$request->contact_no;
             $user->email=$request->EmailAddress;
             $user->password=Hash::make($request->password);
-            $user->role_id=2;
+            $user->status = 1;
+            $user->role_id=1;
             if($user->save())
                 return redirect('login')->with('success','Successfully Registred');
             else
                 return redirect('login')->with('danger','Please try again');
         }catch(Exception $e){
-            //dd($e);
+            dd($e);
             return redirect('login')->with('danger','Please try again');
         }
-
     }
     public function signInForm(){
         return view('authentication.login');
