@@ -6,6 +6,7 @@ use App\Http\Controllers\Backend\UserController as user;
 use App\Http\Controllers\Backend\RoleController as role;
 use App\Http\Controllers\Backend\DashboardController as dashboard;
 use App\Http\Controllers\Backend\PermissionController as permission;
+use App\Http\Controllers\Backend\CompanyController as company;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +34,7 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
     Route::resource('role', role::class);
     Route::get('permission/{role}', [permission::class,'index'])->name('permission.list');
     Route::post('permission/{role}', [permission::class,'save'])->name('permission.save');
+    Route::resource('company', company::class);
 });
 
 // Route::get('/', function () {
