@@ -164,7 +164,13 @@
               <li class="sidebar-item">
                 <a href="{{ route('company.index') }}" class="sidebar-link">
                   <i class="bi bi-file-earmark-medical-fill"></i>
-                  <span>Form Layout</span>
+                  <span>Company</span>
+                </a>
+              </li>
+              <li class="sidebar-item">
+                <a href="{{ route('company.index') }}" class="sidebar-link">
+                  <i class="bi bi-file-earmark-medical-fill"></i>
+                  <span>Category</span>
                 </a>
               </li>
             </ul>
