@@ -14,7 +14,6 @@
     <link rel="stylesheet" href="{{asset('public/assets/compiled/css/app.css')}}" />
     <link rel="stylesheet" href="{{asset('public/assets/compiled/css/app-dark.css')}}" />
     <link rel="stylesheet" href="{{asset('public/assets/compiled/css/iconly.css')}}" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   </head>
 
   <body>
@@ -47,6 +46,13 @@
                   <span>Dashboard</span>
                 </a>
               </li>
+              <li class="sidebar-item">
+                <a href="{{ route('role.index') }}" class="sidebar-link">
+                  <i class="bi bi-grid-fill"></i>
+                  <span>Role</span>
+                </a>
+              </li>
+
 
               <li class="sidebar-item has-sub">
                 <a href="#" class="sidebar-link">

@@ -1,5 +1,6 @@
 @extends('layouts.app')
-@section('title',trans('Permission'))
+@section('title',trans('Company'))
 @section('page',trans('List'))
+@section('content')
 
-@section
+@endsection
