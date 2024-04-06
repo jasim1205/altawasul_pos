@@ -7,6 +7,8 @@ use App\Http\Controllers\Backend\RoleController as role;
 use App\Http\Controllers\Backend\DashboardController as dashboard;
 use App\Http\Controllers\Backend\PermissionController as permission;
 use App\Http\Controllers\Backend\CompanyController as company;
+use App\Http\Controllers\Backend\CategoryController as category;
+use App\Http\Controllers\Backend\ProductController as product;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,6 +37,8 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
     Route::get('permission/{role}', [permission::class,'index'])->name('permission.list');
     Route::post('permission/{role}', [permission::class,'save'])->name('permission.save');
     Route::resource('company', company::class);
+    Route::resource('category', category::class);
+    Route::resource('product', product::class);
 });
 
 // Route::get('/', function () {

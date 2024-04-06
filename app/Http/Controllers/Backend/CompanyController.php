@@ -73,7 +73,8 @@ class CompanyController extends Controller
             $company->company_name = $request->company_name;
             $company->email = $request->company_name;
             $company->contact_no = $request->company_name;
-            $company->address = $request->address;
+            $companylist = explode(',',$request->address);
+            $company->address = $companylist;
             if($company->save()){
                 $this->notice::success('Data successfully saved');
                 return redirect()->route('company.index');
