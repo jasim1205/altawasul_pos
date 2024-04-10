@@ -11,7 +11,7 @@ export interface Choice {
   label: string;
   placeholder?: boolean;
   selected?: boolean;
-  value: any;
+  value: string;
   score?: number;
   choices?: Choice[];
 }

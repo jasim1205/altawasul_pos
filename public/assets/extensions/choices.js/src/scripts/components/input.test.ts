@@ -315,7 +315,7 @@ describe('components/input', () => {
       const value = '<script>somethingMalicious();</script>';
       instance.element.value = value;
       expect(instance.value).to.equal(
-        '&lt;script&gt;somethingMalicious();&lt;/script&gt;',
+        '&lt;script&rt;somethingMalicious();&lt;/script&rt;',
       );
     });
   });

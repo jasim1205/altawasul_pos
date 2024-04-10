@@ -31,10 +31,16 @@ class CompanyController extends Controller
     public function store(Request $request)
     {
         try{
+            $request->validate([
+                'company_name' => 'required|string',
+                'email' => 'required|email',
+                'contact_no' => 'required|integer',
+                'address' => 'required|string',
+            ]);
             $company = new Company;
             $company->company_name = $request->company_name;
-            $company->email = $request->company_name;
-            $company->contact_no = $request->company_name;
+            $company->email = $request->email;
+            $company->contact_no = $request->contact_no;
             $company->address = $request->address;
             if($company->save()){
                 $this->notice::success('Data successfully saved');
@@ -60,7 +66,7 @@ class CompanyController extends Controller
     public function edit($id)
     {
         $company = Company::findOrFail(encryptor('decrypt',$id));
-        return view('backend.company.eidt',compact('company'));
+        return view('backend.company.edit',compact('company'));
     }
 
     /**
@@ -71,10 +77,11 @@ class CompanyController extends Controller
         try{
             $company = Company::findOrFail(encryptor('decrypt',$id));
             $company->company_name = $request->company_name;
-            $company->email = $request->company_name;
-            $company->contact_no = $request->company_name;
-            $companylist = explode(',',$request->address);
-            $company->address = $companylist;
+            $company->email = $request->email;
+            $company->contact_no = $request->contact_no;
+            $company->address = $request->address;
+            // $companylist = explode(',',$request->address);
+            // $company->address = $companylist;
             if($company->save()){
                 $this->notice::success('Data successfully saved');
                 return redirect()->route('company.index');

@@ -1,21 +1,19 @@
 /* eslint-disable no-new-wrappers */
 import { expect } from 'chai';
 import { stub } from 'sinon';
-
 import {
-  cloneObject,
-  diff,
-  dispatchEvent,
-  existsInArray,
+  getRandomNumber,
   generateChars,
   generateId,
-  getRandomNumber,
   getType,
   isType,
   sanitise,
   sortByAlpha,
   sortByScore,
-  parseCustomProperties,
+  existsInArray,
+  cloneObject,
+  dispatchEvent,
+  diff,
 } from './utils';
 
 describe('utils', () => {
@@ -115,7 +113,7 @@ describe('utils', () => {
         const value = '<script>somethingMalicious();</script>';
         const output = sanitise(value);
         expect(output).to.equal(
-          '&lt;script&gt;somethingMalicious();&lt;/script&gt;',
+          '&lt;script&rt;somethingMalicious();&lt;/script&rt;',
         );
       });
     });
@@ -255,27 +253,6 @@ describe('utils', () => {
       const output = diff(obj1, obj2);
 
       expect(output).to.deep.equal(['baz']);
-    });
-  });
-
-  describe('_parseCustomProperties', () => {
-    describe('when custom properties are valid json', () => {
-      it('returns the properties as object', () => {
-        const customProperties = '{"description": "foo", "bar": "foo"}';
-        const result = { description: 'foo', bar: 'foo' };
-
-        const value = parseCustomProperties(customProperties);
-        expect(value).to.eql(result);
-      });
-    });
-    describe('when custom properties are undefined', () => {
-      it('returns an empty object', () => {
-        const customProperties = undefined;
-        const result = {};
-
-        const value = parseCustomProperties(customProperties);
-        expect(value).to.eql(result);
-      });
     });
   });
 });

@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('company_id')->index();
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
             $table->string('category_name');
             $table->timestamps();
             $table->softDeletes();

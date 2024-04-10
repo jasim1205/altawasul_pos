@@ -39,6 +39,8 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
     Route::resource('company', company::class);
     Route::resource('category', category::class);
     Route::resource('product', product::class);
+    Route::get('/get-categories-by-company', [product::class,'getCategoriesByCompany'])->name('getCategoriesByCompany');
+
 });
 
 // Route::get('/', function () {

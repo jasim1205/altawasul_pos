@@ -10,6 +10,9 @@ class Company extends Model
 {
     use HasFactory,SoftDeletes;
 
+    public function category(){
+        return $this->hasMany(Category::class);
+    }
     public function product(){
         return $this->hasMany(Product::class);
     }

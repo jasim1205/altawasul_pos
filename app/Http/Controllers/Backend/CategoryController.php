@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Company;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -13,7 +14,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $data = Category::ger;
+        $data = Category::get();
         return view('backend.category.index',compact('data'));
     }
 
@@ -22,7 +23,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('backend.category.create');
+        $company = Company::get();
+        return view('backend.category.create',compact('company'));
     }
 
     /**
@@ -31,8 +33,13 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         try{
+            $request->validate([
+                'company_id' => 'required|integer',
+                'category_name' => 'required|string',
+            ]);
             $category = new Category;
-            $category->category = $request->category;
+            $category->company_id = $request->company_id;
+            $category->category_name = $request->category_name;
             if($category->save()){
                 $this->notice::success('Data successfully saved');
                 return redirect()->route('category.index');
@@ -56,8 +63,9 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-       $category = Company::findOrFail(encryptor('decrypt',$id));
-       return view('backend.company.eidt',compact('category'));
+       $category = Category::findOrFail(encryptor('decrypt',$id));
+       $company = Company::get();
+       return view('backend.category.edit',compact('category','company'));
     }
 
     /**
@@ -66,8 +74,9 @@ class CategoryController extends Controller
     public function update(Request $request, $id)
     {
         try{
-            $category = Company::findOrFail(encryptor('decrypt',$id));
-            $category->category = $request->category;
+            $category = Category::findOrFail(encryptor('decrypt',$id));
+            $category->company_id = $request->company_id;
+            $category->category_name = $request->category_name;
             if($category->save()){
                 $this->notice::success('Data successfully Updated');
                 return redirect()->route('category.index');
@@ -83,7 +92,7 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        $category = Company::findOrFail(encryptor('decrypt',$id));
+        $category = Category::findOrFail(encryptor('decrypt',$id));
         if($category->delete()){
             $this->notice::success('Data successfully Deleted');
             return redirect()->route('category.index');

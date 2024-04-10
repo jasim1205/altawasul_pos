@@ -1,5 +1,7 @@
 # Choices.js [![Actions Status](https://github.com/jshjohnson/Choices/workflows/Build%20and%20test/badge.svg)](https://github.com/jshjohnson/Choices/actions) [![Actions Status](https://github.com/jshjohnson/Choices/workflows/Bundle%20size%20checks/badge.svg)](https://github.com/jshjohnson/Choices/actions) [![npm](https://img.shields.io/npm/v/choices.js.svg)](https://www.npmjs.com/package/choices.js)
 
+---
+
 A vanilla, lightweight (~19kb gzipped 🎉), configurable select box/text input plugin. Similar to Select2 and Selectize but without the jQuery dependency.
 
 [Demo](https://choices-js.github.io/Choices/)
@@ -19,27 +21,7 @@ A vanilla, lightweight (~19kb gzipped 🎉), configurable select box/text input 
 
 ### Interested in writing your own ES6 JavaScript plugins? Check out [ES6.io](https://ES6.io/friend/JOHNSON) for great tutorials! 💪🏼
 
-### Sponsored by:
-<p align="center">
-  <a href="https://wanderermaps.com/" target="_blank" rel="noopener noreferrer">
-    <img src="https://cdn.shopify.com/s/files/1/0614/3357/7715/files/Logo_BlackWithBackground_200x.png?v=1644802773" alt="Wanderer Maps logo">
-  </a>
-</p>
-
 ---
-
-## Table of Contents
-
-- [Installation](#installation)
-- [Setup](#setup)
-- [Terminology](#terminology)
-- [Input Types](#input-types)
-- [Configuration Options](#configuration-options)
-- [Callbacks](#callbacks)
-- [Events](#events)
-- [Methods](#methods)
-- [Development](#development)
-- [License](#license)
 
 ## Installation
 
@@ -127,7 +109,6 @@ Or include Choices directly:
     removeItems: true,
     removeItemButton: false,
     editItems: false,
-    allowHTML: true,
     duplicateItemsAllowed: true,
     delimiter: ',',
     paste: true,
@@ -151,8 +132,6 @@ Or include Choices directly:
     noResultsText: 'No results found',
     noChoicesText: 'No choices to choose from',
     itemSelectText: 'Press to select',
-    uniqueItemText: 'Only unique values can be added',
-    customAddItemText: 'Only values matching specific conditions can be added',
     addItemText: (value) => {
       return `Press Enter to add <b>"${value}"</b>`;
     },
@@ -191,11 +170,10 @@ Or include Choices directly:
       noChoices: 'has-no-choices'
     },
     // Choices uses the great Fuse library for searching. You
-    // can find more options here: https://fusejs.io/api/options.html
+    // can find more options here: https://github.com/krisk/Fuse#options
     fuseOptions: {
-      includeScore: true
+      include: 'score'
     },
-    labelId: '',
     callbackOnInit: null,
     callbackOnCreateTemplates: null
   });
@@ -216,16 +194,16 @@ Choices works with the following input types, referenced in the documentation as
 | HTML Element                                                                                           | Documentation "Input Type" |
 | -------------------------------------------------------------------------------------------------------| -------------------------- |
 | [`<input type="text">`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input)               | `text`                     |
-| [`<select>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/select)                         | `select-one`               |
+| [`<select>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/select)                         | `select-single`            |
 | [`<select multiple>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/select#attr-multiple)  | `select-multiple`          |
 
-## Configuration Options
+## Configuration options
 
 ### silent
 
 **Type:** `Boolean` **Default:** `false`
 
-**Input types affected:** `text`, `select-one`, `select-multiple`
+**Input types affected:** `text`, `select-single`, `select-multiple`
 
 **Usage:** Optionally suppress console errors and warnings.
 
@@ -335,16 +313,6 @@ Pass an array of objects:
 **Input types affected:** `text`
 
 **Usage:** Whether a user can edit items. An item's value can be edited by pressing the backspace.
-
-### allowHTML
-
-**Type:** `Boolean` **Default:** `true`
-
-**Input types affected:** `text`, `select-one`, `select-multiple`
-
-**Usage:** Whether HTML should be rendered in all Choices elements. If `false`, all elements (placeholder, items, etc.) will be treated as plain text. If `true`, this can be used to perform XSS scripting attacks if you load choices from a remote source.
-
-**Deprecation Warning:** This will default to `false` in a future release.
 
 ### duplicateItemsAllowed
 
@@ -611,14 +579,6 @@ const example = new Choices(element, {
 };
 ```
 
-### labelId
-
-**Type:** `String` **Default:** ``
-
-**Input types affected:** `select-one`, `select-multiple`
-
-**Usage:** The labelId improves accessibility. If set, it will add aria-labelledby to the choices element.
-
 ### classNames
 
 **Type:** `Object` **Default:**
@@ -677,8 +637,6 @@ classNames: {
 If you want just extend a little original template then you may use `Choices.defaults.templates` to get access to
 original template function.
 
-Templates receive the full Choices config as the first argument to any template, which allows you to conditionally display things based on the options specified.
-
 **Example:**
 
 ```js
@@ -698,7 +656,7 @@ or more complex:
 const example = new Choices(element, {
   callbackOnCreateTemplates: function(template) {
     return {
-      item: ({ classNames }, data) => {
+      item: (classNames, data) => {
         return template(`
           <div class="${classNames.item} ${
           data.highlighted
@@ -713,7 +671,7 @@ const example = new Choices(element, {
           </div>
         `);
       },
-      choice: ({ classNames }, data) => {
+      choice: (classNames, data) => {
         return template(`
           <div class="${classNames.item} ${classNames.itemChoice} ${
           data.disabled ? classNames.itemDisabled : classNames.itemSelectable

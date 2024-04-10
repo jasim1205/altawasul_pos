@@ -25,10 +25,18 @@ class ProductController extends Controller
     public function create()
     {
         $company = Company::get();
-        $category = Category::get();
-        return view('backend.product.create',compact('company','category'));
+        // $category = Category::get();
+        return view('backend.product.create',compact('company'));
     }
+    public function getCategoriesByCompany(Request $request)
+    {
+        $company_id = $request->get('company_id');
 
+        // Fetch categories associated with the given company_id
+        $categories = Category::where('company_id', $company_id)->pluck('category_name', 'id');
+
+        return response()->json($categories);
+    }
     /**
      * Store a newly created resource in storage.
      */
@@ -40,7 +48,7 @@ class ProductController extends Controller
                 'category_id' => 'required|integer',
                 'product_name' => 'required|string',
                 'product_model' => 'required|string',
-                'unit_price' => 'required|double',
+                'unit_price' => 'required|numeric',
                 'file' => 'nullable|mimes:jpeg,jpg,png|max:3072', // Adjust max file size as needed (2048 KB = 3 MB)
             ]);
 
