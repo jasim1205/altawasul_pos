@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Backend;
 
-use App\Models\Stock;
+use App\Models\Supplier;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class StockController extends Controller
+class SupplierController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -35,7 +35,7 @@ class StockController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Stock $stock)
+    public function show(Supplier $supplier)
     {
         //
     }
@@ -43,7 +43,7 @@ class StockController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Stock $stock)
+    public function edit(Supplier $supplier)
     {
         //
     }
@@ -51,7 +51,7 @@ class StockController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Stock $stock)
+    public function update(Request $request, Supplier $supplier)
     {
         //
     }
@@ -59,7 +59,7 @@ class StockController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Stock $stock)
+    public function destroy(Supplier $supplier)
     {
         //
     }

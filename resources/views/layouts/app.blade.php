@@ -114,6 +114,12 @@
                   <span>Product</span>
                 </a>
               </li>
+              <li class="sidebar-item">
+                <a href="{{ route('purchase.index') }}" class="sidebar-link">
+                  <i class="bi bi-file-earmark-medical-fill"></i>
+                  <span>Purchase</span>
+                </a>
+              </li>
             </ul>
           </div>
         </div>

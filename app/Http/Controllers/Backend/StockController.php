@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Backend;
 
-use App\Models\Purchase;
+use App\Models\Stock;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class PurchaseController extends Controller
+class StockController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -35,7 +35,7 @@ class PurchaseController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Purchase $purchase)
+    public function show(Stock $stock)
     {
         //
     }
@@ -43,7 +43,7 @@ class PurchaseController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Purchase $purchase)
+    public function edit(Stock $stock)
     {
         //
     }
@@ -51,7 +51,7 @@ class PurchaseController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Purchase $purchase)
+    public function update(Request $request, Stock $stock)
     {
         //
     }
@@ -59,7 +59,7 @@ class PurchaseController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Purchase $purchase)
+    public function destroy(Stock $stock)
     {
         //
     }

@@ -9,6 +9,7 @@ use App\Http\Controllers\Backend\PermissionController as permission;
 use App\Http\Controllers\Backend\CompanyController as company;
 use App\Http\Controllers\Backend\CategoryController as category;
 use App\Http\Controllers\Backend\ProductController as product;
+use App\Http\Controllers\Backend\PurchaseController as purchase;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +40,7 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
     Route::resource('company', company::class);
     Route::resource('category', category::class);
     Route::resource('product', product::class);
+    Route::resource('purchase', purchase::class);
     Route::get('/get-categories-by-company', [product::class,'getCategoriesByCompany'])->name('getCategoriesByCompany');
 
 });
