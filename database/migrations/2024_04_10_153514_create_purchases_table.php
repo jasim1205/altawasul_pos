@@ -13,12 +13,15 @@ return new class extends Migration
     {
         Schema::create('purchases', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('purchase_id')->index();
+            $table->foreign('purchase_id')->references('id')->on('purchase_details')->onDelete('cascade');
             $table->unsignedBigInteger('supplier_id')->index();
             $table->foreign('supplier_id')->references('id')->on('suppliers')->onDelete('cascade');
             $table->date('date');
             $table->integer('total_quantity');
-            $table->integer('total_discount')->nullable();
             $table->integer('total_tax')->nullable();
+            $table->integer('total_subamount')->nullable();
+            $table->integer('total_discount')->nullable();
             $table->integer('grand_total_amount');
             $table->timestamps();
             $table->softDeletes();

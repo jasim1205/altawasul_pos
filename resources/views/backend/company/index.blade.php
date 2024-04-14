@@ -29,6 +29,7 @@
                 <table class="table table-striped" id="table1">
                     <thead>
                         <tr>
+                            <th scope="col">{{__('#SL')}}</th>
                             <th>Name</th>
                             <th>Email</th>
                             <th>Phone</th>
@@ -40,6 +41,7 @@
                     <tbody>
                         @forelse ($company as $value)
                             <tr>
+                                <td>{{ __(++$loop->index) }}</td>
                                 <td>{{ __($value->company_name) }}</td>
                                 <td>{{ __($value->email) }}</td>
                                 <td>{{ __($value->contact_no) }}</td>

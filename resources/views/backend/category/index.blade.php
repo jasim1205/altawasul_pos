@@ -29,6 +29,7 @@
                 <table class="table table-striped" id="table1">
                     <thead>
                         <tr>
+                            <th scope="col">{{__('#SL')}}</th>
                             <th>Company Name</th>
                             <th>Category</th>
                             <th>Action</th>
@@ -37,6 +38,7 @@
                     <tbody>
                         @forelse ($data as $value)
                             <tr>
+                                <td>{{ __(++$loop->index) }}</td>
                                 <td>{{ __($value->company?->company_name) }}</td>
                                 <td>{{ __($value->category_name) }}</td>
                                 <td class="white-space-nowrap">
