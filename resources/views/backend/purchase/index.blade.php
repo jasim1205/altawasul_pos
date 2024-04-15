@@ -42,6 +42,7 @@
                     <tbody>
                         @forelse ($purchase as $value)
                             <tr>
+                                <td>{{ __(++$loop->index) }}</td>
                                 <td>{{ __($value->supplier?->supplier_name) }}</td>
                                 <td>{{ __($value->date) }}</td>
                                 <td>{{ __($value->total_quantity) }}</td>
