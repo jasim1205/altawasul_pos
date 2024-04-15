@@ -71,31 +71,30 @@
                                         </thead>
                                         <tbody id="purchaseHead">
                                             <tr>
-<td>
-    <select name="company_id[]" class="form-control company_id">
-        <option value="">select company</option>
-        @foreach ($company as $value)
-            <option value="{{ $value->id }}">{{ $value->company_name }}</option>
-        @endforeach
-    </select>
-</td>
-<td>
-    
-    <select name="category_id[]" class="form-control category_id">
-        <option value="">Select Category</option>
-    </select>
-</td>
-<td>
-    <select name="product_id[]" class="form-control product_id">
-        <option value="">select product</option>
-        @foreach ($product as $value)
-            <option value="{{ $value->id }}">{{ $value->product_name }}</option>
-        @endforeach
-    </select>
-    {{-- <select name="product_id[]" class="form-control product_id">
-        <option value="">Select Product</option>
-    </select> --}}
-</td>
+ <td>
+                            <select class="select2 company_id" onchange="doData(this);" name="company_id[]">
+                                <option value="">Select Product</option>
+                                @foreach ($company as $value)
+                                    <option value="{{ $value->id }}">{{ $value->company_name }}</option>
+                                @endforeach
+                            </select>
+                        </td>
+                        <td>
+                            <select class="select2 category_id" onchange="doData(this);" name="category_id[]">
+                                <option value="">Select Category</option>
+                                {{-- @foreach ($category as $value)
+                                    <option value="{{ $value->id }}">{{ $value->category_name }}</option>
+                                @endforeach --}}
+                            </select>
+                        </td>
+                        <td>
+                            <select class="select2 product_id" onchange="doData(this);" name="product_id[]">
+                                <option value="">Select Product</option>
+                                {{-- @foreach ($product as $value)
+                                    <option value="{{ $value->id }}">{{ $value->product_name }}</option>
+                                @endforeach --}}
+                            </select>
+                        </td>
 
                                                 <td><input class="form-control uprice" type="text" name="unit_price[]"></td>
                                                 <td><input class="form-control toquantity" type="text" name="quantity[]"></td>
@@ -126,17 +125,16 @@
                                             <th colspan=""><span class="total_discount" id="total_discount"></span></th>
                                             <th colspan="2"><span class="grand_total_amount" id="grand_total_amount"></span></th>
 
-<input type="hidden" name="total_quantity" id="total_quantity_hidden">
-<input type="hidden" name="total_discount" id="total_discount_hidden">
-<input type="hidden" name="total_tax" id="total_tax_hidden">
-<input type="hidden" name="total_subamount" id="total_subamount_hidden">
-<input type="hidden" name="grand_total_amount" id="grand_total_amount_hidden">
-
+                                            <input type="hidden" name="total_quantity" id="total_quantity_hidden">
+                                            <input type="hidden" name="total_discount" id="total_discount_hidden">
+                                            <input type="hidden" name="total_tax" id="total_tax_hidden">
+                                            <input type="hidden" name="total_subamount" id="total_subamount_hidden">
+                                            <input type="hidden" name="grand_total_amount" id="grand_total_amount_hidden">
                                         </tfoot>
                                     </table>
                              </div>
                              <div>
-                                <button type="submit" class="btn btn-primary">Save</button>
+                                <button type="submit" class="btn btn-primary mt-3">Save</button>
                              </div>
                         </div>
                     </form>
@@ -361,6 +359,7 @@
                     if(res) {
                         var categorySelect = row.find('.category_id');
                         categorySelect.empty();
+                        categorySelect.append('<option value="">Select Category</option>');
                         $.each(res, function(key, value) {
                             categorySelect.append('<option value="'+ key +'">'+ value +'</option>');
                         });
@@ -372,8 +371,7 @@
             row.find('.product_id').empty();
         }
     });
-
-
+    
     // Handle change event for category select element
     $(document).on('change', '.category_id', function() {
         var category_id = $(this).val();
@@ -390,6 +388,7 @@
                     if(res) {
                         var productSelect = row.find('.product_id');
                         productSelect.empty();
+                        productSelect.append('<option value="">Select product</option>');
                         $.each(res, function(key, value) {
                             productSelect.append('<option value="'+ key +'">'+ value +'</option>');
                         });

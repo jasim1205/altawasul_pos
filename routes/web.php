@@ -43,6 +43,7 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
     Route::resource('purchase', purchase::class);
     Route::get('/get-categories-by-company', [product::class,'getCategoriesByCompany'])->name('getCategoriesByCompany');
     Route::get('/get-categories-by-company', [purchase::class, 'getCategoriesByCompany'])->name('getCategoriesByCompany');
+    // Route::get('/get-categories-by-company', [purchase::class, 'getCategory'])->name('getCategories');
 
 // Route for getting products by category and company ID
     Route::get('/get-products-by-category-and-company', [purchase::class, 'getProductsByCategoryAndCompany'])->name('getProductsByCategoryAndCompany');

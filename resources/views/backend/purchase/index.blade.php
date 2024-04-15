@@ -21,7 +21,7 @@
     <section class="section">
         <div class="card">
             <div class="card-header">
-                <h5 class="card-title">
+                <h5 class="card-title m-0">
                     <a class="btn btn-primary" href="{{route('purchase.create')}}"><i class="fa fa-plus"></i></a>
                 </h5>
             </div>
@@ -29,13 +29,14 @@
                 <table class="table table-striped" id="table1">
                     <thead>
                         <tr>
-                            <th>Supplier</th>
-                            <th>Date</th>
-                            <th>Total Quantity</th>
-                            <th>Total Discount</th>
-                            <th>Total Tax</th>
-                            <th>Grand Total Amount</th>
-                            <th>Action</th>
+                            <th scope="col">{{__('#SL')}}</th>
+                            <th>{{ __('Supplier') }}</th>
+                            <th>{{ __('Date') }}</th>
+                            <th>{{ __('Total Quantity') }}</th>
+                            <th>{{ __('Total Discount') }}</th>
+                            <th>{{ __('Total Tax') }}</th>
+                            <th>{{ __('Grand Total Amount') }}</th>
+                            <th>{{ __('Action') }}</th>
                         </tr>
                     </thead>
                     <tbody>
