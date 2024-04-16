@@ -127,9 +127,13 @@ class PurchaseController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Purchase $purchase)
+    public function show($id)
     {
-        //
+        $company = Company::get();
+        $category = Category::get();
+        $product = Product::get();
+        $purchase = Purchase::findOrFail(encyptor('decrypt',$id));
+        return view('backend/purchase/show',compact('company','category','product','purchase'));
     }
 
     /**
