@@ -54,6 +54,9 @@
                                         <a href="{{route('purchase.edit',encryptor('encrypt',$value->id))}}">
                                             <i class="fa fa-edit"></i>
                                         </a>
+                                        <a href="{{route('purchase.show',encryptor('encrypt',$value->id))}}">
+                                            <i class="fa fa-eye"></i>
+                                        </a>
                                         <form action="{{route('purchase.destroy',encryptor('encrypt',$value->id))}}" method="post">
                                                 @csrf
                                                 @method('DELETE')

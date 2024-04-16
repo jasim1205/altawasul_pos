@@ -36,20 +36,37 @@
                         @csrf
                         <div class="row">
                             <div class="col-sm-6">
-                                <label for="">Supplier Name</label><b>:</b>
-                                <span><b>$purchase->supplier?->supplier_name</b></span>
-                            </div>
-                            <div class="col-sm-6">
-                                <label for="">Email</label>
+                                <div class="row">
+                                    <div class="col-sm-4"><label for="">Supplier Name</label></div>
+                                    <div class="col-sm-1"><b class="ms-2">:</b></div>
+                                    <div class="col-sm-6"><span><b>{{ $purchase->supplier?->supplier_name }}</b></span></div>
+                                </div>
                                 
+                                {{-- <span><b>{{ $purchase->supplier?->supplier_name }}</b></span> --}}
                             </div>
                             <div class="col-sm-6">
-                                <label for="">Contact</label>
-                                
+                                <div class="row">
+                                    <div class="col-sm-4"><label for="">Email</label>
+                                    </div>
+                                    <div class="col-sm-1"><b class="ms-2">:</b></div>
+                                    <div class="col-sm-6"><span><b>{{ $purchase->supplier?->email }}</b></span></div>
+                                </div>
                             </div>
                             <div class="col-sm-6">
-                                <label for="">Date</label>
-                               
+                                <div class="row">
+                                    <div class="col-sm-4"><label for="">Contact</label>
+                                    </div>
+                                    <div class="col-sm-1"><b class="mx-2">:</b></div>
+                                    <div class="col-sm-6"><span><b>{{ $purchase->supplier?->contact_no }}</b></span></div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <div class="col-sm-4"><label for="">Date</label>
+                                    </div>
+                                    <div class="col-sm-1"><b class="mx-2">:</b></div>
+                                    <div class="col-sm-6"><span><b>{{ $purchase->supplier?->date }}</b></span></div>
+                                </div>
                             </div>
                                 <div class="table-responsive">
                                     <table class="table table-striped mb-0 mt-3">
@@ -70,15 +87,17 @@
                                             </tr>
                                         </thead>
                                         <tbody id="purchaseHead">
+                                            @foreach($purchaseDetail as $purdetail)
                                             <tr>
                                                 <td>
+                                                    {{ $purdetail->company?->company_name }}
                                                     {{-- <select class="select2 company_id" onchange="doData(this);" name="company_id[]">
                                                         <option value="">Select Product</option>
                                                         @foreach ($company as $value)
                                                             <option value="{{ $value->id }}">{{ $value->company_name }}</option>
                                                         @endforeach
                                                     </select> --}}
-                                                </td>
+                                                </td?>
                                                 <td>
                                                     <select class="select2 category_id" onchange="doData(this);" name="category_id[]">
                                                         <option value="">Select Category</option>
@@ -111,6 +130,7 @@
                                                     <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
                                                 </td>
                                             </tr>
+                                            @endforeach
                                         </tbody>
                                         <tfoot>
                                             <th colspan="3">Total</th>

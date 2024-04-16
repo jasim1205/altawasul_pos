@@ -132,8 +132,9 @@ class PurchaseController extends Controller
         $company = Company::get();
         $category = Category::get();
         $product = Product::get();
-        $purchase = Purchase::findOrFail(encyptor('decrypt',$id));
-        return view('backend/purchase/show',compact('company','category','product','purchase'));
+        $purchase = Purchase::findOrFail(encryptor('decrypt',$id));
+        $purchaseDetail = PurchaseDetails::where('purchase_id',$id);
+        return view('backend/purchase/show',compact('company','category','product','purchase','purchaseDetail'));
     }
 
     /**

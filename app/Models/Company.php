@@ -17,6 +17,6 @@ class Company extends Model
         return $this->hasMany(Product::class);
     }
     public function purchase_details(){
-        return $this->hasMany(PurchaseDetails::class);
+        return $this->hasMany(PurchaseDetails::class,'company_id','id');
     }
 }
