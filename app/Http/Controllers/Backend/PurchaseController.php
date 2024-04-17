@@ -76,6 +76,7 @@ class PurchaseController extends Controller
             $purchase->supplier_id = $supplier->id; // Link purchase to supplier
             $purchase->date = $request->date;
             $purchase->total_quantity = $request->total_quantity;
+            $purchase->total_quantity_amount = $request->total_quantity_amount;
             $purchase->total_discount = $request->total_discount;
             $purchase->total_tax = $request->total_tax;
             $purchase->total_subamount = $request->total_subamount;
@@ -92,6 +93,7 @@ class PurchaseController extends Controller
                     $purchaseDetail->product_id = $request->product_id[$key];
                     $purchaseDetail->unit_price = $request->unit_price[$key];
                     $purchaseDetail->quantity = $request->quantity[$key];
+                    $purchaseDetail->amount = $request->amount[$key];
                     $purchaseDetail->sub_amount = $request->sub_amount[$key];
                     $purchaseDetail->tax = $request->tax[$key];
                     $purchaseDetail->discount_type = $request->discount_type[$key];
@@ -133,8 +135,9 @@ class PurchaseController extends Controller
         $category = Category::get();
         $product = Product::get();
         $purchase = Purchase::findOrFail(encryptor('decrypt',$id));
-        $purchaseDetail = PurchaseDetails::where('purchase_id',$id);
-        return view('backend/purchase/show',compact('company','category','product','purchase','purchaseDetail'));
+        $purchaseDetails = $purchase->purchasedetails;
+        // $purchaseDetail = PurchaseDetails::where('purchase_id',$id)->get();
+        return view('backend/purchase/show',compact('company','category','product','purchase','purchaseDetails'));
     }
 
     /**

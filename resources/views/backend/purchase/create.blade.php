@@ -124,7 +124,9 @@
                                             <th colspan=""><span class="total_discount" id="total_discount"></span></th>
                                             <th colspan="2"><span class="grand_total_amount" id="grand_total_amount"></span></th>
 
+
                                             <input type="hidden" name="total_quantity" id="total_quantity_hidden">
+                                            <input type="hidden" name="total_quantity_amount" id="total_quantity_amount_hidden">
                                             <input type="hidden" name="total_discount" id="total_discount_hidden">
                                             <input type="hidden" name="total_tax" id="total_tax_hidden">
                                             <input type="hidden" name="total_subamount" id="total_subamount_hidden">
@@ -222,6 +224,7 @@
             totalAmount += amount;
         });
         $('#total_amount').text(totalAmount.toFixed(2));
+        $('[name="total_quantity_amount"]').text(totalAmount.toFixed(2));
     }
 
     // Function to calculate total tax

@@ -75,6 +75,7 @@
                                                 <th scope="col">{{__('Company')}}</th>
                                                 <th scope="col">{{__('Category')}}</th>
                                                 <th scope="col">{{__('Product')}}</th>
+                                                <th scope="col">{{__('Image')}}</th>
                                                 <th scope="col">{{__('Unit Price')}}</th>
                                                 <th scope="col">{{__('Quantity')}}</th>
                                                 <th scope="col">{{__('Amount')}}</th>
@@ -83,60 +84,62 @@
                                                 <th scope="col">{{__('Discount Type')}}</th>
                                                 <th scope="col">{{__('Discount')}}</th>
                                                 <th scope="col">{{__('Total Amount')}}</th>
-                                                <th class="white-space-nowrap">{{__('Action')}}</th>
+                                                {{-- <th class="white-space-nowrap">{{__('Action')}}</th> --}}
                                             </tr>
                                         </thead>
                                         <tbody id="purchaseHead">
-                                            @foreach($purchaseDetail as $purdetail)
+{{-- @foreach($purchase->purchasedetails as $purdetail)
+<p>{{ $purdetail->company_id }}</p>
+@endforeach --}}
+                                            @foreach($purchaseDetails as $purdetail)
                                             <tr>
                                                 <td>
                                                     {{ $purdetail->company?->company_name }}
-                                                    {{-- <select class="select2 company_id" onchange="doData(this);" name="company_id[]">
-                                                        <option value="">Select Product</option>
-                                                        @foreach ($company as $value)
-                                                            <option value="{{ $value->id }}">{{ $value->company_name }}</option>
-                                                        @endforeach
-                                                    </select> --}}
                                                 </td?>
                                                 <td>
-                                                    <select class="select2 category_id" onchange="doData(this);" name="category_id[]">
-                                                        <option value="">Select Category</option>
-                                                       
-                                                    </select>
+                                                    {{ $purdetail->category?->category_name }}
                                                 </td>
                                                 <td>
-                                                    <select class="select2 product_id" onchange="doData(this);" name="product_id[]">
-                                                        <option value="">Select Product</option>
-                                                        
-                                                    </select>
+                                                    {{ $purdetail->product?->product_name }}
                                                 </td>
-
-                                                <td><input class="form-control uprice" type="text" name="unit_price[]"></td>
-                                                <td><input class="form-control toquantity" type="text" name="quantity[]"></td>
-                                                <td><input class="form-control amount" type="text" name="amount[]"></td>
-                                                <td><input class="form-control totax" type="text" name="tax[]"></td>
-                                                <td><input class="form-control subamount" type="text" name="sub_amount[]"></td>
                                                 <td>
-                                                    <select name="discount_type[]" id="" class="form-control discount_type">
-                                                        <option value="">select</option>
-                                                        <option value="1">%</option>
-                                                        <option value="0">Fixed</option>
-                                                    </select>
+                                                    <img src="{{ asset('public/uploads/product/'.$purdetail->product?->product_image) }}" alt="product_image" width="50px">
                                                 </td>
-                                                <td><input class="form-control todiscount" type="text" name="discount[]"></td>
-                                                <td><input class="form-control toamount" type="text" name="total_amount[]"></td>
                                                 <td>
-                                                    
+                                                    {{ $purdetail->product?->unit_price }}
+                                                </td>
+                                                <td>
+                                                    {{ $purdetail->quantity }}
+                                                </td>
+                                                <td>
+                                                    {{ $purdetail->amount }}
+                                                </td>
+                                                <td>
+                                                    {{ $purdetail->tax }}%
+                                                </td>
+                                                <td>
+                                                     {{ $purdetail->sub_amount }}
+                                                </td>
+                                                <td>
+                                                    @if($purdetail->discount_type==1){{__('%')}} @else{{__('Fixed')}} @endif
+                                                </td>
+                                                <td>
+                                                    {{ $purdetail->discount }}
+                                                </td>
+                                                <td>
+                                                    {{ $purdetail->total_amount }}
+                                                </td>
+                                                {{-- <td>
                                                     <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
-                                                </td>
+                                                </td> --}}
                                             </tr>
                                             @endforeach
                                         </tbody>
                                         <tfoot>
-                                            <th colspan="3">Total</th>
-                                            <th><span class="total_unitprice" id="total_unitprice" ></span></th>
-                                            <th><span class="total_quantity" id="total_quantity" ></span></th>
-                                            <th><span class="total_amount" id="total_amount"></span></th>
+                                            <th colspan="5" class="text-end">Total</th>
+                                            {{-- <th><span class="total_unitprice" id="total_unitprice" >{{ $purchase->total_unitprice }}</span></th> --}}
+                                            <th><span class="total_quantity" id="total_quantity" >{{ $purchase->total_quantity }}</span></th>
+                                            <th><span class="total_amount" id="total_amount">{{ $purchase->total_amount }}</span></th>
                                             <th><span class="total_tax" id="total_tax"></span></th>
                                             <th><span class="total_subamount" id="total_subamount"></span></th>
                                             <th></th>

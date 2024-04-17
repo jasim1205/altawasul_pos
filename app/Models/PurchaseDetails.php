@@ -10,7 +10,7 @@ class PurchaseDetails extends Model
 {
     use HasFactory,SoftDeletes;
     public function purchase(){
-        return $this->belongsTo(Purchase::class);
+        return $this->belongsTo(Purchase::class,'purchase_id','id');
     }
     public function company(){
         return $this->belongsTo(Company::class,'company_id','id');
