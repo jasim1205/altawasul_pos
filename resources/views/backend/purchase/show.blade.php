@@ -29,7 +29,7 @@
         <section class="section">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Add New</h4>
+                    
                 </div>
                 <div class="card-body">
                     <form action="{{route('purchase.store')}}" method="post" enctype="multipart/form-data">
@@ -106,7 +106,7 @@
                                                     <img src="{{ asset('public/uploads/product/'.$purdetail->product?->product_image) }}" alt="product_image" width="50px">
                                                 </td>
                                                 <td>
-                                                    {{ $purdetail->product?->unit_price }}
+                                                    {{ $purdetail->unit_price }}
                                                 </td>
                                                 <td>
                                                     {{ $purdetail->quantity }}
@@ -139,12 +139,12 @@
                                             <th colspan="5" class="text-end">Total</th>
                                             {{-- <th><span class="total_unitprice" id="total_unitprice" >{{ $purchase->total_unitprice }}</span></th> --}}
                                             <th><span class="total_quantity" id="total_quantity" >{{ $purchase->total_quantity }}</span></th>
-                                            <th><span class="total_amount" id="total_amount">{{ $purchase->total_amount }}</span></th>
-                                            <th><span class="total_tax" id="total_tax"></span></th>
-                                            <th><span class="total_subamount" id="total_subamount"></span></th>
+                                            <th><span class="total_amount" id="total_amount">{{ $purchase->total_quantity_amount }}</span></th>
+                                            <th><span class="total_tax" id="total_tax">{{ $purchase->total_tax }}</span></th>
+                                            <th><span class="total_subamount" id="total_subamount">{{ $purchase->total_subamount }}</span></th>
                                             <th></th>
-                                            <th colspan=""><span class="total_discount" id="total_discount"></span></th>
-                                            <th colspan="2"><span class="grand_total_amount" id="grand_total_amount"></span></th>
+                                            <th colspan=""><span class="total_discount" id="total_discount">{{ $purchase->total_discount }}</span></th>
+                                            <th colspan="2"><span class="grand_total_amount" id="grand_total_amount">{{ $purchase->grand_total_amount }}</span></th>
                                         </tfoot>
                                     </table>
                                 </div>

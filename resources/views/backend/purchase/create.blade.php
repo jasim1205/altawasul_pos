@@ -49,7 +49,7 @@
                             </div>
                             <div class="col-sm-3">
                                 <label for="">Date</label>
-                                <input type="date" name="date" id="" class="form-control">
+                                <input type="date" name="date" id="current_date" class="form-control">
                             </div>
                                 <div class="table-responsive">
                                     <table class="table table-striped mb-0 mt-3">
@@ -61,7 +61,7 @@
                                                 <th scope="col">{{__('Unit Price')}}</th>
                                                 <th scope="col">{{__('Quantity')}}</th>
                                                 <th scope="col">{{__('Amount')}}</th>
-                                                <th scope="col">{{__('Tax')}}</th>
+                                                <th scope="col">{{__('Tax(%)')}}</th>
                                                 <th scope="col">{{__('Sub Amount')}}</th>
                                                 <th scope="col">{{__('Discount Type')}}</th>
                                                 <th scope="col">{{__('Discount')}}</th>
@@ -82,23 +82,17 @@
                                                 <td>
                                                     <select class="select2 category_id" onchange="doData(this);" name="category_id[]">
                                                         <option value="">Select Category</option>
-                                                        {{-- @foreach ($category as $value)
-                                                            <option value="{{ $value->id }}">{{ $value->category_name }}</option>
-                                                        @endforeach --}}
                                                     </select>
                                                 </td>
                                                 <td>
                                                     <select class="select2 product_id" onchange="doData(this);" name="product_id[]">
                                                         <option value="">Select Product</option>
-                                                        {{-- @foreach ($product as $value)
-                                                            <option value="{{ $value->id }}">{{ $value->product_name }}</option>
-                                                        @endforeach --}}
                                                     </select>
                                                 </td>
-                                                <td><input class="form-control uprice" type="text" name="unit_price[]"></td>
+                                                <td><input class="form-control uprice" type="text" name="unit_price[]" style="width: 50px"></td>
                                                 <td><input class="form-control toquantity" type="text" name="quantity[]"></td>
                                                 <td><input class="form-control amount" type="text" name="amount[]"></td>
-                                                <td><input class="form-control totax" type="text" name="tax[]"></td>
+                                                <td><input class="form-control totax"  type="text" name="tax[]" style="width: 50px"></td>
                                                 <td><input class="form-control subamount" type="text" name="sub_amount[]"></td>
                                                 <td><select name="discount_type[]" id="" class="form-control discount_type">
                                                     <option value="">select</option>
@@ -146,6 +140,13 @@
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+<script>
+    // Set current date to the date input field
+    document.addEventListener('DOMContentLoaded', function() {
+        var currentDate = new Date().toISOString().split('T')[0]; // Get current date in "YYYY-MM-DD" format
+        document.getElementById('current_date').value = currentDate;
+    });
+</script>
 <script>
     $(document).ready(function() {
     // Function to calculate amount, subamount, total amount, and other values
@@ -212,8 +213,8 @@
             const quantity = parseFloat($(this).val()) || 0;
             totalQuantity += quantity;
         });
-        $('#total_quantity').text(totalQuantity.toFixed(2));
-        $('[name="total_quantity"]').val(totalQuantity.toFixed(2)); // Update hidden input field
+        $('#total_quantity').text(totalQuantity);
+        $('[name="total_quantity"]').val(totalQuantity); // Update hidden input field
     }
 
     // Function to calculate total amount
@@ -224,7 +225,7 @@
             totalAmount += amount;
         });
         $('#total_amount').text(totalAmount.toFixed(2));
-        $('[name="total_quantity_amount"]').text(totalAmount.toFixed(2));
+        $('[name="total_quantity_amount"]').val(totalAmount.toFixed(2));
     }
 
     // Function to calculate total tax
@@ -234,8 +235,8 @@
             const tax = parseFloat($(this).val()) || 0;
             totalTax += tax;
         });
-        $('#total_tax').text(totalTax.toFixed(2));
-        $('[name="total_tax"]').val(totalTax.toFixed(2)); // Update hidden input field
+        $('#total_tax').text(totalTax);
+        $('[name="total_tax"]').val(totalTax); // Update hidden input field
     }
 
     // Function to calculate total sub amount
@@ -298,17 +299,11 @@
                         <td>
                             <select class="select2 category_id" onchange="doData(this);" name="category_id[]">
                                 <option value="">Select Category</option>
-                                @foreach ($category as $value)
-                                    <option value="{{ $value->id }}">{{ $value->category_name }}</option>
-                                @endforeach
                             </select>
                         </td>
                         <td>
                             <select class="select2 product_id" onchange="doData(this);" name="product_id[]">
                                 <option value="">Select Product</option>
-                                @foreach ($product as $value)
-                                    <option value="{{ $value->id }}">{{ $value->product_name }}</option>
-                                @endforeach
                             </select>
                         </td>
                         <td><input class="form-control uprice" type="text" name="unit_price[]"></td>
@@ -346,62 +341,62 @@
 
 <script>
     $(document).ready(function() {
-    // Handle change event for company select element
-    $('.company_id').change(function() {
-        var company_id = $(this).val();
-        var row = $(this).closest('tr');
+        // Function to handle AJAX request for fetching categories by company
+        $('.company_id').change(function() {
+            var company_id = $(this).val();
+            var row = $(this).closest('tr');
 
-        if(company_id) {
-            $.ajax({
-                type: "GET",
-                url: "{{ route('getCategoriesByCompany') }}",
-                data: {'company_id': company_id},
-                dataType: "json",
-                success: function(res) {
-                    if(res) {
-                        var categorySelect = row.find('.category_id');
-                        categorySelect.empty();
-                        categorySelect.append('<option value="">Select Category</option>');
-                        $.each(res, function(key, value) {
-                            categorySelect.append('<option value="'+ key +'">'+ value +'</option>');
-                        });
+            if(company_id) {
+                $.ajax({
+                    type: "GET",
+                    url: "{{ route('getCategoriesByCompany') }}",
+                    data: {'company_id': company_id},
+                    dataType: "json",
+                    success: function(res) {
+                        if(res) {
+                            var categorySelect = row.find('.category_id');
+                            categorySelect.empty();
+                            categorySelect.append('<option value="">Select Category</option>');
+                            $.each(res, function(key, value) {
+                                categorySelect.append('<option value="'+ key +'">'+ value +'</option>');
+                            });
+                        }
                     }
-                }
-            });
-        } else {
-            row.find('.category_id').empty();
-            row.find('.product_id').empty();
-        }
-    });
-    
-    // Handle change event for category select element
-    $(document).on('change', '.category_id', function() {
-        var category_id = $(this).val();
-        var row = $(this).closest('tr');
-        var company_id = row.find('.company_id').val();
+                });
+            } else {
+                row.find('.category_id').empty();
+                row.find('.product_id').empty();
+            }
+        });
+        
+        // Function to handle AJAX request for fetching products by category and company
+        $(document).on('change', '.category_id', function() {
+            var category_id = $(this).val();
+            var row = $(this).closest('tr');
+            var company_id = row.find('.company_id').val();
 
-        if(category_id && company_id) {
-            $.ajax({
-                type: "GET",
-                url: "{{ route('getProductsByCategoryAndCompany') }}",
-                data: {'category_id': category_id, 'company_id': company_id},
-                dataType: "json",
-                success: function(res) {
-                    if(res) {
-                        var productSelect = row.find('.product_id');
-                        productSelect.empty();
-                        productSelect.append('<option value="">Select product</option>');
-                        $.each(res, function(key, value) {
-                            productSelect.append('<option value="'+ key +'">'+ value +'</option>');
-                        });
+            if(category_id && company_id) {
+                $.ajax({
+                    type: "GET",
+                    url: "{{ route('getProductsByCategoryAndCompany') }}",
+                    data: {'category_id': category_id, 'company_id': company_id},
+                    dataType: "json",
+                    success: function(res) {
+                        if(res) {
+                            var productSelect = row.find('.product_id');
+                            productSelect.empty();
+                            productSelect.append('<option value="">Select product</option>');
+                            $.each(res, function(key, value) {
+                                productSelect.append('<option value="'+ key +'">'+ value +'</option>');
+                            });
+                        }
                     }
-                }
-            });
-        } else {
-            row.find('.product_id').empty();
-        }
+                });
+            } else {
+                row.find('.product_id').empty();
+            }
+        });
     });
-});
-
 </script>
+
 @endsection
