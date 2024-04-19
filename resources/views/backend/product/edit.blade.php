@@ -2,7 +2,87 @@
 @section('title',trans('Product'))
 @section('page',trans('Create'))
 @section('content')
-<div class="page-heading">
+<!--breadcrumb-->
+<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+    <div class="breadcrumb-title pe-3">Forms</div>
+    <div class="ps-3">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0 p-0">
+                <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">Add New Product</li>
+            </ol>
+        </nav>
+    </div>
+    <div class="ms-auto">
+        <div class="btn-group">
+            <a class="btn btn-primary" href="{{route('product.index')}}"><i class="fa fa-list"></i></a>
+        </div>
+    </div>
+</div>
+<!--end breadcrumb-->
+<!--start stepper one--> 
+<h6 class="text-uppercase">Product</h6>
+<hr>
+<div id="stepper1" class="bs-stepper">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">Add New</h4>
+        </div>
+        <div class="card-body">
+            <div class="bs-stepper-content">
+                 <form action="{{route('product.update',encryptor('encrypt',$product->id))}}" method="post" enctype="multipart/form-data">
+                        @csrf
+                        @method('PATCH')
+                    <div id="test-l-1" role="tabpanel" class="bs-stepper-pane" aria-labelledby="stepper1trigger1">
+                        <div class="row g-3">
+                            <div class="col-12 col-lg-6">
+                                <label for="FisrtName" class="form-label">Company Name</label>
+                                <select name="company_id" id="company_id" class="form-control">
+                                    <option value="">Select Company</option>
+                                    @foreach ($company as $value)
+                                        <option value="{{ $value->id }}" {{ old('company_id',$product->company_id==$value->id?"selected":"") }} >{{ $value->company_name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-12 col-lg-6">
+                                <label for="name" class="form-label">Category Name</label>
+                                <select name="category_id" id="category_id" class="form-control">
+                                    <option value="{{ $value->id }}" {{old('category_id',$product->category_id=$value->id ? 'selected' : '') }}>
+                                        {{ $value->category_name }}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-12 col-lg-6">
+                                <label for="name" class="form-label">Product Name</label>
+                                <input type="text" name="product_name" value="{{ old('product_name',$product->product_name) }}" class="form-control" id="name" placeholder="Enter a product name"/>
+                            </div>
+                            <div class="col-12 col-lg-6">
+                                <label for="" class="form-label">Unit Price</label>
+                                 <input type="text" name="unit_price" value="{{ old('unit_price',$product->unit_price) }}" class="form-control" id="name" placeholder="Enter a unit price"/>
+                            </div>
+                            <div class="col-12 col-lg-6">
+                               <label for="name" class="form-label">Product Model</label>
+                                <input type="text" name="product_model" value="{{ old('product_model',$product->product_model) }}"  class="form-control" id="name" placeholder="Enter a product model"/>
+                            </div>
+                            <div class="col-12 col-lg-6">
+                                <label for="" class="form-label">Image</label>
+                                <input type="file" name="product_image" class="form-control" id=""/>
+                            </div>
+                            <div class="col-12 col-lg-6">
+                                <button type="submit" class="btn btn-primary px-4">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end stepper one--> 
+
+
+{{-- <div class="page-heading">
     <div class="page-title">
         <div class="row">
             <div class="col-12 col-md-6 order-md-1 order-last">
@@ -42,7 +122,7 @@
                                     <select name="company_id" id="company_id" class="form-control">
                                         <option value="">Select Company</option>
                                         @foreach ($company as $value)
-                                        {{-- <option value="{{$r->id}}" {{ old('roleId',$user->role_id)==$r->id?"selected":""}}> {{ $r->name}}</option> --}}
+                                        
                                             <option value="{{ $value->id }}" {{ old('company_id',$product->company_id==$value->id?"selected":"") }} >{{ $value->company_name }}</option>
                                         @endforeach
                                     </select>
@@ -86,7 +166,7 @@
             </div>
         </section>
     </div>
-</div>
+</div> --}}
 
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
