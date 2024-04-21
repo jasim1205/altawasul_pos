@@ -81,6 +81,13 @@
               <div class="menu-title">Purchase</div>
             </a>
           </li>
+          <li>
+            <a href="{{ route('stock.index') }}" class="has-arrow">
+              <div class="parent-icon"><i class="bx bx-category"></i>
+              </div>
+              <div class="menu-title">Stock</div>
+            </a>
+          </li>
           {{-- <li class="menu-label">UI Elements</li>
           <li>
             <a href="widgets.html">
@@ -474,7 +481,7 @@
     <script src="{{ asset('public/syndron/assets/plugins/apexcharts-bundle/js/apexcharts.min.js') }}"></script>
     <script src="{{ asset('public/syndron/assets/plugins/datatable/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('public/syndron/assets/plugins/datatable/js/dataTables.bootstrap5.min.js') }}"></script>
-    
+
     <script src="{{ asset('public/syndron/assets/js/index.js') }}"></script>
     <script>
       $(document).ready(function() {

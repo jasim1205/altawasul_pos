@@ -2,7 +2,140 @@
 @section('title',trans('Purchase'))
 @section('page',trans('Create'))
 @section('content')
-<div class="page-heading">
+<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+    <div class="breadcrumb-title pe-3">Forms</div>
+    <div class="ps-3">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0 p-0">
+                <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">Add New Purchase</li>
+            </ol>
+        </nav>
+    </div>
+    <div class="ms-auto">
+        <div class="btn-group">
+            <a class="btn btn-primary" href="{{route('purchase.index')}}"><i class="fa fa-list"></i></a>
+        </div>
+    </div>
+</div>
+<!--end breadcrumb-->
+
+<hr>
+<div id="stepper1" class="bs-stepper">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">Create New Purchase</h4>
+        </div>
+        <div class="card-body">
+            <div class="bs-stepper-content">
+                <form action="{{route('purchase.store')}}" method="post" enctype="multipart/form-data">
+                        @csrf
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label for="">Supplier Name</label>
+                            <input type="text" name="supplier_name" id="" class="form-control">
+                        </div>
+                        <div class="col-sm-3">
+                            <label for="">Email</label>
+                            <input type="text" name="email" id="" class="form-control">
+                        </div>
+                        <div class="col-sm-3">
+                            <label for="">Contact</label>
+                            <input type="text" name="contact_no" id="" class="form-control">
+                        </div>
+                        <div class="col-sm-3">
+                            <label for="">Date</label>
+                            <input type="date" name="date" id="current_date" class="form-control">
+                        </div>
+                            <div class="table-responsive">
+                                <table class="table table-striped mb-0 mt-3">
+                                    <thead>
+                                        <tr class="text-center">
+                                            <th scope="col">{{__('Company')}}</th>
+                                            <th scope="col">{{__('Category')}}</th>
+                                            <th scope="col">{{__('Product')}}</th>
+                                            <th scope="col">{{__('Unit Price')}}</th>
+                                            <th scope="col">{{__('Quantity')}}</th>
+                                            <th scope="col">{{__('Amount')}}</th>
+                                            <th scope="col">{{__('Tax(%)')}}</th>
+                                            <th scope="col">{{__('Sub Amount')}}</th>
+                                            <th scope="col">{{__('Discount Type')}}</th>
+                                            <th scope="col">{{__('Discount')}}</th>
+                                            <th scope="col">{{__('Total Amount')}}</th>
+                                            <th class="white-space-nowrap">{{__('Action')}}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="purchaseHead">
+                                        <tr>
+                                            <td>
+                                                <select class="select2 company_id" onchange="doData(this);" name="company_id[]">
+                                                    <option value="">Select Product</option>
+                                                    @foreach ($company as $value)
+                                                        <option value="{{ $value->id }}">{{ $value->company_name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select class="select2 category_id" onchange="doData(this);" name="category_id[]">
+                                                    <option value="">Select Category</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select class="select2 product_id" onchange="doData(this);" name="product_id[]">
+                                                    <option value="">Select Product</option>
+                                                </select>
+                                            </td>
+                                            <td><input class="form-control uprice" type="text" name="unit_price[]" style="width: 50px"></td>
+                                            <td><input class="form-control toquantity" type="text" name="quantity[]"></td>
+                                            <td><input class="form-control amount" type="text" name="amount[]"></td>
+                                            <td><input class="form-control totax"  type="text" name="tax[]" style="width: 50px"></td>
+                                            <td><input class="form-control subamount" type="text" name="sub_amount[]"></td>
+                                            <td><select name="discount_type[]" id="" class="form-control discount_type">
+                                                <option value="">select</option>
+                                                <option value="1">%</option>
+                                                <option value="0">Fixed</option>
+                                            </select></td>
+                                            <td><input class="form-control todiscount" type="text" name="discount[]"></td>
+                                            <td><input class="form-control toamount" type="text" name="total_amount[]"></td>
+                                            <td>
+                                                {{--  <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>  --}}
+                                                <span onClick='addRow();' class="add-row text-primary"><i class="fa fa-plus"></i></span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <th colspan="3">Total</th>
+                                        <th><span class="total_unitprice" id="total_unitprice" ></span></th>
+                                        <th><span class="total_quantity" id="total_quantity" ></span></th>
+                                        <th><span class="total_amount" id="total_amount"></span></th>
+                                        <th><span class="total_tax" id="total_tax"></span></th>
+                                        <th><span class="total_subamount" id="total_subamount"></span></th>
+                                        <th></th>
+                                        <th colspan=""><span class="total_discount" id="total_discount"></span></th>
+                                        <th colspan="2"><span class="grand_total_amount" id="grand_total_amount"></span></th>
+
+
+                                        <input type="hidden" name="total_quantity" id="total_quantity_hidden">
+                                        <input type="hidden" name="total_quantity_amount" id="total_quantity_amount_hidden">
+                                        <input type="hidden" name="total_discount" id="total_discount_hidden">
+                                        <input type="hidden" name="total_tax" id="total_tax_hidden">
+                                        <input type="hidden" name="total_subamount" id="total_subamount_hidden">
+                                        <input type="hidden" name="grand_total_amount" id="grand_total_amount_hidden">
+                                    </tfoot>
+                                </table>
+                            </div>
+                            <div>
+                            <button type="submit" class="btn btn-primary mt-3">Save</button>
+                            </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{-- <div class="page-heading">
     <div class="page-title">
         <div class="row">
             <div class="col-12 col-md-6 order-md-1 order-last">
@@ -102,7 +235,7 @@
                                                 <td><input class="form-control todiscount" type="text" name="discount[]"></td>
                                                 <td><input class="form-control toamount" type="text" name="total_amount[]"></td>
                                                 <td>
-                                                    {{--  <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>  --}}
+                                                    
                                                     <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
                                                 </td>
                                             </tr>
@@ -137,7 +270,7 @@
             </div>
         </section>
     </div>
-</div>
+</div> --}}
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
@@ -320,7 +453,7 @@
                         <td><input class="form-control todiscount" type="text" name="discount[]"></td>
                         <td><input class="form-control toamount" type="text" name="total_amount[]"></td>
                         <td>
-                            <span onClick='RemoveRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span> 
+                            <span onClick='RemoveRow(this);' class="delete-row text-danger"><i class="fa fa-trash"></i></span> 
                         </td>
                     </tr>`;
         $('#purchaseHead').append(row);
@@ -341,62 +474,62 @@
 
 <script>
     $(document).ready(function() {
-        // Function to handle AJAX request for fetching categories by company
-        $('.company_id').change(function() {
-            var company_id = $(this).val();
-            var row = $(this).closest('tr');
+    // Delegate change event to a parent element
+    $(document).on('change', '.company_id', function() {
+        var company_id = $(this).val();
+        var row = $(this).closest('tr');
 
-            if(company_id) {
-                $.ajax({
-                    type: "GET",
-                    url: "{{ route('getCategoriesByCompany') }}",
-                    data: {'company_id': company_id},
-                    dataType: "json",
-                    success: function(res) {
-                        if(res) {
-                            var categorySelect = row.find('.category_id');
-                            categorySelect.empty();
-                            categorySelect.append('<option value="">Select Category</option>');
-                            $.each(res, function(key, value) {
-                                categorySelect.append('<option value="'+ key +'">'+ value +'</option>');
-                            });
-                        }
+        if(company_id) {
+            $.ajax({
+                type: "GET",
+                url: "{{ route('getCategoriesByCompany') }}",
+                data: {'company_id': company_id},
+                dataType: "json",
+                success: function(res) {
+                    if(res) {
+                        var categorySelect = row.find('.category_id');
+                        categorySelect.empty();
+                        categorySelect.append('<option value="">Select Category</option>');
+                        $.each(res, function(key, value) {
+                            categorySelect.append('<option value="'+ key +'">'+ value +'</option>');
+                        });
                     }
-                });
-            } else {
-                row.find('.category_id').empty();
-                row.find('.product_id').empty();
-            }
-        });
-        
-        // Function to handle AJAX request for fetching products by category and company
-        $(document).on('change', '.category_id', function() {
-            var category_id = $(this).val();
-            var row = $(this).closest('tr');
-            var company_id = row.find('.company_id').val();
-
-            if(category_id && company_id) {
-                $.ajax({
-                    type: "GET",
-                    url: "{{ route('getProductsByCategoryAndCompany') }}",
-                    data: {'category_id': category_id, 'company_id': company_id},
-                    dataType: "json",
-                    success: function(res) {
-                        if(res) {
-                            var productSelect = row.find('.product_id');
-                            productSelect.empty();
-                            productSelect.append('<option value="">Select product</option>');
-                            $.each(res, function(key, value) {
-                                productSelect.append('<option value="'+ key +'">'+ value +'</option>');
-                            });
-                        }
-                    }
-                });
-            } else {
-                row.find('.product_id').empty();
-            }
-        });
+                }
+            });
+        } else {
+            row.find('.category_id').empty();
+            row.find('.product_id').empty();
+        }
     });
+    
+    $(document).on('change', '.category_id', function() {
+        var category_id = $(this).val();
+        var row = $(this).closest('tr');
+        var company_id = row.find('.company_id').val();
+
+        if(category_id && company_id) {
+            $.ajax({
+                type: "GET",
+                url: "{{ route('getProductsByCategoryAndCompany') }}",
+                data: {'category_id': category_id, 'company_id': company_id},
+                dataType: "json",
+                success: function(res) {
+                    if(res) {
+                        var productSelect = row.find('.product_id');
+                        productSelect.empty();
+                        productSelect.append('<option value="">Select product</option>');
+                        $.each(res, function(key, value) {
+                            productSelect.append('<option value="'+ key +'">'+ value +'</option>');
+                        });
+                    }
+                }
+            });
+        } else {
+            row.find('.product_id').empty();
+        }
+    });
+});
+
 </script>
 
 @endsection

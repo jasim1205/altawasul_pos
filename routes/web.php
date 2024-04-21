@@ -10,6 +10,7 @@ use App\Http\Controllers\Backend\CompanyController as company;
 use App\Http\Controllers\Backend\CategoryController as category;
 use App\Http\Controllers\Backend\ProductController as product;
 use App\Http\Controllers\Backend\PurchaseController as purchase;
+use App\Http\Controllers\Backend\StockController as stock;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,8 +41,11 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
     Route::resource('company', company::class);
     Route::resource('category', category::class);
     Route::resource('product', product::class);
+    Route::resource('stock', stock::class);
     Route::resource('purchase', purchase::class);
-    Route::get('/get-categories-by-company', [product::class,'getCategoriesByCompany'])->name('getCategoriesByCompany');
+    Route::get('invoice/{id}',[purchase::class, 'invoice'])->name('invoice');
+    Route::get('phurchasereport', [purchase::class,'PurchaseReport'])->name('phurchasereport'); //2nd one is function name
+    // Route::get('/get-categories-by-company', [product::class,'getCategoriesByCompany'])->name('getCategoriesByCompany');
     Route::get('/get-categories-by-company', [purchase::class, 'getCategoriesByCompany'])->name('getCategoriesByCompany');
     // Route::get('/get-categories-by-company', [purchase::class, 'getCategory'])->name('getCategories');
 

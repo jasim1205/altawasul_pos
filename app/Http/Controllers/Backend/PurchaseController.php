@@ -18,10 +18,12 @@ class PurchaseController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $fromDate = $request->input('from_date')." 00:00:00";
+        $toDate = $request->input('to_date')." 23:59:59";
         $purchase = Purchase::get();
-        return view('backend/purchase/index',compact('purchase'));
+        return view('backend.purchase.index',compact('purchase','fromDate','toDate'));
     }
 
     /**
@@ -32,7 +34,7 @@ class PurchaseController extends Controller
         $company = Company::get();
         $category = Category::get();
         $product = Product::get();
-        return view('backend/purchase/create',compact('company','category','product'));
+        return view('backend.purchase.create',compact('company','category','product'));
     }
 
     public function getCategoriesByCompany(Request $request)
@@ -137,7 +139,17 @@ class PurchaseController extends Controller
         $purchase = Purchase::findOrFail(encryptor('decrypt',$id));
         $purchaseDetails = $purchase->purchasedetails;
         // $purchaseDetail = PurchaseDetails::where('purchase_id',$id)->get();
-        return view('backend/purchase/show',compact('company','category','product','purchase','purchaseDetails'));
+        return view('backend.purchase.show',compact('company','category','product','purchase','purchaseDetails'));
+    }
+    public function invoice($id)
+    {
+        $company = Company::get();
+        $category = Category::get();
+        $product = Product::get();
+        $purchase = Purchase::findOrFail(encryptor('decrypt',$id));
+        $purchaseDetails = $purchase->purchasedetails;
+        // $purchaseDetail = PurchaseDetails::where('purchase_id',$id)->get();
+        return view('backend.purchase.invoice',compact('company','category','product','purchase','purchaseDetails'));
     }
 
     /**
@@ -162,5 +174,14 @@ class PurchaseController extends Controller
     public function destroy(Purchase $purchase)
     {
         //
+    }
+    public function PurchaseReport(Request $request)
+    {
+        $fromDate = $request->input('from_date')." 00:00:00";
+        $toDate = $request->input('to_date')." 23:59:59";
+
+        $purchase = Purchase::whereBetween('date', [$fromDate, $toDate])->get();
+
+        return view('backend.purchase.index', compact('purchase', 'fromDate', 'toDate'));
     }
 }

@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Models\Stock;
+use App\Models\Product;
+use App\Models\Company;
+use App\Models\Category;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -13,7 +16,8 @@ class StockController extends Controller
      */
     public function index()
     {
-        //
+        $stock = Stock::get();
+        return view('backend.stock.index',compact('stock'));
     }
 
     /**
