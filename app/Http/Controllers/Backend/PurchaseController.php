@@ -83,6 +83,7 @@ class PurchaseController extends Controller
             $purchase->total_tax = $request->total_tax;
             $purchase->total_subamount = $request->total_subamount;
             $purchase->grand_total_amount = $request->grand_total_amount;
+            $purchase->status = $request->status;
             $purchase->save();
 
             // Save purchase details

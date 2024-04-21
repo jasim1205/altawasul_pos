@@ -52,15 +52,15 @@
         <div class="card-body">
             <div class="table-responsive">
                 <table id="" class="table table-striped table-bordered" style="width:100%">
-                    <thead>
+                    <thead class="text-center">
                         @if($fromDate && $toDate)
-    @php
-        $fromDate = \Carbon\Carbon::parse($fromDate);
-        $toDate = \Carbon\Carbon::parse($toDate);
-    @endphp
+                            @php
+                                $fromDate = \Carbon\Carbon::parse($fromDate);
+                                $toDate = \Carbon\Carbon::parse($toDate);
+                            @endphp
 
-    <h6 class="text-center text-primary">Purchase Report from {{ $fromDate->toDateString() }} to {{  $toDate->toDateString() }}</h6>
-@endif
+                            <h6 class="text-center text-primary">Purchase Report from {{ $fromDate->toDateString() }} to {{  $toDate->toDateString() }}</h6>
+                        @endif
                         <tr>
                             <th scope="col">{{__('#SL')}}</th>
                             <th>{{ __('Supplier') }}</th>
@@ -69,19 +69,22 @@
                             <th>{{ __('Total Discount') }}</th>
                             <th>{{ __('Total Tax') }}</th>
                             <th>{{ __('Grand Total Amount') }}</th>
+                            <th>{{ __('Status') }}</th>
                             <th>{{ __('Action') }}</th>
                         </tr>
                     </thead>
                     <tbody>
                          @forelse ($purchase as $value)
                             <tr>
-                                <td>{{ __(++$loop->index) }}</td>
+                                <td class="text-center">{{ __(++$loop->index) }}</td>
                                 <td>{{ __($value->supplier?->supplier_name) }}</td>
                                 <td>{{ __($value->date) }}</td>
                                 <td>{{ __($value->total_quantity) }}</td>
                                 <td>{{ __($value->total_discount) }}</td>
                                 <td>{{ __($value->total_tax) }}</td>
                                 <td>{{ __($value->grand_total_amount) }}</td>
+                                <td style="color: @if($value->status==1) red @else green @endif; font-weight:bold;"><i class='bx bx-radio-circle-marked bx-burst bx-rotate-90 align-middle font-18 me-1'></i>
+                                @if($value->status==1){{__('Unpaid')}} @else{{__('Paid')}} @endif</td>
                                 <td class="white-space-nowrap">
                                     <div class="d-flex">
                                         <a href="{{route('purchase.edit',encryptor('encrypt',$value->id))}}">

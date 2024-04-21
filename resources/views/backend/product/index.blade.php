@@ -34,7 +34,7 @@
                             <th>Category</th>
                             <th>Product Name</th>
                             <th>Product Model</th>
-                            <th>Unit Price</th>
+                            {{-- <th>Unit Price</th> --}}
                             <th>Product Image</th>
                             <th>Action</th>
                         </tr>
@@ -47,7 +47,7 @@
                                 <td>{{ __($value->category?->category_name) }}</td>
                                 <td>{{ __($value->product_name) }}</td>
                                 <td>{{ __($value->product_model) }}</td>
-                                <td>{{ __($value->unit_price) }}</td>
+                                {{-- <td>{{ __($value->unit_price) }}</td> --}}
                                 <td><img src="{{ asset('public/uploads/product/'.$value->product_image) }}" width="50px"></td>
                                 <td class="white-space-nowrap">
                                     <div class="d-flex">

@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Blade;
+use NumberFormatter;
 
 
 class AppServiceProvider extends ServiceProvider
@@ -22,5 +24,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Paginator::useBootstrap();
+        Blade::directive('numberToWords', function ($expression) {
+        return "<?php echo ucwords(strtolower(NumberFormatter::create('en', NumberFormatter::SPELLOUT)->format($expression))); ?>";
+    });
     }
 }

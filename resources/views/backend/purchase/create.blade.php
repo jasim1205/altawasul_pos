@@ -114,6 +114,7 @@
                                         <th></th>
                                         <th colspan=""><span class="total_discount" id="total_discount"></span></th>
                                         <th colspan="2"><span class="grand_total_amount" id="grand_total_amount"></span></th>
+                                        
 
 
                                         <input type="hidden" name="total_quantity" id="total_quantity_hidden">
@@ -125,8 +126,14 @@
                                     </tfoot>
                                 </table>
                             </div>
+                            <div class="col-sm-4 mt-3">
+                                <select name="status" id="" class="form-control">
+                                    <option value="1">Unpaid</option>
+                                    <option value="2">Paid</option>
+                                </select>
+                            </div>
                             <div>
-                            <button type="submit" class="btn btn-primary mt-3">Save</button>
+                            <button type="submit" class="btn btn-primary mt-3 px-5">Save</button>
                             </div>
                     </div>
                 </form>

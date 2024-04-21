@@ -33,7 +33,7 @@
         </div>
         <div class="form-check d-flex mb-2">
             <input class="form-check-input" type="checkbox" value=""  id="flexCheckDefault"/>
-            <label class="form-check-label"
+            <label class="form-check-label mx-1"
             for="flexCheckDefault"> Keep me logged in </label>
         </div>
         <button class="btn btn-primary btn-block">
