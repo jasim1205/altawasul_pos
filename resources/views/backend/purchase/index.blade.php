@@ -20,7 +20,7 @@
         </div> --}}
     </div>
     <!--end breadcrumb-->
-    <h6 class="mb-0 text-uppercase">Purchase</h6>
+    {{-- <h6 class="mb-0 text-uppercase">Purchase</h6> --}}
     <hr/>
     <div class="card">
         <div class="card-header">
@@ -59,7 +59,8 @@
                                 $toDate = \Carbon\Carbon::parse($toDate);
                             @endphp
 
-                            <h6 class="text-center text-primary">Purchase Report from {{ $fromDate->toDateString() }} to {{  $toDate->toDateString() }}</h6>
+                            <h6 class="text-center text-primary">Purchase Report from :{{ date('d-M-Y',strtotime($fromDate->toDateString())) }} to {{  date('d-M-Y',strtotime($toDate->toDateString())) }}
+                            </h6>
                         @endif
                         <tr>
                             <th scope="col">{{__('#SL')}}</th>
@@ -78,7 +79,7 @@
                             <tr>
                                 <td class="text-center">{{ __(++$loop->index) }}</td>
                                 <td>{{ __($value->supplier?->supplier_name) }}</td>
-                                <td>{{ __($value->date) }}</td>
+                                <td>{{ __(date('d-M-Y', strtotime($value->date))) }}</td>
                                 <td>{{ __($value->total_quantity) }}</td>
                                 <td>{{ __($value->total_discount) }}</td>
                                 <td>{{ __($value->total_tax) }}</td>

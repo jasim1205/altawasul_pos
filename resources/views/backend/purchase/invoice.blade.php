@@ -43,7 +43,7 @@
 											</div>
 											<div class="col invoice-details">
 												<h4 class="invoice-id">PURCHASE INVOICE NO:{{ $purchase->id }}</h4>
-												<div class="date">Date of Invoice: {{ $purchase->supplier?->date }}</div>
+												<div class="date">Date of Invoice: {{ date('d-M-Y', strtotime($purchase->supplier->date)) }}</div>
 											</div>
 										</div>
 										<table>

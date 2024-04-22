@@ -53,7 +53,7 @@
                         <div class="col-sm-4"><label for="">Date</label>
                         </div>
                         <div class="col-sm-1"><b class="mx-2">:</b></div>
-                        <div class="col-sm-6"><span><b>{{ $purchase->supplier?->date }}</b></span></div>
+                        <div class="col-sm-6"><span><b>{{ date('d-M-Y', strtotime($purchase->supplier->date)) }}</b></span></div>
                     </div>
                 </div>
             </div>
