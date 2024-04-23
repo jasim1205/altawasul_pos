@@ -56,6 +56,11 @@ class PurchaseController extends Controller
         $products = Product::where('company_id', $company_id)
                             ->where('category_id', $category_id)
                             ->pluck('product_name', 'id');
+        // $products = Product::join('stocks', 'products.id', '=', 'stocks.product_id')
+        //                     ->where('products.company_id', $company_id)
+        //                     ->where('products.category_id', $category_id)
+        //                     ->where('stocks.quantity', '>', 0)
+        //                     ->pluck('products.product_name', 'products.id');
 
         return response()->json($products);
     }

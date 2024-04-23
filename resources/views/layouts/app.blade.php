@@ -37,10 +37,10 @@
       <div class="sidebar-wrapper" data-simplebar="true">
         <div class="sidebar-header">
           <div>
-            <img src="assets/images/logo-icon.png" class="logo-icon" alt="logo icon">
+            {{-- <img src="assets/images/logo-icon.png" class="logo-icon" alt="logo icon"> --}}
           </div>
           <div>
-            <h4 class="logo-text">Syndron</h4>
+            <h4 class="logo-text">Al-Tawasul</h4>
           </div>
           <div class="toggle-icon ms-auto"><i class='bx bx-arrow-back'></i>
           </div>
@@ -423,14 +423,14 @@
             </div>
             <div class="user-box dropdown px-3">
               <a class="d-flex align-items-center nav-link dropdown-toggle gap-3 dropdown-toggle-nocaret" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="assets/images/avatars/avatar-2.png" class="user-img" alt="user avatar">
+                {{-- <img src="assets/images/avatars/avatar-2.png" class="user-img" alt="user avatar"> --}}
                 <div class="user-info">
-                  <p class="user-name mb-0">Pauline Seitz</p>
+                  <p class="user-name mb-0">MD.Monir Hossain</p>
                   {{-- <p class="designattion mb-0">Web Designer</p> --}}
                 </div>
               </a>
               <ul class="dropdown-menu dropdown-menu-end">
-                <li><a class="dropdown-item d-flex align-items-center" href="javascript:;"><i class="bx bx-user fs-5"></i><span>Profile</span></a>
+                {{-- <li><a class="dropdown-item d-flex align-items-center" href="javascript:;"><i class="bx bx-user fs-5"></i><span>Profile</span></a>
                 </li>
                 <li><a class="dropdown-item d-flex align-items-center" href="javascript:;"><i class="bx bx-cog fs-5"></i><span>Settings</span></a>
                 </li>
@@ -442,8 +442,8 @@
                 </li>
                 <li>
                   <div class="dropdown-divider mb-0"></div>
-                </li>
-                <li><a class="dropdown-item d-flex align-items-center" href="javascript:;"><i class="bx bx-log-out-circle"></i><span>Logout</span></a>
+                </li> --}}
+                <li><a class="dropdown-item d-flex align-items-center" href="{{ route('logOut') }}"><i class="bx bx-log-out-circle"></i><span>Logout</span></a>
                 </li>
               </ul>
             </div>

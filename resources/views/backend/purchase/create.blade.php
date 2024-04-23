@@ -70,7 +70,7 @@
                                         <tr>
                                             <td>
                                                 <select class="select2 company_id" onchange="doData(this);" name="company_id[]">
-                                                    <option value="">Select Product</option>
+                                                    <option value="">Select Company</option>
                                                     @foreach ($company as $value)
                                                         <option value="{{ $value->id }}">{{ $value->company_name }}</option>
                                                     @endforeach
