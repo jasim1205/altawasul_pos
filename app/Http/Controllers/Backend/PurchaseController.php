@@ -161,9 +161,15 @@ class PurchaseController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Purchase $purchase)
+    public function edit($id)
     {
-        //
+        $company = Company::get();
+        $category = Category::get();
+        $product = Product::get();
+        $purchase = Purchase::findOrFail(encryptor('decrypt',$id));
+        $purchaseDetails = $purchase->purchasedetails;
+        // $purchaseDetail = PurchaseDetails::where('purchase_id',$id)->get();
+        return view('backend.purchase.edit',compact('company','category','product','purchase','purchaseDetails'));
     }
 
     /**
