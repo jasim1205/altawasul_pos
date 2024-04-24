@@ -31,7 +31,7 @@
             <div class="bs-stepper-content">
                 <form action="{{route('purchase.update',encryptor('encrypt',$purchase->id))}}" method="post" enctype="multipart/form-data">
                         @csrf
-                        @method('PATCH')
+                        @method('PUT')
                     <div class="row">
                         <div class="col-sm-3">
                             <label for="">Supplier Name</label>
@@ -80,12 +80,17 @@
                                             </td>
                                             <td>
                                                 <select class="select2 category_id" onchange="doData(this);" name="category_id[]">
-                                                    <option value="">Select Category</option>
+                                                    @foreach ($category as $value)
+                                                        <option value="{{ $value->id }}" {{ old('category_id', $purdetail->category_id) == $value->id ? "selected" : ""}}>{{ $value->category_name }}</option>
+                                                    @endforeach
+                                                    {{-- <option value="">Select Category</option> --}}
                                                 </select>
                                             </td>
                                             <td>
                                                 <select class="select2 product_id" onchange="doData(this);" name="product_id[]">
-                                                    <option value="">Select Product</option>
+                                                    @foreach ($product as $value)
+                                                        <option value="{{ $value->id }}" {{ old('product_id', $purdetail->product_id) == $value->id ? "selected" : ""}}>{{ $value->product_name }}</option>
+                                                    @endforeach
                                                 </select>
                                             </td>
                                             <td><input class="form-control uprice" type="text" name="unit_price[]" value="{{ $purdetail->unit_price }}" style="width: 75px"></td>
@@ -109,13 +114,13 @@
                                     <tfoot>
                                         <th colspan="3">Total</th>
                                         <th><span class="total_unitprice" id="total_unitprice" ></span></th>
-                                        <th><span class="total_quantity" id="total_quantity" ></span></th>
-                                        <th><span class="total_amount" id="total_amount"></span></th>
-                                        <th><span class="total_tax" id="total_tax"></span></th>
-                                        <th><span class="total_subamount" id="total_subamount"></span></th>
+                                        <th><span class="total_quantity" id="total_quantity" >{{ $purchase->total_quantity }}</span></th>
+                                        <th><span class="total_amount" id="total_amount">{{ $purchase->total_amount }}</span></th>
+                                        <th><span class="total_tax" id="total_tax">{{ $purchase->total_tax }}</span></th>
+                                        <th><span class="total_subamount" id="total_subamount">{{ $purchase->total_subamount }}</span></th>
                                         <th></th>
-                                        <th colspan=""><span class="total_discount" id="total_discount"></span></th>
-                                        <th colspan="2"><span class="grand_total_amount" id="grand_total_amount"></span></th>
+                                        <th colspan=""><span class="total_discount" id="total_discount">{{ $purchase->total_discount }}</span></th>
+                                        <th colspan="2"><span class="grand_total_amount" id="grand_total_amount">{{ $purchase->grand_total_amount }}</span></th>
                                         
 
 
@@ -130,8 +135,8 @@
                             </div>
                             <div class="col-sm-4 mt-3">
                                 <select name="status" id="" class="form-control">
-                                    <option value="1">Unpaid</option>
-                                    <option value="2">Paid</option>
+                                    <option value="1" @if(old('status',$purchase->status)==1) selected @endif>Unpaid</option>
+                                    <option value="2" @if(old('status',$purchase->status == 2)) selectd @endif >Paid</option>
                                 </select>
                             </div>
                             <div>

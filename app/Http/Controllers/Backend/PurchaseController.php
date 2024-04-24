@@ -175,10 +175,162 @@ class PurchaseController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Purchase $purchase)
+    public function update(Request $request, $id)
     {
-        //
+        try {
+            DB::beginTransaction();
+
+            // Update supplier information if it exists
+            
+
+            // Update purchase information
+            $purchase = Purchase::findOrFail(encryptor('decrypt', $id));
+            if ($purchase) {
+                $purchase->date = $request->date;
+                $purchase->total_quantity = $request->total_quantity;
+                $purchase->total_quantity_amount = $request->total_quantity_amount;
+                $purchase->total_discount = $request->total_discount;
+                $purchase->total_tax = $request->total_tax;
+                $purchase->total_subamount = $request->total_subamount;
+                $purchase->grand_total_amount = $request->grand_total_amount;
+                $purchase->status = $request->status;
+                $purchase->save();
+            } else {
+                // Handle the case where the purchase doesn't exist
+                // You can choose to return an error message or handle it based on your application logic
+            }
+            $supplier = Supplier::where('id',$purchase->id)->first();
+            if ($supplier) {
+                $supplier->supplier_name = $request->supplier_name;
+                $supplier->email = $request->email;
+                $supplier->contact_no = $request->contact_no;
+                $supplier->save();
+            } else {
+                // Handle the case where the supplier doesn't exist
+                // You can choose to return an error message or handle it based on your application logic
+            }
+            // Update purchase details
+            if ($request->has('company_id')) {
+                foreach ($request->company_id as $key => $companyId) {
+                    $purchaseDetail = PurchaseDetails::where('purchase_id', encryptor('decrypt', $id))->first();
+                    if ($purchaseDetail) {
+                        // Update purchase detail attributes
+                        $purchaseDetail->company_id = $companyId;
+                        $purchaseDetail->category_id = $request->category_id[$key];
+                        $purchaseDetail->product_id = $request->product_id[$key];
+                        $purchaseDetail->unit_price = $request->unit_price[$key];
+                        $purchaseDetail->quantity = $request->quantity[$key];
+                        $purchaseDetail->amount = $request->amount[$key];
+                        $purchaseDetail->sub_amount = $request->sub_amount[$key];
+                        $purchaseDetail->tax = $request->tax[$key];
+                        $purchaseDetail->discount_type = $request->discount_type[$key];
+                        $purchaseDetail->discount = $request->discount[$key];
+                        $purchaseDetail->total_amount = $request->total_amount[$key];
+                        $purchaseDetail->save(); // Save the updated purchase detail
+
+                        // Update stock
+                        $stock = Stock::where('product_id', $request->product_id[$key])->where('purchase_id', $id)->first();
+                        if ($stock) {
+                            // Deduct the quantity from the current stock
+                            $stock->quantity -= $request->quantity[$key];
+                            $stock->save();
+                        } else {
+                            // If stock item doesn't exist, create a new one
+                            $newStock = new Stock();
+                            $newStock->product_id = $request->product_id[$key];
+                            $newStock->purchase_id = $purchase->id;
+                            $newStock->quantity = -$request->quantity[$key]; // Negative quantity to represent deduction
+                            $newStock->save();
+                        }
+                    } else {
+                        // Handle the case where the purchase detail doesn't exist
+                        // You can choose to return an error message or handle it based on your application logic
+                    }
+                }
+            }
+
+            DB::commit();
+            return redirect()->route('purchase.index')->with('success', 'Product purchase details successfully updated');
+        } catch (Exception $e) {
+            DB::rollBack();
+            dd($e); // You can remove this line after debugging
+            return redirect()->route('purchase.edit', $id)->with('error', 'Something went wrong! Please try again.');
+        }
     }
+
+    // public function update(Request $request, $id)
+    // {
+    //     try {
+    //         DB::beginTransaction();
+
+    //         // Update supplier information if it exists
+    //         $supplier = Supplier::where('id',$id)->first();
+    //         if ($supplier) {
+    //             $supplier->supplier_name = $request->supplier_name;
+    //             $supplier->email = $request->email;
+    //             $supplier->contact_no = $request->contact_no;
+    //             $supplier->date = $request->date;
+    //             $supplier->save();
+    //         } else {
+    //             // Handle the case where the supplier doesn't exist
+    //             // You can choose to return an error message or handle it based on your application logic
+    //         }
+
+    //         // Update purchase information if supplier was found
+    //         if ($supplier) {
+    //             $purchase = Purchase::findOrFail(encryptor('decrypt',$id));
+    //                 $purchase->date = $request->date;
+    //                 $purchase->total_quantity = $request->total_quantity;
+    //                 $purchase->total_quantity_amount = $request->total_quantity_amount;
+    //                 $purchase->total_discount = $request->total_discount;
+    //                 $purchase->total_tax = $request->total_tax;
+    //                 $purchase->total_subamount = $request->total_subamount;
+    //                 $purchase->grand_total_amount = $request->grand_total_amount;
+    //                 $purchase->status = $request->status;
+    //                 $purchase->save();
+    //         }
+
+    //         // Update purchase details if purchase and supplier were found
+    //         if ($request->has('company_id')) {
+    //             foreach ($request->company_id as $key => $companyId) {
+    //                 $purchaseDetail = PurchaseDetails::where('purchase_id',encryptor('decrypt', $id))->first();
+    //                 if ($purchaseDetail) {
+    //                 // Update purchase detail attributes
+    //                 $purchaseDetail->company_id = $companyId;
+    //                 $purchaseDetail->category_id = $request->category_id[$key];
+    //                 $purchaseDetail->product_id = $request->product_id[$key];
+    //                 $purchaseDetail->unit_price = $request->unit_price[$key];
+    //                 $purchaseDetail->quantity = $request->quantity[$key];
+    //                 $purchaseDetail->amount = $request->amount[$key];
+    //                 $purchaseDetail->sub_amount = $request->sub_amount[$key];
+    //                 $purchaseDetail->tax = $request->tax[$key];
+    //                 $purchaseDetail->discount_type = $request->discount_type[$key];
+    //                 $purchaseDetail->discount = $request->discount[$key];
+    //                 $purchaseDetail->total_amount = $request->total_amount[$key];
+    //                 $purchaseDetail->save(); // Save the updated purchase detail
+    //             } else {
+    //                 // Handle the case where the purchase detail doesn't exist
+    //                 // You can choose to return an error message or handle it based on your application logic
+    //             }
+
+    //                 // Update stock
+    //                 $stock = Stock::where('product_id', $request->product_id[$key])->first();
+    //                 if ($stock) {
+    //                     $stock->quantity = $request->quantity[$key];
+    //                     $stock->save();
+    //                 }
+    //             }
+    //         }
+
+    //     DB::commit();
+    //     return redirect()->route('purchase.index')->with('success', 'Product purchase details successfully updated');
+    //     } catch (Exception $e) {
+    //         DB::rollBack();
+    //         dd($e); // You can remove this line after debugging
+    //         return redirect()->route('purchase.edit', $id)->with('error', 'Something went wrong! Please try again.');
+    //     }
+    // }
+    
 
     /**
      * Remove the specified resource from storage.
