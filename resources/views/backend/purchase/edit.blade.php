@@ -136,7 +136,7 @@
                             <div class="col-sm-4 mt-3">
                                 <select name="status" id="" class="form-control">
                                     <option value="1" @if(old('status',$purchase->status)==1) selected @endif>Unpaid</option>
-                                    <option value="2" @if(old('status',$purchase->status == 2)) selectd @endif >Paid</option>
+                                    <option value="2" @if(old('status',$purchase->status)== 2) selected @endif >Paid</option>
                                 </select>
                             </div>
                             <div>

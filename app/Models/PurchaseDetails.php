@@ -9,6 +9,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class PurchaseDetails extends Model
 {
     use HasFactory,SoftDeletes;
+    protected $fillable = [
+        'category_id', // Add any other attributes you want to be mass-assignable
+        // Add other fillable attributes as needed
+    ];
     public function purchase(){
         return $this->belongsTo(Purchase::class,'purchase_id','id');
     }
