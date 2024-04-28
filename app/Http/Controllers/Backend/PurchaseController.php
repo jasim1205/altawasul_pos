@@ -321,14 +321,25 @@ class PurchaseController extends Controller
                 $purchaseDetail->total_amount = $request->total_amount[$key];
                 $purchaseDetail->save();
 
-                // Update stock
-                $stock = Stock::where('product_id', $request->product_id[$key])->first();
+                // Calculate difference in quantity
+$originalQuantity = $purchaseDetail->getOriginal('quantity');
+$editedQuantity = $request->quantity[$key];
+$quantityDifference = $editedQuantity - $originalQuantity;
 
-                if ($stock) {
-                    // Update the quantity if the stock is found
-                    $stock->quantity = $stock->quantity - $purchaseDetail->quantity + $request->quantity[$key];
-                    $stock->save();
-                } 
+// Update stock
+$productId = $request->product_id[$key];
+$stock = Stock::where('product_id', $productId)->first();
+
+if (!$stock) {
+    // If stock does not exist, create a new stock record
+    $stock = new Stock();
+    $stock->product_id = $productId;
+}
+
+// Update the quantity
+$stock->quantity += $quantityDifference;
+$stock->save();
+
             }
         }
 
