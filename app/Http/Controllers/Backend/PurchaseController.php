@@ -282,13 +282,13 @@ class PurchaseController extends Controller
     //         return redirect()->route('purchase.edit', $id)->with('error', 'Something went wrong! Please try again.');
     //     }
     // }
-
- public function update(Request $request, $id)
+public function update(Request $request, $id)
 {
     try {
         DB::beginTransaction();
+
         // Update purchase information
-        $purchase = Purchase::findOrFail(encryptor('decrypt',$id));
+        $purchase = Purchase::findOrFail(encryptor('decrypt', $id));
         $purchase->date = $request->date;
         $purchase->total_quantity = $request->total_quantity;
         $purchase->total_quantity_amount = $request->total_quantity_amount;
@@ -298,51 +298,123 @@ class PurchaseController extends Controller
         $purchase->grand_total_amount = $request->grand_total_amount;
         $purchase->status = $request->status;
         $purchase->save();
+
         $supplier = Supplier::find($purchase->id);        
         $supplier->supplier_name = $request->supplier_name;
         $supplier->email = $request->email;
         $supplier->contact_no = $request->contact_no;
         $supplier->date = $request->date;
         $supplier->save();
+
         // Update purchase details
         if ($request->has('company_id')) {
             foreach ($request->company_id as $key => $companyId) {
-                 $purchaseDetail = PurchaseDetails::where('purchase_id', encryptor('decrypt', $id))->skip($key)->first();
-                $purchaseDetail->company_id = $companyId;
-                $purchaseDetail->category_id = $request->category_id[$key];
-                $purchaseDetail->product_id = $request->product_id[$key];
-                $purchaseDetail->unit_price = $request->unit_price[$key];
-                $purchaseDetail->quantity = $request->quantity[$key];
-                $purchaseDetail->amount = $request->amount[$key];
-                $purchaseDetail->sub_amount = $request->sub_amount[$key];
-                $purchaseDetail->tax = $request->tax[$key];
-                $purchaseDetail->discount_type = $request->discount_type[$key];
-                $purchaseDetail->discount = $request->discount[$key];
-                $purchaseDetail->total_amount = $request->total_amount[$key];
-                $purchaseDetail->save();
+                if($companyId){
 
-                // Calculate difference in quantity
-$originalQuantity = $purchaseDetail->getOriginal('quantity');
-$editedQuantity = $request->quantity[$key];
-$quantityDifference = $editedQuantity - $originalQuantity;
+                    $purchaseDetail = PurchaseDetails::where('purchase_id', encryptor('decrypt', $id))->skip($key)->first();
+                    if($purchaseDetail){
 
-// Update stock
-$productId = $request->product_id[$key];
-$stock = Stock::where('product_id', $productId)->first();
+                        $purchaseDetail->company_id = $companyId;
+                        $purchaseDetail->category_id = $request->category_id[$key];
+                        $purchaseDetail->product_id = $request->product_id[$key];
+                        $purchaseDetail->unit_price = $request->unit_price[$key];
+                        $purchaseDetail->quantity = $request->quantity[$key];
+                        $purchaseDetail->amount = $request->amount[$key];
+                        $purchaseDetail->sub_amount = $request->sub_amount[$key];
+                        $purchaseDetail->tax = $request->tax[$key];
+                        $purchaseDetail->discount_type = $request->discount_type[$key];
+                        $purchaseDetail->discount = $request->discount[$key];
+                        $purchaseDetail->total_amount = $request->total_amount[$key];
+                        $purchaseDetail->save();
 
-if (!$stock) {
-    // If stock does not exist, create a new stock record
-    $stock = new Stock();
-    $stock->product_id = $productId;
-}
+                        // Update or create stock
+                        // $originalQuantity = $purchaseDetail->getOriginal('quantity');
+                        // $editedQuantity = $request->quantity[$key];
+                        // $quantityDifference = $editedQuantity - $originalQuantity;
 
-// Update the quantity
-$stock->quantity += $quantityDifference;
-$stock->save();
+                        // $originalProductId = $purchaseDetail->getOriginal('product_id');
+                        // $newProductId = $request->product_id[$key];
 
+                        // // Check if product_id has changed
+                        // if ($originalProductId !== $newProductId) {
+                        //     // Reduce the quantity of the original product in stock
+                        //     $originalStock = Stock::where('product_id', $originalProductId)->first();
+                        //     if ($originalStock) {
+                        //         $originalStock->quantity -= $originalQuantity;
+                        //         $originalStock->save();
+                        //     }
+
+                        //     // Update or create stock for the new product
+                        //     $newStock = Stock::where('product_id', $newProductId)->first();
+                        //     if (!$newStock) {
+                        //         $newStock = new Stock;
+                        //         $newStock->product_id = $newProductId;
+                        //         $newStock->purchase_id = $purchase->id;
+                        //         $newStock->quantity = $request->quantity[$key];
+                        //     } else {
+                        //         $newStock->quantity += $request->quantity[$key];
+                        //     }
+                        //     $newStock->save();
+                        // } else {
+                        //     // If product_id remains the same, update the quantity in the existing stock
+                        //     $stock = Stock::where('product_id', $newProductId)->first();
+                        //     if ($stock) {
+                        //         $stock->quantity += $quantityDifference;
+                        //         $stock->save();
+                        //     }
+                        // }
+
+                    } else {
+                        // If $purchaseDetail doesn't exist, create a new one
+                        $purchaseDetail = new PurchaseDetails;
+                        $purchaseDetail->purchase_id = $purchase->id; // Link purchase detail to purchase
+                        $purchaseDetail->company_id = $companyId;
+                        $purchaseDetail->category_id = $request->category_id[$key];
+                        $purchaseDetail->product_id = $request->product_id[$key];
+                        $purchaseDetail->unit_price = $request->unit_price[$key];
+                        $purchaseDetail->quantity = $request->quantity[$key];
+                        $purchaseDetail->amount = $request->amount[$key];
+                        $purchaseDetail->sub_amount = $request->sub_amount[$key];
+                        $purchaseDetail->tax = $request->tax[$key];
+                        $purchaseDetail->discount_type = $request->discount_type[$key];
+                        $purchaseDetail->discount = $request->discount[$key];
+                        $purchaseDetail->total_amount = $request->total_amount[$key];
+                        $purchaseDetail->save();
+
+                        // Update or create stock for the new product
+                        // $newProductId = $request->product_id[$key];
+                        // $newStock = Stock::where('product_id', $newProductId)->first();
+                        // if (!$newStock) {
+                        //     $newStock = new Stock;
+                        //     $newStock->product_id = $newProductId;
+                        //     $newStock->purchase_id = $purchase->id;
+                        //     $newStock->quantity = $request->quantity[$key];
+                        // } else {
+                        //     $newStock->quantity += $request->quantity[$key];
+                        // }
+                        // $newStock->save();
+                    }
+                }
             }
         }
+        foreach ($request->product_id as $key => $productId) {
+            $quantity = $request->quantity[$key];
 
+            $stock = Stock::where('product_id', $productId)->first();
+            if (!$stock) {
+                // Create new stock entry
+                $stock = new Stock;
+                $stock->product_id = $productId;
+                $stock->purchase_id = $purchase->id;
+                $stock->quantity = $quantity;
+                $stock->save();
+            } else {
+                // Update existing stock entry
+                $stock->quantity = $quantity;
+                $stock->product_id = $productId;
+                $stock->save();
+            }
+        }
         DB::commit();
         return redirect()->route('purchase.index')->with('success', 'Purchase details successfully updated');
     } catch (Exception $e) {
@@ -351,6 +423,110 @@ $stock->save();
         return redirect()->route('purchase.edit', $id)->with('error', 'Something went wrong! Please try again.');
     }
 }
+
+//  public function update(Request $request, $id)
+// {
+//     try {
+//         DB::beginTransaction();
+//         // Update purchase information
+//         $purchase = Purchase::findOrFail(encryptor('decrypt',$id));
+//         $purchase->date = $request->date;
+//         $purchase->total_quantity = $request->total_quantity;
+//         $purchase->total_quantity_amount = $request->total_quantity_amount;
+//         $purchase->total_discount = $request->total_discount;
+//         $purchase->total_tax = $request->total_tax;
+//         $purchase->total_subamount = $request->total_subamount;
+//         $purchase->grand_total_amount = $request->grand_total_amount;
+//         $purchase->status = $request->status;
+//         $purchase->save();
+//         $supplier = Supplier::find($purchase->id);        
+//         $supplier->supplier_name = $request->supplier_name;
+//         $supplier->email = $request->email;
+//         $supplier->contact_no = $request->contact_no;
+//         $supplier->date = $request->date;
+//         $supplier->save();
+//         // Update purchase details
+//         if ($request->has('company_id')) {
+//             foreach ($request->company_id as $key => $companyId) {
+//                 if($companyId){
+
+//                     $purchaseDetail = PurchaseDetails::where('purchase_id', encryptor('decrypt', $id))->skip($key)->first();
+//                     if($purchaseDetail){
+
+//                         $purchaseDetail->company_id = $companyId;
+//                         $purchaseDetail->category_id = $request->category_id[$key];
+//                         $purchaseDetail->product_id = $request->product_id[$key];
+//                         $purchaseDetail->unit_price = $request->unit_price[$key];
+//                         $purchaseDetail->quantity = $request->quantity[$key];
+//                         $purchaseDetail->amount = $request->amount[$key];
+//                         $purchaseDetail->sub_amount = $request->sub_amount[$key];
+//                         $purchaseDetail->tax = $request->tax[$key];
+//                         $purchaseDetail->discount_type = $request->discount_type[$key];
+//                         $purchaseDetail->discount = $request->discount[$key];
+//                         $purchaseDetail->total_amount = $request->total_amount[$key];
+//                         $purchaseDetail->save();
+//                             // // Calculate difference in quantity
+//                             // $originalQuantity = $purchaseDetail->getOriginal('quantity');
+//                             // $editedQuantity = $request->quantity[$key];
+//                             // $quantityDifference = $editedQuantity - $originalQuantity;
+
+//                             // // Update or create stock
+//                             // $productId = $request->product_id[$key];
+//                             // $stock = Stock::where('product_id', $productId)->first();
+//                             // dd($stock); 
+//                             // if (!$stock) {
+//                             //     $stock = new Stock;
+//                             //     $stock->product_id = $productId;
+//                             //     $stock->purchase_id = $purchase->id;
+//                             //     $stock->quantity = $quantityDifference;
+//                             // } else {
+//                             //     $stock->quantity += $quantityDifference;
+//                             // }
+//                             // $stock->save();
+                        
+//                     }else{
+//                         $purchaseDetail = new PurchaseDetails;
+//                         $purchaseDetail->purchase_id = $purchase->id; // Link purchase detail to purchase
+//                         $purchaseDetail->company_id = $companyId;
+//                         $purchaseDetail->category_id = $request->category_id[$key];
+//                         $purchaseDetail->product_id = $request->product_id[$key];
+//                         $purchaseDetail->unit_price = $request->unit_price[$key];
+//                         $purchaseDetail->quantity = $request->quantity[$key];
+//                         $purchaseDetail->amount = $request->amount[$key];
+//                         $purchaseDetail->sub_amount = $request->sub_amount[$key];
+//                         $purchaseDetail->tax = $request->tax[$key];
+//                         $purchaseDetail->discount_type = $request->discount_type[$key];
+//                         $purchaseDetail->discount = $request->discount[$key];
+//                         $purchaseDetail->total_amount = $request->total_amount[$key];
+//                         $purchaseDetail->save();
+
+//                         // Update or create stock
+//                     }
+//                     $originalQuantity = $purchaseDetail->getOriginal('quantity');
+//                     $editedQuantity = $request->quantity[$key];
+//                     $quantityDifference = $editedQuantity - $originalQuantity;
+//                     $stock = Stock::where('product_id', $request->product_id[$key])->first();
+//                     if (!$stock) {
+//                         $stock = new Stock;
+//                         $stock->product_id = $request->product_id[$key];
+//                         $stock->purchase_id = $purchase->id;
+//                         $stock->quantity = $request->quantity[$key];
+//                     } else {
+//                         $stock->quantity += $quantityDifference;;
+//                     }
+//                     $stock->save();
+//                 }
+//             }
+//         }
+
+//         DB::commit();
+//         return redirect()->route('purchase.index')->with('success', 'Purchase details successfully updated');
+//     } catch (Exception $e) {
+//         DB::rollBack();
+//         dd($e); // You can remove this line after debugging
+//         return redirect()->route('purchase.edit', $id)->with('error', 'Something went wrong! Please try again.');
+//     }
+// }
     // public function update(Request $request, $id)
     // {
     //     try {
