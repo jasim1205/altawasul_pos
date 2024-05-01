@@ -25,4 +25,8 @@ class PurchaseDetails extends Model
     public function product(){
         return $this->belongsTo(Product::class);
     }
+     public function getOriginalQuantityAttribute()
+    {
+        return $this->getOriginal('quantity'); // Assuming 'quantity' is the field storing the original quantity
+    }
 }
