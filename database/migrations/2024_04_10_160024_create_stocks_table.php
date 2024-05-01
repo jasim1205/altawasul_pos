@@ -13,8 +13,6 @@ return new class extends Migration
     {
         Schema::create('stocks', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('purchase_id')->index();
-            $table->foreign('purchase_id')->references('id')->on('purchases')->onDelete('cascade');
             $table->unsignedBigInteger('product_id')->index();
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             // $table->unsignedBigInteger('sale_id')->index();

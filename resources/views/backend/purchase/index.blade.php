@@ -35,14 +35,14 @@
                         <div class="d-flex flex-wrap align-items-center     justify-content-between">
                             <div class="col-md-4">
                                 <label for="from_date" class="col-auto">From Date:</label>
-                                <input class="form-control" type="date" name="from_date" value="{{ $fromDate ?? '' }}" required placeholder="start date">
+                                <input class="form-control" type="date" name="from_date" value="{{ $fromDate ?? '' }}" required  style="height: 35px">
                             </div>
                             <div class="col-md-4">
                                 <label for="to_date" class="col-auto">To Date:</label>
-                                <input class="form-control" type="date" name="to_date" value="{{ $toDate ?? '' }}" required>
+                                <input class="form-control" type="date" name="to_date" value="{{ $toDate ?? '' }}" required style="height: 35px">
                             </div>
                             <div class="col-md-3 mt-3">
-                            <button type="submit" class="btn btn-primary text-end">Generate Report</button>
+                            <button type="submit" class="btn btn-primary text-end" style="height: 35px">Generate Report</button>
                             </div>
                         </div>
                     </form>

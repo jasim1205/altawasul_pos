@@ -135,14 +135,14 @@
                                     </tfoot>
                                 </table>
                             </div>
-                            <div class="col-sm-4 mt-3">
-                                <select name="status" id="" class="form-control">
+                            <div class="col-sm-8 mt-3 d-flex"">
+                                <select name="status" id="" class="form-control" style="width:100%; height:35px">
                                     <option value="1" @if(old('status',$purchase->status)==1) selected @endif>Unpaid</option>
                                     <option value="2" @if(old('status',$purchase->status)== 2) selected @endif >Paid</option>
                                 </select>
+                                <button type="submit" class="btn btn-primary mx-3 px-5">Save</button>
                             </div>
                             <div>
-                            <button type="submit" class="btn btn-primary mt-3 px-5">Save</button>
                             </div>
                     </div>
                 </form>

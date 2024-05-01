@@ -34,19 +34,19 @@
                     <div class="row">
                         <div class="col-sm-3">
                             <label for="">Supplier Name</label>
-                            <input type="text" name="supplier_name" id="" class="form-control">
+                            <input type="text" name="supplier_name" id="" class="form-control" style="height:30px;">
                         </div>
                         <div class="col-sm-3">
                             <label for="">Email</label>
-                            <input type="text" name="email" id="" class="form-control">
+                            <input type="text" name="email" id="" class="form-control" style="height:30px;">
                         </div>
                         <div class="col-sm-3">
                             <label for="">Contact</label>
-                            <input type="text" name="contact_no" id="" class="form-control">
+                            <input type="text" name="contact_no" id="" class="form-control" style="height:30px;">
                         </div>
                         <div class="col-sm-3">
                             <label for="">Date</label>
-                            <input type="date" name="date" id="current_date" class="form-control">
+                            <input type="date" name="date" id="current_date" class="form-control" style="height:30px;">
                         </div>
                             <div class="table-responsive">
                                 <table class="table table-striped mb-0 mt-3">
@@ -86,18 +86,18 @@
                                                     <option value="">Select Product</option>
                                                 </select>
                                             </td>
-                                            <td><input class="form-control uprice" type="text" name="unit_price[]" style="width: 50px"></td>
-                                            <td><input class="form-control toquantity" type="text" name="quantity[]"></td>
-                                            <td><input class="form-control amount" type="text" name="amount[]"></td>
-                                            <td><input class="form-control totax"  type="text" name="tax[]" style="width: 50px"></td>
-                                            <td><input class="form-control subamount" type="text" name="sub_amount[]"></td>
-                                            <td><select name="discount_type[]" id="" class="form-control discount_type">
+                                            <td><input class="form-control uprice" type="text" name="unit_price[]" style="width: 80px; height:25px;"></td>
+                                            <td><input class="form-control toquantity" type="text" name="quantity[]" style="width: 80px; height:25px;"></td>
+                                            <td><input class="form-control amount" type="text" name="amount[]" style="width: 100px; height:25px;"></td>
+                                            <td><input class="form-control totax"  type="text" name="tax[]" style="width: 80px; height:25px;"></td>
+                                            <td><input class="form-control subamount" type="text" name="sub_amount[]" style="width: 100px; height:25px;"></td>
+                                            <td><select name="discount_type[]" id="" class="form-control discount_type" style="width: 80px; height:25px;">
                                                 <option value="">select</option>
                                                 <option value="1">%</option>
                                                 <option value="0">Fixed</option>
                                             </select></td>
-                                            <td><input class="form-control todiscount" type="text" name="discount[]"></td>
-                                            <td><input class="form-control toamount" type="text" name="total_amount[]"></td>
+                                            <td><input class="form-control todiscount" type="text" name="discount[]" style="width: 80px; height:25px;"></td>
+                                            <td><input class="form-control toamount" type="text" name="total_amount[]" style="width: 100px; height:25px;"></td>
                                             <td>
                                                 {{--  <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>  --}}
                                                 <span onClick='addRow();' class="add-row text-primary"><i class="fa fa-plus"></i></span>
@@ -126,14 +126,14 @@
                                     </tfoot>
                                 </table>
                             </div>
-                            <div class="col-sm-4 mt-3">
-                                <select name="status" id="" class="form-control">
+                            <div class="col-sm-8 mt-3 d-flex">
+                                <select name="status" id="" class="form-control" style="width:100%; height:35px">
                                     <option value="1">Unpaid</option>
                                     <option value="2">Paid</option>
                                 </select>
+                                <button type="submit" class="btn btn-primary mx-3 px-5">Save</button>
                             </div>
                             <div>
-                            <button type="submit" class="btn btn-primary mt-3 px-5">Save</button>
                             </div>
                     </div>
                 </form>
