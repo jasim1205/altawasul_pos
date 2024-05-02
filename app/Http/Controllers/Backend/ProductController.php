@@ -66,6 +66,7 @@ class ProductController extends Controller
                 $request->product_image->move(public_path('uploads/product'),$imageName);
                 $product->product_image = $imageName;
             }
+          
             if($product->save()){
                 $this->notice::success('Product Successfully Saved');
                 return redirect()->route('product.index');
@@ -107,22 +108,11 @@ class ProductController extends Controller
             $product->product_name = $request->product_name;
             $product->product_model = $request->product_model;
             $product->unit_price = $request->unit_price;
-            // if($request->hasFile('product_image')){
-            //     $imageName = rand(111,999).'.'.$request->product_image->extension();
-            //     $request->product_image->move(public_path('uploads/product'),$imageName);
-            //     $product->product_image = $imageName;
-            // }
             $path = 'uploads/product';
-
-            if ($request->hasFile('product_image')) {
-                $image = $request->file('product_image');
-
-                // Delete the old image
+            if($request->hasFile('product_image')){
                 $this->deleteImage($product->product_image, $path);
-
-                $imageName = rand(111, 999) . '.' . $image->extension();
-                $imagePath = public_path("$path/$imageName");
-
+                $imageName = rand(111,999).'.'.$request->product_image->extension();
+                $request->product_image->move(public_path('uploads/product'),$imageName);
                 $product->product_image = $imageName;
             }
             if($product->save()){
