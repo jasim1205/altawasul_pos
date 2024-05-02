@@ -26,8 +26,8 @@
         <div class="card-header">
             <div class="row">
                 <div class="col-sm-3">
-                    <h5 class="card-title m-0">
-                        <a class="btn btn-primary" href="{{route('purchase.create')}}"><i class="fa fa-plus"></i></a>
+                    <h5 class="card-title">
+                        <a class="btn btn-primary mt-3" href="{{route('purchase.create')}}" style="width:80px;height:35px"><i class="fa fa-plus"></i></a>
                     </h5>
                 </div>
                 <div class="col-sm-9">

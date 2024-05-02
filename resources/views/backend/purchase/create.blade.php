@@ -91,7 +91,7 @@
                                             <td><input class="form-control amount" type="text" name="amount[]" style="width: 100px; height:25px;"></td>
                                             <td><input class="form-control totax"  type="text" name="tax[]" style="width: 80px; height:25px;"></td>
                                             <td><input class="form-control subamount" type="text" name="sub_amount[]" style="width: 100px; height:25px;"></td>
-                                            <td><select name="discount_type[]" id="" class="form-control discount_type" style="width: 80px; height:25px;">
+                                            <td><select name="discount_type[]" id="" class="form-control discount_type p-0 text-center" style="width: 80px; height:25px;">
                                                 <option value="">select</option>
                                                 <option value="1">%</option>
                                                 <option value="0">Fixed</option>
@@ -430,7 +430,7 @@
         var row = `<tr>
                         <td>
                             <select class="select2 company_id" onchange="doData(this);" name="company_id[]">
-                                <option value="">Select Product</option>
+                                <option value="">Select Company</option>
                                 @foreach ($company as $value)
                                     <option value="{{ $value->id }}">{{ $value->company_name }}</option>
                                 @endforeach
@@ -446,19 +446,19 @@
                                 <option value="">Select Product</option>
                             </select>
                         </td>
-                        <td><input class="form-control uprice" type="text" name="unit_price[]"></td>
-                        <td><input class="form-control toquantity" type="text" name="quantity[]"></td>
-                        <td><input class="form-control amount" type="text" name="amount[]"></td>
-                        <td><input class="form-control totax" type="text" name="tax[]"></td>
-                        <td><input class="form-control subamount" type="text" name="sub_amount[]"></td>
-                        <td><select name="discount_type[]" id="" class="form-control discount_type">
+                        <td><input class="form-control uprice" type="text" name="unit_price[]" style="width: 80px; height:25px;"></td>
+                        <td><input class="form-control toquantity" type="text" name="quantity[]"style="width: 80px; height:25px;"></td>
+                        <td><input class="form-control amount" type="text" name="amount[]" style="width: 100px; height:25px;"></td>
+                        <td><input class="form-control totax" type="text" name="tax[]"style="width: 80px; height:25px;"></td>
+                        <td><input class="form-control subamount" type="text" name="sub_amount[]"style="width: 100px; height:25px;"></td>
+                        <td><select name="discount_type[]" id="" class="select2 text-center p-0 form-control discount_type" style="width: 80px; height:25px;">
                                 <option value="">select</option>
                                 <option value="1">%</option>
                                 <option value="0">Fixed</option>
                             </select>
                         </td>
-                        <td><input class="form-control todiscount" type="text" name="discount[]"></td>
-                        <td><input class="form-control toamount" type="text" name="total_amount[]"></td>
+                        <td><input class="form-control todiscount" type="text" name="discount[]" style="width: 80px; height:25px;"></td>
+                        <td><input class="form-control toamount" type="text" name="total_amount[]" style="width: 100px; height:25px;"></td>
                         <td>
                             <span onClick='RemoveRow(this);' class="delete-row text-danger"><i class="fa fa-trash"></i></span> 
                         </td>

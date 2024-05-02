@@ -114,7 +114,7 @@ class PurchaseController extends Controller
                     if (!$stock) {
                         $stock = new Stock;
                         $stock->product_id = $request->product_id[$key];
-                        $stock->purchase_id = $purchase->id;
+                        // $stock->purchase_id = $purchase->id;
                         $stock->quantity = $request->quantity[$key];
                     } else {
                         $stock->quantity += $request->quantity[$key];
@@ -247,24 +247,51 @@ class PurchaseController extends Controller
                     }
                 }
             }
+            // foreach ($request->product_id as $key => $productId) {
+            //     $quantity = $request->quantity[$key];
+
+            //     $stock = Stock::where('product_id', $productId)->first();
+            //     if (!$stock) {
+            //         // Create new stock entry
+            //         $stock = new Stock;
+            //         $stock->product_id = $productId;
+            //         $stock->purchase_id = $purchase->id;
+            //         $stock->quantity = $quantity;
+            //         $stock->save();
+            //     } else {
+            //         // Update existing stock entry
+            //         $stock->quantity = $quantity;
+            //         $stock->product_id = $productId;
+            //         $stock->save();
+            //     }
+            // }
             foreach ($request->product_id as $key => $productId) {
                 $quantity = $request->quantity[$key];
 
-                $stock = Stock::where('product_id', $productId)->first();
-                if (!$stock) {
-                    // Create new stock entry
-                    $stock = new Stock;
-                    $stock->product_id = $productId;
-                    $stock->purchase_id = $purchase->id;
-                    $stock->quantity = $quantity;
-                    $stock->save();
-                } else {
-                    // Update existing stock entry
-                    $stock->quantity = $quantity;
-                    $stock->product_id = $productId;
-                    $stock->save();
+                // Find the corresponding purchase detail
+                $purchaseDetail = PurchaseDetails::where('product_id', $productId)->where('purchase_id', $purchase->id)->first();
+
+                if ($purchaseDetail) {
+                    // Deduct the old quantity from stock
+                    $oldQuantity = $purchaseDetail->quantity;
+                    $stock = Stock::where('product_id', $productId)->first();
+                    $stock->quantity -= $oldQuantity;
+
+                    // Add the new quantity to stock
+                    if ($stock) {
+                        $stock->quantity += $quantity;
+                        $stock->save();
+                    } else {
+                        // If there is no existing stock entry, create a new one
+                        $stock = new Stock;
+                        $stock->product_id = $productId;
+                        $stock->purchase_id = $purchase->id;
+                        $stock->quantity = $quantity;
+                        $stock->save();
+                    }
                 }
             }
+
             DB::commit();
             return redirect()->route('purchase.index')->with('success', 'Purchase details successfully updated');
         } catch (Exception $e) {
