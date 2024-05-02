@@ -7,9 +7,12 @@ use App\Models\Company;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Http\Traits\ImageHandleTraits;
+Use File;
 
 class ProductController extends Controller
 {
+    use ImageHandleTraits;
     /**
      * Display a listing of the resource.
      */
@@ -104,9 +107,22 @@ class ProductController extends Controller
             $product->product_name = $request->product_name;
             $product->product_model = $request->product_model;
             $product->unit_price = $request->unit_price;
-            if($request->hasFile('product_image')){
-                $imageName = rand(111,999).'.'.$request->product_image->extension();
-                $request->product_image->move(public_path('uploads/product'),$imageName);
+            // if($request->hasFile('product_image')){
+            //     $imageName = rand(111,999).'.'.$request->product_image->extension();
+            //     $request->product_image->move(public_path('uploads/product'),$imageName);
+            //     $product->product_image = $imageName;
+            // }
+            $path = 'uploads/product';
+
+            if ($request->hasFile('product_image')) {
+                $image = $request->file('product_image');
+
+                // Delete the old image
+                $this->deleteImage($product->product_image, $path);
+
+                $imageName = rand(111, 999) . '.' . $image->extension();
+                $imagePath = public_path("$path/$imageName");
+
                 $product->product_image = $imageName;
             }
             if($product->save()){
