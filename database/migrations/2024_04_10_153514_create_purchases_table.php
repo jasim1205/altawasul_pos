@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreign('supplier_id')->references('id')->on('suppliers')->onDelete('cascade');
             $table->date('date');
             $table->integer('total_quantity');
-            $table->decimal('otal_quantity_amount',10,2)->nullable();
+            $table->decimal('total_quantity_amount',10,2)->nullable();
             $table->integer('total_tax')->nullable();
             $table->decimal('total_subamount',10,2)->nullable();
             $table->integer('total_discount')->nullable();

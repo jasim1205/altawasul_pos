@@ -5,7 +5,14 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 
 use App\Models\Sales;
+use App\Models\Customer;
+use App\Models\Company;
+use App\Models\Category;
+use App\Models\Product;
+use App\Models\Stock;
+use App\Models\SaleDetails;
 use Illuminate\Http\Request;
+use DB;
 
 class SalesController extends Controller
 {
@@ -40,7 +47,7 @@ class SalesController extends Controller
             DB::beginTransaction();
 
             // Save supplier information
-            $customer = new Supplier;
+            $customer = new Customer;
             $customer->customer_name = $request->customer_name;
             $customer->email = $request->email;
             $customer->contact_no = $request->contact_no;
@@ -48,56 +55,53 @@ class SalesController extends Controller
             $customer->save();
 
             // Save purchase information
-            $purchase = new Purchase;
-            $purchase->customer_id = $customer->id; // Link purchase to supplier
-            $purchase->date = $request->date;
-            $purchase->total_quantity = $request->total_quantity;
-            $purchase->total_quantity_amount = $request->total_quantity_amount;
-            $purchase->total_discount = $request->total_discount;
-            $purchase->total_tax = $request->total_tax;
-            $purchase->total_subamount = $request->total_subamount;
-            $purchase->grand_total_amount = $request->grand_total_amount;
-            $purchase->status = $request->status;
-            $purchase->save();
+            $sale = new Sales;
+            $sale->customer_id = $customer->id; // Link purchase to supplier
+            $sale->date = $request->date;
+            $sale->total_quantity = $request->total_quantity;
+            $sale->total_quantity_amount = $request->total_quantity_amount;
+            $sale->total_discount = $request->total_discount;
+            $sale->total_tax = $request->total_tax;
+            $sale->total_subamount = $request->total_subamount;
+            $sale->grand_total_amount = $request->grand_total_amount;
+            $sale->status = $request->status;
+            $sale->save();
 
             // Save purchase details
             if ($request->has('company_id')) {
                 foreach ($request->company_id as $key => $companyId) {
-                    $purchaseDetail = new PurchaseDetails;
-                    $purchaseDetail->purchase_id = $purchase->id; // Link purchase detail to purchase
-                    $purchaseDetail->company_id = $companyId;
-                    $purchaseDetail->category_id = $request->category_id[$key];
-                    $purchaseDetail->product_id = $request->product_id[$key];
-                    $purchaseDetail->unit_price = $request->unit_price[$key];
-                    $purchaseDetail->quantity = $request->quantity[$key];
-                    $purchaseDetail->amount = $request->amount[$key];
-                    $purchaseDetail->sub_amount = $request->sub_amount[$key];
-                    $purchaseDetail->tax = $request->tax[$key];
-                    $purchaseDetail->discount_type = $request->discount_type[$key];
-                    $purchaseDetail->discount = $request->discount[$key];
-                    $purchaseDetail->total_amount = $request->total_amount[$key];
-                    $purchaseDetail->save();
+                    $saledetails = new SaleDetails;
+                    $saledetails->sale_id = $sale->id; // Link purchase detail to purchase
+                    $saledetails->company_id = $companyId;
+                    $saledetails->category_id = $request->category_id[$key];
+                    $saledetails->product_id = $request->product_id[$key];
+                    $saledetails->unit_price = $request->unit_price[$key];
+                    $saledetails->quantity = $request->quantity[$key];
+                    $saledetails->amount = $request->amount[$key];
+                    $saledetails->sub_amount = $request->sub_amount[$key];
+                    $saledetails->tax = $request->tax[$key];
+                    $saledetails->discount_type = $request->discount_type[$key];
+                    $saledetails->discount = $request->discount[$key];
+                    $saledetails->total_amount = $request->total_amount[$key];
+                    $saledetails->save();
 
                     // Update or create stock
                     $stock = Stock::where('product_id', $request->product_id[$key])->first();
-                    if (!$stock) {
-                        $stock = new Stock;
-                        $stock->product_id = $request->product_id[$key];
-                        // $stock->purchase_id = $purchase->id;
-                        $stock->quantity = $request->quantity[$key];
+                    if ($stock) {
+                        $stock->quantity -= $request->quantity[$key];
                     } else {
-                        $stock->quantity += $request->quantity[$key];
+
                     }
                     $stock->save();
                 }
             }
 
             DB::commit();
-            return redirect()->route('purchase.index')->with('success', 'Product successfully purchased');
+            return redirect()->route('sale.index')->with('success', 'Product successfully saled');
         } catch (Exception $e) {
             DB::rollBack();
             dd($e); // You can remove this line after debugging
-            return redirect()->route('purchase.create')->with('error', 'Something went wrong! Please try again.');
+            return redirect()->route('sale.create')->with('error', 'Something went wrong! Please try again.');
         }
     }
 
