@@ -88,6 +88,13 @@
               <div class="menu-title">Stock</div>
             </a>
           </li>
+          <li>
+            <a href="{{ route('sale.index') }}" class="has-arrow">
+              <div class="parent-icon"><i class="bx bx-category"></i>
+              </div>
+              <div class="menu-title">Sale</div>
+            </a>
+          </li>
           {{-- <li class="menu-label">UI Elements</li>
           <li>
             <a href="widgets.html">

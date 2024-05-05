@@ -19,4 +19,7 @@ class Category extends Model
     public function purchase_details(){
         return $this->hasMany(PurchaseDetails::class);
     }
+    public function sale_details(){
+        return $this->hasMany(SaleDetails::class,'category_id','id');
+    }
 }

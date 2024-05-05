@@ -19,4 +19,7 @@ class Company extends Model
     public function purchase_details(){
         return $this->hasMany(PurchaseDetails::class,'company_id','id');
     }
+    public function sale_details(){
+        return $this->hasMany(SaleDetails::class,'company_id','id');
+    }
 }

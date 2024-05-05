@@ -11,6 +11,7 @@ use App\Http\Controllers\Backend\CategoryController as category;
 use App\Http\Controllers\Backend\ProductController as product;
 use App\Http\Controllers\Backend\PurchaseController as purchase;
 use App\Http\Controllers\Backend\StockController as stock;
+use App\Http\Controllers\Backend\SalesController as sale;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,6 +52,7 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
 
 // Route for getting products by category and company ID
     Route::get('/get-products-by-category-and-company', [purchase::class, 'getProductsByCategoryAndCompany'])->name('getProductsByCategoryAndCompany');
+    Route::resource('sale', sale::class);
 });
 
 // Route::get('/', function () {
