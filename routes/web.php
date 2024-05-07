@@ -52,6 +52,7 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
     
     // Route for getting products by category and company ID
     Route::get('/get-products-by-category-and-company', [purchase::class, 'getProductsByCategoryAndCompany'])->name('getProductsByCategoryAndCompany');
+    Route::get('/getStockByProduct', [purchase::class, 'getStockByProduct'])->name('getStockByProduct');
     Route::resource('sale', sale::class);
     Route::get('salesreport', [sale::class,'salesReport'])->name('salesreport'); //2nd one is function name
 });

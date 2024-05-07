@@ -321,4 +321,20 @@ class PurchaseController extends Controller
 
         return view('backend.purchase.index', compact('purchase', 'fromDate', 'toDate'));
     }
+
+    // Assuming this is your controller method
+    public function getStockByProduct(Request $request)
+    {
+        $product_id = $request->input('product_id');
+
+        // Assuming you have a Stock model with a 'product_id' and 'quantity' column
+        $stock = Stock::where('product_id', $product_id)
+                  ->where('quantity', '>', 0) // Filter out products with zero quantity
+                  ->first();
+
+        
+            return response()->json(['quantity' => $stock->quantity]);
+       
+    }
+
 }

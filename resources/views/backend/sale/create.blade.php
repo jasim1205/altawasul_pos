@@ -9,7 +9,7 @@
             <ol class="breadcrumb mb-0 p-0">
                 <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">Add New Purchase</li>
+                <li class="breadcrumb-item active" aria-current="page">Add New Sale</li>
             </ol>
         </nav>
     </div>
@@ -373,32 +373,70 @@
         }
     });
     
-    $(document).on('change', '.category_id', function() {
-        var category_id = $(this).val();
-        var row = $(this).closest('tr');
-        var company_id = row.find('.company_id').val();
+    // $(document).on('change', '.category_id', function() {
+    //     var category_id = $(this).val();
+    //     var row = $(this).closest('tr');
+    //     var company_id = row.find('.company_id').val();
 
-        if(category_id && company_id) {
-            $.ajax({
-                type: "GET",
-                url: "{{ route('getProductsByCategoryAndCompany') }}",
-                data: {'category_id': category_id, 'company_id': company_id},
-                dataType: "json",
-                success: function(res) {
-                    if(res) {
-                        var productSelect = row.find('.product_id');
-                        productSelect.empty();
-                        productSelect.append('<option value="">Select product</option>');
-                        $.each(res, function(key, value) {
-                            productSelect.append('<option value="'+ key +'">'+ value +'</option>');
+    //     if(category_id && company_id) {
+    //         $.ajax({
+    //             type: "GET",
+    //             url: "{{ route('getProductsByCategoryAndCompany') }}",
+    //             data: {'category_id': category_id, 'company_id': company_id},
+    //             dataType: "json",
+    //             success: function(res) {
+    //                 if(res) {
+    //                     var productSelect = row.find('.product_id');
+    //                     productSelect.empty();
+    //                     productSelect.append('<option value="">Select product</option>');
+    //                     $.each(res, function(key, value) {
+    //                         productSelect.append('<option value="'+ key +'">'+ value + '</option>');
+    //                     });
+    //                 }
+    //             }
+    //         });
+    //     } else {
+    //         row.find('.product_id').empty();
+    //     }
+    // });
+    $(document).on('change', '.category_id', function() {
+    var category_id = $(this).val();
+    var row = $(this).closest('tr');
+    var company_id = row.find('.company_id').val();
+
+    if(category_id && company_id) {
+        $.ajax({
+            type: "GET",
+            url: "{{ route('getProductsByCategoryAndCompany') }}",
+            data: {'category_id': category_id, 'company_id': company_id},
+            dataType: "json",
+            success: function(res) {
+                if(res) {
+                    var productSelect = row.find('.product_id');
+                    productSelect.empty();
+                    productSelect.append('<option value="">Select product</option>');
+                    $.each(res, function(key, value) {
+                        // Fetch stock information for each product
+                        $.ajax({
+                            type: "GET",
+                            url: "{{ route('getStockByProduct') }}",
+                            data: {'product_id': key},
+                            dataType: "json",
+                            success: function(stock) {
+                                var stockText = stock ? ' (Stock: ' + stock.quantity + ')' : '';
+                                productSelect.append('<option value="'+ key +'">'+ value + stockText +'</option>');
+                                
+                            }
                         });
-                    }
+                    });
                 }
-            });
-        } else {
-            row.find('.product_id').empty();
-        }
-    });
+            }
+        });
+    } else {
+        row.find('.product_id').empty();
+    }
+});
+
 });
 
 </script>
