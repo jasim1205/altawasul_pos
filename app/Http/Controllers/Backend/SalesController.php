@@ -136,4 +136,14 @@ class SalesController extends Controller
     {
         //
     }
+
+    public function salesReport(Request $request)
+    {
+        $fromDate = $request->input('from_date')." 00:00:00";
+        $toDate = $request->input('to_date')." 23:59:59";
+
+        $sale = Sales::whereBetween('date', [$fromDate, $toDate])->get();
+
+        return view('backend.sale.index', compact('sale', 'fromDate', 'toDate'));
+    }
 }

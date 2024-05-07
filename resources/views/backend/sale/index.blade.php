@@ -31,21 +31,22 @@
                     </h5>
                 </div>
                 <div class="col-sm-9">
-                    {{-- <form action="{{ route('phurchasereport') }}" method="get">
-                        <div class="d-flex flex-wrap align-items-center     justify-content-between">
+                    <form action="{{ route('salesreport') }}" method="get">
+                        <div class="d-flex flex-wrap align-items-center justify-content-between">
                             <div class="col-md-4">
                                 <label for="from_date" class="col-auto">From Date:</label>
-                                <input class="form-control" type="date" name="from_date" value="{{ $fromDate ?? '' }}" required  style="height: 35px">
+                                <input class="form-control" type="date" name="from_date" value="{{ $fromDate }}" required style="height: 35px">
                             </div>
                             <div class="col-md-4">
                                 <label for="to_date" class="col-auto">To Date:</label>
-                                <input class="form-control" type="date" name="to_date" value="{{ $toDate ?? '' }}" required style="height: 35px">
+                                <input class="form-control" type="date" name="to_date" value="{{ $toDate }}" required style="height: 35px">
                             </div>
                             <div class="col-md-3 mt-3">
-                            <button type="submit" class="btn btn-primary text-end" style="height: 35px">Generate Report</button>
+                                <button type="submit" class="btn btn-primary text-end" style="height: 35px">Generate Report</button>
                             </div>
                         </div>
-                    </form> --}}
+                    </form>
+                    
                 </div>
             </div>
         </div>

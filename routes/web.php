@@ -49,10 +49,11 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
     // Route::get('/get-categories-by-company', [product::class,'getCategoriesByCompany'])->name('getCategoriesByCompany');
     Route::get('/get-categories-by-company', [purchase::class, 'getCategoriesByCompany'])->name('getCategoriesByCompany');
     // Route::get('/get-categories-by-company', [purchase::class, 'getCategory'])->name('getCategories');
-
-// Route for getting products by category and company ID
+    
+    // Route for getting products by category and company ID
     Route::get('/get-products-by-category-and-company', [purchase::class, 'getProductsByCategoryAndCompany'])->name('getProductsByCategoryAndCompany');
     Route::resource('sale', sale::class);
+    Route::get('salesreport', [sale::class,'salesReport'])->name('salesreport'); //2nd one is function name
 });
 
 // Route::get('/', function () {
