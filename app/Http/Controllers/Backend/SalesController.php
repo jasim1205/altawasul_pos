@@ -116,9 +116,14 @@ class SalesController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Sales $sales)
+    public function edit($id)
     {
-        //
+        $company = Company::get();
+        $category = Category::get();
+        $product = Product::get();
+        $saledetail = SaleDetails::where('sale_id',$id)->get();
+        $sale = Sales::findOrFail(encryptor('decrypt',$id));
+        return view('backend.sale.edit',compact('company','category','product','sale','saledetail'));
     }
 
     /**

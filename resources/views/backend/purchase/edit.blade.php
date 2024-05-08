@@ -47,7 +47,7 @@
                         </div>
                         <div class="col-sm-3">
                             <label for="">Date</label>
-                            <input type="date" name="date" value="{{ old('date',$purchase->date) }}" id="current_date" class="form-control">
+                            <input type="date" name="date" value="{{ old('date',$purchase->date) }}" id="current_date" class="form-control" readonly>
                         </div>
                             <div class="table-responsive">
                                 <table class="table table-striped mb-0 mt-3">
