@@ -526,17 +526,17 @@
                         productSelect.empty();
                         productSelect.append('<option value="">Select product</option>');
                         $.each(res, function(key, value) {
-                            // productSelect.append('<option value="'+ key +'">'+ value +'</option>');
-                            $.ajax({
-                                type: "GET",
-                                url: "{{ route('getStockByProduct') }}",
-                                data: {'product_id': key},
-                                dataType: "json",
-                                success: function(stock) {
-                                    var stockText = stock ? ' (Stock: ' + stock.quantity + ')' : '';
-                                    productSelect.append('<option value="'+ key +'">'+ value + stockText +'</option>');
-                                }
-                            });
+                             productSelect.append('<option value="'+ key +'">'+ value +'</option>');
+                            // $.ajax({
+                            //     type: "GET",
+                            //     url: "{{ route('getStockByProduct') }}",
+                            //     data: {'product_id': key},
+                            //     dataType: "json",
+                            //     success: function(stock) {
+                            //         var stockText = stock ? ' (Stock: ' + stock.quantity + ')' : '';
+                            //         productSelect.append('<option value="'+ key +'">'+ value + stockText +'</option>');
+                            //     }
+                            // });
                         });
                     }
                 }

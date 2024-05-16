@@ -151,4 +151,18 @@ class SalesController extends Controller
 
         return view('backend.sale.index', compact('sale', 'fromDate', 'toDate'));
     }
+
+    public function salegetStockByProduct(Request $request)
+    {
+        $product_id = $request->input('product_id');
+
+        // Assuming you have a Stock model with a 'product_id' and 'quantity' column
+        $stock = Stock::where('product_id', $product_id)
+                  ->where('quantity', '>', 0) // Filter out products with zero quantity
+                  ->first();
+
+        
+            return response()->json(['quantity' => $stock->quantity]);
+       
+    }
 }

@@ -55,6 +55,7 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
     Route::get('/getStockByProduct', [purchase::class, 'getStockByProduct'])->name('getStockByProduct');
     Route::resource('sale', sale::class);
     Route::get('salesreport', [sale::class,'salesReport'])->name('salesreport'); //2nd one is function name
+    Route::get('/salegetStockByProduct', [sale::class, 'salegetStockByProduct'])->name('salegetStockByProduct');
 });
 
 // Route::get('/', function () {

@@ -419,7 +419,7 @@
                         // Fetch stock information for each product
                         $.ajax({
                             type: "GET",
-                            url: "{{ route('getStockByProduct') }}",
+                            url: "{{ route('salegetStockByProduct') }}",
                             data: {'product_id': key},
                             dataType: "json",
                             success: function(stock) {
