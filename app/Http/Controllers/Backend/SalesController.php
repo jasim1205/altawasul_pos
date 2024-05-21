@@ -108,9 +108,24 @@ class SalesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Sales $sales)
+    public function show($id)
     {
-        //
+        $company = Company::get();
+        $category = Category::get();
+        $product = Product::get();
+        $saledetail = SaleDetails::where('sale_id',$id)->get();
+        $sale = Sales::findOrFail(encryptor('decrypt',$id));
+        return view('backend.sale.show',compact('company','category','product','sale','saledetail'));
+    }
+    public function invoice($id)
+    {
+        $company = Company::get();
+        $category = Category::get();
+        $product = Product::get();
+        // $saledetail = SaleDetails::where('sale_id',$id)->get();
+        $sale = Sales::findOrFail(encryptor('decrypt',$id));
+        $saledetail = $sale->saledetails;
+        return view('backend.sale.invoice',compact('company','category','product','sale','saledetail'));
     }
 
     /**

@@ -95,6 +95,9 @@
                                         <a href="{{route('sale.show',encryptor('encrypt',$value->id))}}">
                                             <i class="fa fa-eye"></i>
                                         </a>
+                                        <a href="{{route('sale.invoice',encryptor('encrypt',$value->id))}}">
+                                            {{-- <i class="fa fa-eye"></i> --}}invoice
+                                        </a>
                                         {{-- <a href="{{route('invoice',encryptor('encrypt',$value->id))}}">
                                             <i class="fa fa-list"></i>
                                         </a> --}}
