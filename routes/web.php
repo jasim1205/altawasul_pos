@@ -25,7 +25,7 @@ use App\Http\Controllers\Backend\SalesController as sale;
 */
 Route::get('/register', [auth::class,'signUpForm'])->name('register');
 Route::post('/register', [auth::class,'signUpStore'])->name('register.store');
-Route::get('/login', [auth::class,'signInForm'])->name('login');
+Route::get('/', [auth::class,'signInForm'])->name('login');
 Route::post('/login', [auth::class,'signInCheck'])->name('login.check');
 Route::get('/logout', [auth::class,'signOut'])->name('logOut');
 

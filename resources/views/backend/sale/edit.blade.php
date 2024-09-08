@@ -79,27 +79,39 @@
                                                 </select>
                                             </td>
                                             <td>
-                                                <select class="select2 category_id" onchange="doData(this);" name="category_id[]">
-                                                    <option value="">Select Category</option>
+                                                <select class="select2 category_id" onchange="doData(this);" name="category_id[]" readonly>
+                                                    @foreach ($category as $value)
+                                                        <option value="{{ $value->id }}" {{ old('category_id', $sdetail->category_id) == $value->id ? "selected" : ""}}>{{ $value->category_name }}</option>
+                                                    @endforeach
+                                                    
                                                 </select>
+                                                {{-- <select class="select2 category_id" onchange="doData(this);" name="category_id[]">
+                                                    <option value="">Select Category</option>
+                                                </select> --}}
                                             </td>
                                             <td>
-                                                <select class="select2 product_id" onchange="doData(this);" name="product_id[]">
-                                                    <option value="">Select Product</option>
+                                                <select class="select2 product_id" onchange="doData(this);" name="product_id[]" readonly>
+                                                    @foreach ($product as $value)
+                                                        <option value="{{ $value->id }}" {{ old('product_id', $sdetail->product_id) == $value->id ? "selected" : ""}}>{{ $value->product_name }}</option>
+                                                    @endforeach
                                                 </select>
+                                                {{-- <select class="select2 product_id" onchange="doData(this);" name="product_id[]">
+                                                    <option value="">Select Product</option>
+                                                </select> --}}
                                             </td>
-                                            <td><input class="form-control uprice" type="text" name="unit_price[]" style="width: 80px; height:25px;"></td>
-                                            <td><input class="form-control toquantity" type="text" name="quantity[]" style="width: 80px; height:25px;"></td>
-                                            <td><input class="form-control amount" type="text" name="amount[]" style="width: 100px; height:25px;"></td>
-                                            <td><input class="form-control totax"  type="text" name="tax[]" style="width: 80px; height:25px;"></td>
-                                            <td><input class="form-control subamount" type="text" name="sub_amount[]" style="width: 100px; height:25px;"></td>
-                                            <td><select name="discount_type[]" id="" class="form-control discount_type p-0 text-center" style="width: 80px; height:25px;">
-                                                <option value="">select</option>
-                                                <option value="1">%</option>
-                                                <option value="0">Fixed</option>
-                                            </select></td>
-                                            <td><input class="form-control todiscount" type="text" name="discount[]" style="width: 80px; height:25px;"></td>
-                                            <td><input class="form-control toamount" type="text" name="total_amount[]" style="width: 100px; height:25px;"></td>
+                                            <td><input class="form-control uprice" type="text" name="unit_price[]" value="{{ old('unit_price',$sdetail->unit_price) }}" style="width: 80px; height:25px;"></td>
+                                            <td><input class="form-control toquantity" type="text" name="quantity[]" value="{{ old('quantity',$sdetail->quantity) }}" style="width: 80px; height:25px;"></td>
+                                            <td><input class="form-control amount"  type="text" name="amount[]" value="{{ old('amount',$sdetail->amount) }}" style="width: 100px; height:25px;"></td>
+                                            <td><input class="form-control totax"  type="text" name="tax[]" value="{{ old('tax',$sdetail->tax) }}" style="width: 80px; height:25px;"></td>
+                                            <td><input class="form-control subamount" type="text" name="sub_amount[]" value="{{ old('sub_amount',$sdetail->sub_amount) }}" style="width: 100px; height:25px;"></td>
+                                            <td>
+                                                <select name="discount_type[]" id="" class="select2 form-control discount_type p-0 text-center" style="width: 80px; height:25px;">
+                                                    <option value="1" @if(old('discount_type',$sdetail->discount_type)==1) selected @endif>%</option>
+                                                    <option value="0" @if(old('discount_type',$sdetail->discount_type)==0) selected @endif>Fixed</option>
+                                                </select>
+                                        </td>
+                                            <td><input class="form-control todiscount" type="text" name="discount[]" value="{{ old('discount',$sdetail->discount) }}" style="width: 80px; height:25px;"></td>
+                                            <td><input class="form-control toamount" type="text" name="total_amount[]" value="{{ old('total_amount',$sdetail->total_amount) }}" style="width: 100px; height:25px;"></td>
                                             <td>
                                                 {{--  <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>  --}}
                                                 <span onClick='addRow();' class="add-row text-primary"><i class="fa fa-plus"></i></span>

@@ -33,7 +33,7 @@
                         @csrf
                     <div class="row">
                         <div class="col-sm-3">
-                            <label for="">Supplier Name</label>
+                            <label for="">Customer Name</label>
                             <input type="text" name="customer_name" id="" class="form-control" style="height:30px;">
                         </div>
                         <div class="col-sm-3">
