@@ -95,6 +95,13 @@
               <div class="menu-title">Sale</div>
             </a>
           </li>
+          <li>
+            <a href="{{ route('dailyexpense.index') }}" class="has-arrow">
+              <div class="parent-icon"><i class="bx bx-category"></i>
+              </div>
+              <div class="menu-title">Daily Expense</div>
+            </a>
+          </li>
           {{-- <li class="menu-label">UI Elements</li>
           <li>
             <a href="widgets.html">
@@ -501,7 +508,7 @@
           lengthChange: false,
           buttons: [ 'copy', 'excel', 'pdf', 'print']
         } );
-      
+
         table.buttons().container()
           .appendTo( '#example2_wrapper .col-md-6:eq(0)' );
       } );

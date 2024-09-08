@@ -12,6 +12,7 @@ use App\Http\Controllers\Backend\ProductController as product;
 use App\Http\Controllers\Backend\PurchaseController as purchase;
 use App\Http\Controllers\Backend\StockController as stock;
 use App\Http\Controllers\Backend\SalesController as sale;
+use App\Http\Controllers\Backend\DailyExpenseController as dailyexpense;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,7 +50,7 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
     // Route::get('/get-categories-by-company', [product::class,'getCategoriesByCompany'])->name('getCategoriesByCompany');
     Route::get('/get-categories-by-company', [purchase::class, 'getCategoriesByCompany'])->name('getCategoriesByCompany');
     // Route::get('/get-categories-by-company', [purchase::class, 'getCategory'])->name('getCategories');
-    
+
     // Route for getting products by category and company ID
     Route::get('/get-products-by-category-and-company', [purchase::class, 'getProductsByCategoryAndCompany'])->name('getProductsByCategoryAndCompany');
     Route::get('/getStockByProduct', [purchase::class, 'getStockByProduct'])->name('getStockByProduct');
@@ -57,6 +58,7 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
     Route::get('sale_invoice/{id}', [sale::class,'invoice'])->name('sale.invoice');
     Route::get('salesreport', [sale::class,'salesReport'])->name('salesreport'); //2nd one is function name
     Route::get('/salegetStockByProduct', [sale::class, 'salegetStockByProduct'])->name('salegetStockByProduct');
+    Route::resource('dailyexpense', dailyexpense::class);
 });
 
 // Route::get('/', function () {
