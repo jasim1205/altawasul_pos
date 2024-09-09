@@ -33,17 +33,21 @@
                             <th>Product Name</th>
                             <th>Product Model</th>
                             <th>Stock</th>
+                            <th>Status</th>
                         </tr>
                     </thead>
                     <tbody>
                          @forelse ($stock as $value)
-                            <tr> 
+                            <tr>
                                 <td>{{ __(++$loop->index) }}</td>
                                 <td>{{ __($value->product->company?->company_name) }}</td>
                                 <td>{{ __($value->product->category?->category_name) }}</td>
                                 <td>{{ __($value->product?->product_name) }}</td>
                                 <td>{{ __($value->product?->product_model) }}</td>
-                                <td>{{ __($value->quantity) }}</td>                               
+                                <td style="color: {{ $value->quantity <= 5 ? 'red' : 'green' }};font-weight:bold">{{ __($value->quantity) }}</td>
+                                <td style="color: {{ $value->quantity <= 5 ? 'red' : 'green' }};font-weight:bold">
+                                    {{ $value->quantity <=5 ? "Low Stock":"Available" }}
+                                </td>
                             </tr>
                         @empty
                             <tr>
@@ -95,7 +99,7 @@
                     </thead>
                     <tbody>
                         @forelse ($product as $value)
-                            <tr> 
+                            <tr>
                                 <td>{{ __(++$loop->index) }}</td>
                                 <td>{{ __($value->company?->company_name) }}</td>
                                 <td>{{ __($value->category?->category_name) }}</td>
@@ -116,7 +120,7 @@
                                                 </button>
                                             </form>
                                     </div>
-                                    
+
                                 </td>
                             </tr>
                         @empty
@@ -124,8 +128,8 @@
                                 <td colspan="7" class="text-center fw-bolder">Product No found</td>
                             </tr>
                         @endforelse
-                        
-                       
+
+
                     </tbody>
                 </table>
             </div>
