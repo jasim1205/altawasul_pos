@@ -64,6 +64,7 @@ class SalesController extends Controller
             $sale->total_tax = $request->total_tax;
             $sale->total_subamount = $request->total_subamount;
             $sale->grand_total_amount = $request->grand_total_amount;
+            $sale->paid = $request->paid;
             $sale->status = $request->status;
             $sale->save();
 
@@ -171,6 +172,7 @@ class SalesController extends Controller
             $sale->total_tax = $request->total_tax;
             $sale->total_subamount = $request->total_subamount;
             $sale->grand_total_amount = $request->grand_total_amount;
+            $sale->paid = $request->paid;
             $sale->status = $request->status;
             $sale->save();
 
@@ -250,8 +252,8 @@ class SalesController extends Controller
                   ->where('quantity', '>', 0) // Filter out products with zero quantity
                   ->first();
 
-        
+
             return response()->json(['quantity' => $stock->quantity]);
-       
+
     }
 }

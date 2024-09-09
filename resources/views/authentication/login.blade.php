@@ -12,7 +12,7 @@
 </style>
 
 <div class="col-sm-6 col-lg-4 mx-auto">
-    <div class="card p-3 my-5 shadow-lg">
+    <div class="card p-3 my-5 mx-4 shadow-lg">
         <form action="{{route('login.check')}}" method="POST">
         @csrf
         <!-- <a href="index.html"
@@ -45,11 +45,11 @@
             Don't have an account?
             <a href="{{route('register')}}" class="font-bold">Sign up</a>.
         </p>
-        <p>
+        {{-- <p>
             <a class="font-bold" href="auth-forgot-password.html"
             >Forgot password?</a
             >.
-        </p>
+        </p> --}}
         </div>
     </div>
 </div>
