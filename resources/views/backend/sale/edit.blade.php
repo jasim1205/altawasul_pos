@@ -143,12 +143,10 @@
                             </div>
 
                             <div class="col-sm-4 mt-3 d-flex">
-
-                                    <input type="text" name="paid" id="" value="{{ old('paid',$sale->paid) }}" class="form-control" placeholder="Enter amount">
-
+                                <input type="text" name="paid" id="paid" value="{{ old('paid',$sale->paid) }}" class="form-control" placeholder="Enter amount">
                             </div>
                             <div class="col-sm-4 mt-3 d-flex">
-                                <select name="status" id="" class="form-control" >
+                                <select name="status" id="status" class="form-control" >
                                     <option value="1" @if(old('status',$sale->status)==1) selected @endif>Unpaid</option>
                                     <option value="2" @if(old('status',$sale->status)==2) selected @endif>Due</option>
                                     <option value="3" @if(old('status',$sale->status)==3) selected @endif>Paid</option>
@@ -171,6 +169,28 @@
     document.addEventListener('DOMContentLoaded', f2nction() {
         var currentDate = new Date().toISOString().split('T')[0]; // Get current date in "YYYY-MM-DD" format
         document.getElementById('current_date').value = currentDate;
+    });
+
+    $(document).ready(function() {
+        function updateStatus() {
+            var amount = parseFloat($('#paid').val());
+            var grandTotal = parseFloat($('#grand_total_amount').text());
+
+            // Ensure the amount is a valid number before comparison
+            if (!isNaN(amount) && amount > 0 && amount < grandTotal) {
+                $('#status').val('2'); // Change status to "Due"
+            } else if (!isNaN(amount) && amount === grandTotal) {
+                $('#status').val('3'); // Change status to "Paid"
+            } else {
+                $('#status').val('1'); // Change status to "Unpaid"
+            }
+        }
+
+        // Trigger the check on page load to set the correct status initially
+        updateStatus();
+
+        // Trigger the check when the input value changes
+        $('#paid').on('input', updateStatus);
     });
 </script>
 <script>

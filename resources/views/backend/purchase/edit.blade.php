@@ -85,7 +85,7 @@
                                                     @foreach ($category as $value)
                                                         <option value="{{ $value->id }}" {{ old('category_id', $purdetail->category_id) == $value->id ? "selected" : ""}}>{{ $value->category_name }}</option>
                                                     @endforeach
-                                                    
+
                                                 </select>
                                             </td>
                                             <td>
@@ -123,7 +123,7 @@
                                         <th></th>
                                         <th colspan=""><span class="total_discount" id="total_discount">{{ $purchase->total_discount }}</span></th>
                                         <th colspan="2"><span class="grand_total_amount" id="grand_total_amount">{{ $purchase->grand_total_amount }}</span></th>
-                                        
+
 
 
                                         <input type="hidden" name="total_quantity" id="total_quantity_hidden">
@@ -135,14 +135,20 @@
                                     </tfoot>
                                 </table>
                             </div>
-                            <div class="col-sm-8 mt-3 d-flex"">
-                                <select name="status" id="" class="form-control" style="width:100%; height:35px">
-                                    <option value="1" @if(old('status',$purchase->status)==1) selected @endif>Unpaid</option>
-                                    <option value="2" @if(old('status',$purchase->status)== 2) selected @endif >Paid</option>
-                                </select>
-                                <button type="submit" class="btn btn-primary mx-3 px-5">Save</button>
+                            <div class="col-sm-4 mt-3 d-flex">
+
+                                <input type="text" name="pay_amount" id="pay_amount" value="{{ old('pay_amount',$purchase->pay_amount) }}" class="form-control" placeholder="Enter amount">
+
                             </div>
-                            <div>
+                            <div class="col-sm-4 mt-3 d-flex">
+                                <select name="status" id="status" class="form-control" >
+                                    <option value="1" @if(old('status',$purchase->status)==1) selected @endif>Unpaid</option>
+                                    <option value="2" @if(old('status',$purchase->status)==2) selected @endif>Due</option>
+                                    <option value="3" @if(old('status',$purchase->status)==3) selected @endif>Paid</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-4 mt-3 d-flex">
+                                <button type="submit" class="btn btn-primary mx-3 px-5 py-0">Save</button>
                             </div>
                     </div>
                 </form>
@@ -251,7 +257,7 @@
                                                 <td><input class="form-control todiscount" type="text" name="discount[]"></td>
                                                 <td><input class="form-control toamount" type="text" name="total_amount[]"></td>
                                                 <td>
-                                                    
+
                                                     <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
                                                 </td>
                                             </tr>
@@ -292,9 +298,30 @@
 <script>
     // Set current date to the date input field
     // document.addEventListener('DOMContentLoaded', function() {
-    //     var currentDate = new Date().toISOString().split('T')[0]; 
+    //     var currentDate = new Date().toISOString().split('T')[0];
     //     document.getElementById('current_date').value = currentDate;
     // });
+    $(document).ready(function() {
+        function updateStatus() {
+            var amount = parseFloat($('#pay_amount').val());
+            var grandTotal = parseFloat($('#grand_total_amount').text());
+
+            // Ensure the amount is a valid number before comparison
+            if (!isNaN(amount) && amount > 0 && amount < grandTotal) {
+                $('#status').val('2'); // Change status to "Due"
+            } else if (!isNaN(amount) && amount === grandTotal) {
+                $('#status').val('3'); // Change status to "Paid"
+            } else {
+                $('#status').val('1'); // Change status to "Unpaid"
+            }
+        }
+
+        // Trigger the check on page load to set the correct status initially
+        updateStatus();
+
+        // Trigger the check when the input value changes
+        $('#pay_amount').on('input', updateStatus);
+    });
 </script>
 <script>
     $(document).ready(function() {
@@ -307,11 +334,11 @@
             var tax = parseFloat(row.find('.totax').val()) || 0;
             var discountType = row.find('.discount_type').val();
             var discount = parseFloat(row.find('.todiscount').val()) || 0;
-            
+
             var amount = unitPrice * quantity;
             var subAmount = amount + (amount * tax / 100);
             var totalAmount;
-            
+
             if (discountType == 1) { // Percentage discount
                 totalAmount = subAmount - (subAmount * discount / 100);
             } else if (discountType == 0) { // Fixed discount
@@ -469,7 +496,7 @@
                         <td><input class="form-control todiscount" type="text" name="discount[]" style="width: 80px; height:25px;"></td>
                         <td><input class="form-control toamount" type="text" name="total_amount[]" style="width: 100px; height:25px;"></td>
                         <td>
-                            <span onClick='RemoveRow(this);' class="delete-row text-danger"><i class="fa fa-trash"></i></span> 
+                            <span onClick='RemoveRow(this);' class="delete-row text-danger"><i class="fa fa-trash"></i></span>
                         </td>
                     </tr>`;
         $('#purchaseHead').append(row);
@@ -517,7 +544,7 @@
             row.find('.product_id').empty();
         }
     });
-    
+
     $(document).on('change', '.category_id', function() {
         var category_id = $(this).val();
         var row = $(this).closest('tr');

@@ -85,11 +85,12 @@
                                 <td>{{ __($value->total_discount) }}</td>
                                 <td>{{ __($value->total_tax) }}</td>
                                 <td>{{ __($value->grand_total_amount) }}</td>
-                                <td style="color: @if($value->status==1) red @else green @endif; font-weight:bold;"><i class='bx bx-radio-circle-marked bx-burst bx-rotate-90 align-middle font-18 me-1'></i>
-                                @if($value->status==1){{__('Unpaid')}}
-                                @elseif($value->status==2){{__('Due')}}
-                                @else{{ __('Paid') }}
-                                @endif
+                                <td style="color:  @if($value->status==1) red @elseif($value->status==2) yellow @else green @endif; font-weight:bold;"><i class='bx bx-radio-circle-marked bx-burst bx-rotate-90 align-middle font-18 me-1'></i>
+
+                                    @if($value->status==1){{__('Unpaid')}}
+                                    @elseif($value->status==2){{__('Due')}}
+                                    @else{{__('Paid')}}
+                                    @endif
                                 </td>
                                 <td class="white-space-nowrap">
                                     <div class="d-flex">

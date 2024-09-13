@@ -88,6 +88,7 @@ class PurchaseController extends Controller
             $purchase->total_tax = $request->total_tax;
             $purchase->total_subamount = $request->total_subamount;
             $purchase->grand_total_amount = $request->grand_total_amount;
+            $purchase->pay_amount = $request->pay_amount;
             $purchase->status = $request->status;
             $purchase->save();
 
@@ -131,10 +132,10 @@ class PurchaseController extends Controller
             return redirect()->route('purchase.create')->with('error', 'Something went wrong! Please try again.');
         }
     }
-   
 
 
-    
+
+
 
     /**
      * Display the specified resource.
@@ -195,7 +196,7 @@ class PurchaseController extends Controller
     //         $purchase->status = $request->status;
     //         $purchase->save();
 
-    //         $supplier = Supplier::find($purchase->id);        
+    //         $supplier = Supplier::find($purchase->id);
     //         $supplier->supplier_name = $request->supplier_name;
     //         $supplier->email = $request->email;
     //         $supplier->contact_no = $request->contact_no;
@@ -239,7 +240,7 @@ class PurchaseController extends Controller
     //                         $purchaseDetail->total_amount = $request->total_amount[$key];
     //                         $purchaseDetail->save();
 
-                            
+
     //                     }
     //                 }
     //             }
@@ -314,7 +315,7 @@ class PurchaseController extends Controller
 //         $purchase->status = $request->status;
 //         $purchase->save();
 
-//         $supplier = Supplier::find($purchase->supplier_id);        
+//         $supplier = Supplier::find($purchase->supplier_id);
 //         $supplier->supplier_name = $request->supplier_name;
 //         $supplier->email = $request->email;
 //         $supplier->contact_no = $request->contact_no;
@@ -395,10 +396,11 @@ public function update(Request $request, $id)
         $purchase->total_tax = $request->total_tax;
         $purchase->total_subamount = $request->total_subamount;
         $purchase->grand_total_amount = $request->grand_total_amount;
+        $purchase->pay_amount = $request->pay_amount;
         $purchase->status = $request->status;
         $purchase->save();
 
-        $supplier = Supplier::find($purchase->supplier_id);        
+        $supplier = Supplier::find($purchase->supplier_id);
         $supplier->supplier_name = $request->supplier_name;
         $supplier->email = $request->email;
         $supplier->contact_no = $request->contact_no;
@@ -491,9 +493,9 @@ public function update(Request $request, $id)
                 //   ->where('quantity', '>', 0) // Filter out products with zero quantity
                 //   ->first();
 
-        
+
             return response()->json(['quantity' => $stock->quantity]);
-       
+
     }
 
 }

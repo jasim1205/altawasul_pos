@@ -129,15 +129,16 @@
                                 </table>
                             </div>
                             <div class="col-sm-4 mt-3 d-flex">
-                                <select name="status" id="" class="form-control" style="width:100%; height:35px">
+                                <input type="text" name="paid" id="paid" class="form-control" placeholder="Enter amount">
+                            </div>
+                            <div class="col-sm-4 mt-3 d-flex">
+                                <select name="status" id="status" class="form-control" style="width:100%; height:35px">
                                     <option value="1">Unpaid</option>
                                     <option value="2">Due</option>
                                     <option value="3">Paid</option>
                                 </select>
                             </div>
-                            <div class="col-sm-4 mt-3 d-flex">
-                                <input type="text" name="paid" id="" class="form-control" placeholder="Enter amount">
-                            </div>
+
                             <div  class="col-sm-4 mt-3 d-flex">
                                 <button type="submit" class="btn btn-primary mx-3 px-5">Save</button>
                             </div>
@@ -155,6 +156,20 @@
     document.addEventListener('DOMContentLoaded', function() {
         var currentDate = new Date().toISOString().split('T')[0]; // Get current date in "YYYY-MM-DD" format
         document.getElementById('current_date').value = currentDate;
+    });
+    $(document).ready(function() {
+        $('#paid').on('input', function() {
+            var amount = $(this).val();
+            var grandTotal = parseFloat($('#grand_total_amount').text());
+
+            if (amount > 0 && amount < grandTotal) {
+                $('#status').val('2'); // Change status to "Due"
+            } else if (amount == grandTotal) {
+                $('#status').val('3'); // Change status to "Paid"
+            } else {
+                $('#status').val('1'); // Change status to "Unpaid" if no amount is entered or conditions are not met
+            }
+        });
     });
 </script>
 <script>
