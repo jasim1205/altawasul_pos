@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\Purchase;
 use App\Models\PurchaseDetails;
+use App\Models\Sales;
+use App\Models\SaleDetails;
 use Illuminate\Http\Request;
 
 class ReportController extends Controller
@@ -25,5 +27,23 @@ class ReportController extends Controller
             ->whereMonth('date', $month)
             ->get();
         return view('backend.report.monthlypurchasedetails', compact('monthlydetails', 'year', 'month'));
+    }
+
+    public function yearlysalesreport(Request $request){
+        $selectedYear = $request->year;
+        $years = array_reverse(range(2020, date('Y')));
+        $monthlySale = Sales::selectRaw('YEAR(date) as year, MONTH(date) as month, SUM(grand_total_amount) as amount')
+            ->whereYear('date', $selectedYear)
+            ->groupBy('year', 'month')
+            ->get();
+        return view('backend.report.monthlsale',compact('selectedYear','years','monthlySale'));
+    }
+
+     public function salesMonthlyDetails($year, $month)
+    {
+        $monthlydetails = Sales::whereYear('date', $year)
+            ->whereMonth('date', $month)
+            ->get();
+        return view('backend.report.monthlysalesdetails', compact('monthlydetails', 'year', 'month'));
     }
 }

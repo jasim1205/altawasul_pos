@@ -111,9 +111,9 @@
                 <ul>
                     <li> <a href="{{ route('yearly_purchase') }}"><i class='bx bx-radio-circle'></i>Yearly Purchase Report</a>
                     </li>
-                    {{-- <li> <a href="{{ route('category.index') }}"><i class='bx bx-radio-circle'></i>Category List</a>
+                    <li> <a href="{{ route('yearly_sale') }}"><i class='bx bx-radio-circle'></i>Yearly Sales Report</a>
                     </li>
-                    <li> <a href="{{ route('product.index') }}"><i class='bx bx-radio-circle'></i>Product List</a>
+                   {{--  <li> <a href="{{ route('product.index') }}"><i class='bx bx-radio-circle'></i>Product List</a>
                     </li> --}}
                 </ul>
           <li>

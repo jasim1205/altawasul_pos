@@ -62,6 +62,8 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
     Route::resource('dailyexpense', dailyexpense::class);
     Route::get('yearly-purchase', [report::class, 'yearlypurchasereport'])->name('yearly_purchase');
     Route::get('monthly/{year}/{month}', [report::class, 'purchaseMonthlyDetails'])->name('Monthly_Details');
+    Route::get('yearly-sale', [report::class, 'yearlysalesreport'])->name('yearly_sale');
+    Route::get('monthly/{year}/{month}', [report::class, 'salesMonthlyDetails'])->name('Monthly_sale_Details');
 });
 
 // Route::get('/', function () {
