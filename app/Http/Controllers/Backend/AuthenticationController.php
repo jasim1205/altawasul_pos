@@ -84,7 +84,7 @@ class AuthenticationController extends Controller
 
     public function signOut(){
         request()->session()->flush();
-        return redirect('login')->with('danger','Succfully Logged Out');
+        return redirect('/')->with('danger','Succfully Logged Out');
     }
     public function show(User $data)
     {

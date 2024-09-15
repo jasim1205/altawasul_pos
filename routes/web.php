@@ -61,9 +61,15 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
     Route::get('/salegetStockByProduct', [sale::class, 'salegetStockByProduct'])->name('salegetStockByProduct');
     Route::resource('dailyexpense', dailyexpense::class);
     Route::get('yearly-purchase', [report::class, 'yearlypurchasereport'])->name('yearly_purchase');
-    Route::get('monthly/{year}/{month}', [report::class, 'purchaseMonthlyDetails'])->name('Monthly_Details');
+    Route::get('monthly-purchase/{year}/{month}', [report::class, 'purchaseMonthlyDetails'])->name('Monthly_purchase_details');
     Route::get('yearly-sale', [report::class, 'yearlysalesreport'])->name('yearly_sale');
-    Route::get('monthly/{year}/{month}', [report::class, 'salesMonthlyDetails'])->name('Monthly_sale_Details');
+    Route::get('monthly-sale/{year}/{month}', [report::class, 'salesMonthlyDetails'])->name('Monthly_sale_Details');
+    Route::get('yearly-expense', [report::class, 'yearlyExpense'])->name('yearly_expense');
+    Route::get('monthly-expense/{year}/{month}', [report::class, 'monthlyexpensdetails'])->name('Monthly_expense_Details');
+    Route::get('yearly-report', [report::class, 'yearlyReport'])->name('yearly_report');
+    // routes/web.php
+    Route::get('monthly-details/{year}/{month}', [report::class, 'monthlyDetailsReport'])->name('Monthly_Details');
+
 });
 
 // Route::get('/', function () {

@@ -27,6 +27,9 @@
 	<link rel="stylesheet" href="{{ asset('public/syndron/assets/css/semi-dark.css') }}"/>
 	<link rel="stylesheet" href="{{ asset('public/syndron/assets/css/header-colors.css') }}"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+  <link rel="stylesheet" href="https://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
+       
+  @stack('styles')
 	<title>Syndron - Bootstrap 5 Admin Dashboard Template</title>
 </head>
 
@@ -113,8 +116,10 @@
                     </li>
                     <li> <a href="{{ route('yearly_sale') }}"><i class='bx bx-radio-circle'></i>Yearly Sales Report</a>
                     </li>
-                   {{--  <li> <a href="{{ route('product.index') }}"><i class='bx bx-radio-circle'></i>Product List</a>
-                    </li> --}}
+                    <li> <a href="{{ route('yearly_expense') }}"><i class='bx bx-radio-circle'></i>Yearly Expense</a>
+                    </li>
+                    <li> <a href="{{ route('yearly_report') }}"><i class='bx bx-radio-circle'></i>Yearly Report</a>
+                    </li>
                 </ul>
           <li>
           {{-- <li class="menu-label">UI Elements</li>
@@ -527,6 +532,24 @@
         table.buttons().container()
           .appendTo( '#example2_wrapper .col-md-6:eq(0)' );
       } );
+    </script>
+    <script src="https://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
+    {!! Toastr::message() !!}
+       
+    @stack('scripts')
+     <script>
+        function printDiv(divName) {
+            var prtContent = document.getElementById(divName);
+            var WinPrint = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
+            WinPrint.document.write('<link rel="stylesheet" href="{{ asset('public/syndron/assets/css/app.css') }}" type="text/css"/>');
+            WinPrint.document.write(prtContent.innerHTML);
+            WinPrint.document.close();
+            WinPrint.onload =function(){
+                WinPrint.focus();
+                WinPrint.print();
+                WinPrint.close();
+            }
+        };
     </script>
 
     <!--app JS-->

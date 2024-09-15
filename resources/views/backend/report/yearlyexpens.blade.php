@@ -1,61 +1,15 @@
 @extends('layouts.app')
-@section('title',trans('Purchase'))
+@section('title',trans('Expense'))
 @section('page',trans('List'))
 @section('content')
-<style>
-    /* Custom print styles */
-@media print {
-        body {
-            font-size: 12px; /* Reduce font size for printing */
-            color: black;    /* Ensure text color is black */
-        }
-
-        .btn, .breadcrumb, #searchInput, #monthSelect, .no-print {
-            display: none; /* Hide buttons, inputs, and other unnecessary elements when printing */
-        }
-
-        table {
-            width: 100%; /* Ensure table takes full width */
-            border-collapse: collapse;
-        }
-
-        table th, table td {
-            border: 1px solid black;
-            padding: 8px;
-        }
-
-        h5.text-center {
-            font-size: 16px; /* Adjust heading size for print */
-        }
-
-        /* Customize the table for print */
-        th, td {
-            text-align: left;
-            padding: 8px;
-        }
-
-        .table-responsive {
-            overflow: visible !important; /* Ensure full table is visible in print */
-        }
-
-        /* Optional: remove any background color or images */
-        * {
-            background: transparent !important;
-            box-shadow: none !important;
-        }
-
-        /* Add more print-specific customizations as needed */
-    }
-
-</style>
     <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-        <div class="breadcrumb-title pe-3">Tables</div>
+        <div class="breadcrumb-title pe-3">Expense</div>
         <div class="ps-3">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb mb-0 p-0">
                     <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
                     </li>
-                    <li class="breadcrumb-item active" aria-current="page">Purchase</li>
+                    <li class="breadcrumb-item active" aria-current="page">Monthly Expense</li>
                 </ol>
             </nav>
         </div>
@@ -67,7 +21,7 @@
         <div class="card-header">
             <div class="row">
                 <div class="col-sm-12">
-                    <form action="{{ route('yearly_purchase') }}" method="get">
+                    <form action="{{ route('yearly_expense') }}" method="get">
                     @csrf
                     <div class="row">
                         <div class="col-md-3">
@@ -84,7 +38,7 @@
                             <input type="text" class="form-control" style="height: 35px;" id="searchInput" placeholder="Search by month">
                         </div>
                         <div class="col-md-3 mt-4 text-end ms-auto">
-                            <button type="button" class="btn btn-primary" onclick="printDiv('print_area')">Export as PDF</button>
+                            <button type="button" class="btn btn-primary" onclick="printPDF('print_area')">Export as PDF</button>
                         </div>
                     </div>
                 </form>
@@ -97,8 +51,7 @@
                     <option value="">All Month</option>
                 </select>
             </div>
-            <div class="table-responsive" id="print_area">
-                <h5 class="text-center">Purchase Report of- {{ $selectedYear }}</h5>
+            <div class="table-responsive">
                 <table  class="table table-striped table-bordered" id="monthrow" style="width:100%">
                     <thead class="text-center">
                         <tr>
@@ -110,7 +63,7 @@
                         </tr>
                     </thead>
                     <tbody class="text-center">
-                         @forelse ($monthlyPurchase as $value)
+                         @forelse ($yearlyexpense as $value)
                             <tr>
                                 <td class="text-center">{{ __(++$loop->index) }}</td>
                                 <td>{{ __($value['year']) }}</td>
@@ -119,13 +72,13 @@
 
                                 <td class="white-space-nowrap">
                                     <div >
-                                        <a href="{{ route('Monthly_purchase_details', ['year' => $value['year'], 'month' => $value['month']]) }}" class="btn btn-primary">Details</a>
+                                        <a href="{{ route('Monthly_expense_Details', ['year' => $value['year'], 'month' => $value['month']]) }}" class="btn btn-primary">Details</a>
                                     </div>
                                 </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="7" class="text-center fw-bolder">Purchase Not Found This Year</td>
+                                <td colspan="7" class="text-center fw-bolder">Expens Not Found This Year</td>
                             </tr>
                         @endforelse
                     </tbody>

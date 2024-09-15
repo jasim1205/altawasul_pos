@@ -76,7 +76,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="7" class="text-center fw-bolder">Purchase Not Found This Year</td>
+                                <td colspan="7" class="text-center fw-bolder">Sale Not Found This Year</td>
                             </tr>
                         @endforelse
                     </tbody>
