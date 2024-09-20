@@ -50,6 +50,7 @@
                 </select>
             </div>
             <div class="table-responsive">
+                <h5 class="text-center">Sale Report of- {{ $selectedYear }}</h5>
                 <table  class="table table-striped table-bordered" id="monthrow" style="width:100%">
                     <thead class="text-center">
                         <tr>
