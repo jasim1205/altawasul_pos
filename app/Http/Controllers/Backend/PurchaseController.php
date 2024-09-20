@@ -480,7 +480,7 @@ public function update(Request $request, $id)
 
         $purchase = Purchase::whereBetween('date', [$fromDate, $toDate])->get();
 
-        return view('backend.purchase.index', compact('purchase', 'fromDate', 'toDate'));
+        return view('backend.purchase.purchasepdf', compact('purchase', 'fromDate', 'toDate'));
     }
 
     // Assuming this is your controller method
