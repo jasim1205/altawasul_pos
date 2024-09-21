@@ -51,9 +51,9 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table id="" class="table table-striped table-bordered" style="width:100%">
+                <table id="example" class="table table-striped" style="width:100%">
                     <thead class="text-center">
-                        @if($fromDate && $toDate)
+                        {{-- @if($fromDate && $toDate)
                             @php
                                 $fromDate = \Carbon\Carbon::parse($fromDate);
                                 $toDate = \Carbon\Carbon::parse($toDate);
@@ -61,7 +61,7 @@
 
                             <h6 class="text-center text-primary">Purchase Report from :{{ date('d-M-Y',strtotime($fromDate->toDateString())) }} to {{  date('d-M-Y',strtotime($toDate->toDateString())) }}
                             </h6>
-                        @endif
+                        @endif --}}
                         <tr>
                             <th scope="col">{{__('#SL')}}</th>
                             <th>{{ __('Supplier') }}</th>
