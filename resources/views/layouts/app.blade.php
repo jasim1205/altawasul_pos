@@ -30,7 +30,7 @@
   <link rel="stylesheet" href="https://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
        
   @stack('styles')
-	<title>Syndron - Bootstrap 5 Admin Dashboard Template</title>
+	<title>@yield('title',env('APP_NAME'))  | Al-Tawasul</title>
 </head>
 
 <body>
