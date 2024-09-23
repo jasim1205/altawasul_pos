@@ -79,6 +79,10 @@
                                                 </select>
                                             </td>
                                             <td>
+                                                @php
+                                                   $company_id = $sdetail->company_id;
+                                                   $category = DB::table('categories')->where('company_id',$company_id)->get();
+                                                @endphp
                                                 <select class="select2 category_id" onchange="doData(this);" name="category_id[]" readonly>
                                                     @foreach ($category as $value)
                                                         <option value="{{ $value->id }}" {{ old('category_id', $sdetail->category_id) == $value->id ? "selected" : ""}}>{{ $value->category_name }}</option>
@@ -90,6 +94,10 @@
                                                 </select> --}}
                                             </td>
                                             <td>
+                                                @php
+                                                   $category_id = $sdetail->category_id;
+                                                   $product = DB::table('products')->where('category_id',$category_id)->get();
+                                                @endphp
                                                 <select class="select2 product_id" onchange="doData(this);" name="product_id[]" readonly>
                                                     @foreach ($product as $value)
                                                         <option value="{{ $value->id }}" {{ old('product_id', $sdetail->product_id) == $value->id ? "selected" : ""}}>{{ $value->product_name }}</option>
@@ -441,7 +449,90 @@
     //         row.find('.product_id').empty();
     //     }
     // });
-    $(document).on('change', '.category_id', function() {
+    // $(document).on('change', '.category_id', function() {
+    //     var category_id = $(this).val();
+    //     var row = $(this).closest('tr');
+    //     var company_id = row.find('.company_id').val();
+
+    //     if(category_id && company_id) {
+
+    //     console.log('Category ID:', category_id, 'Company ID:', company_id);
+    //         $.ajax({
+    //             type: "GET",
+    //             url: "{{ route('getProductsByCategoryAndCompany') }}",
+    //             data: {'category_id': category_id, 'company_id': company_id},
+    //             dataType: "json",
+    //             success: function(res) {
+    //                 console.log('Product Response:', res);
+    //                 if(res) {
+    //                     var productSelect = row.find('.product_id');
+    //                     productSelect.empty();
+    //                     productSelect.append('<option value="">Select product</option>');
+    //                     $.each(res, function(key, value) {
+    //                         // Fetch stock information for each product
+    //                         $.ajax({
+    //                             type: "GET",
+    //                             url: "{{ route('getStockByProduct') }}",
+    //                             data: {'product_id': key},
+    //                             dataType: "json",
+    //                             success: function(stock) {
+    //                                 var stockText = stock ? ' (Stock: ' + stock.quantity + ')' : '';
+    //                                 productSelect.append('<option value="'+ key +'">'+ value + stockText +'</option>');
+
+    //                             }
+    //                         });
+    //                     });
+    //                 }
+    //             }
+    //         });
+    //     } else {
+    //         row.find('.product_id').empty();
+    //     }
+    // });
+
+    // $(document).on('change', '.category_id', function() {
+    //     var category_id = $(this).val();
+    //     var row = $(this).closest('tr');
+    //     var company_id = row.find('.company_id').val();
+
+    //     if(category_id && company_id) {
+    //         console.log('Category ID:', category_id, 'Company ID:', company_id);
+    //         $.ajax({
+    //             type: "GET",
+    //             url: "{{ route('getProductsByCategoryAndCompany') }}",
+    //             data: {'category_id': category_id, 'company_id': company_id},
+    //             dataType: "json",
+    //             success: function(res) {
+    //                 console.log('Product Response:', res);
+    //                 if(res) {
+    //                     var productSelect = row.find('.product_id');
+    //                     productSelect.empty();
+    //                     productSelect.append('<option value="">Select product</option>');
+    //                     $.each(res, function(key, value) {
+    //                         // Fetch stock information for each product
+    //                         $.ajax({
+    //                             type: "GET",
+    //                             url: "{{ route('salegetStockByProduct') }}",
+    //                             data: {'product_id': key},
+    //                             dataType: "json",
+    //                             success: function(stock) {
+    //                                 console.log('Product Response:', stock);
+    //                                 var stockText = stock ? ' (Stock: ' + stock.quantity + ')' : '';
+    //                                 productSelect.append('<option value="'+ key +'">'+ value + stockText +'</option>');
+
+    //                             }
+    //                         });
+    //                     });
+    //                 }
+    //             }
+    //         });
+    //     } else {
+    //         row.find('.product_id').empty();
+    //     }
+    // });
+
+
+   $(document).on('change', '.category_id', function() {
     var category_id = $(this).val();
     var row = $(this).closest('tr');
     var company_id = row.find('.company_id').val();
@@ -458,18 +549,14 @@
                     productSelect.empty();
                     productSelect.append('<option value="">Select product</option>');
                     $.each(res, function(key, value) {
-                        // Fetch stock information for each product
-                        $.ajax({
-                            type: "GET",
-                            url: "{{ route('getStockByProduct') }}",
-                            data: {'product_id': key},
-                            dataType: "json",
-                            success: function(stock) {
-                                var stockText = stock ? ' (Stock: ' + stock.quantity + ')' : '';
-                                productSelect.append('<option value="'+ key +'">'+ value + stockText +'</option>');
+                        var stockQuantity = value.match(/\((\d+)\)/); // Extract stock quantity from parentheses
+                        var stock = stockQuantity ? parseInt(stockQuantity[1]) : 0;
 
-                            }
-                        });
+                        if (stock <= 5) { // Highlight products with low stock in red
+                            productSelect.append('<option value="'+ key +'" style="color:red;" data-stock="'+ stock +'">'+ value +'</option>');
+                        } else {
+                            productSelect.append('<option value="'+ key +'" data-stock="'+ stock +'">'+ value +'</option>');
+                        }
                     });
                 }
             }
@@ -478,6 +565,19 @@
         row.find('.product_id').empty();
     }
 });
+
+// Check stock on product selection
+$(document).on('change', '.product_id', function() {
+    var selectedOption = $(this).find('option:selected'); // Get the selected product option
+    var stock = selectedOption.data('stock'); // Get the stock value from data attribute
+
+    if (stock === 0) {
+        alert("This product is out of stock and cannot be selected.");
+        $(this).val(''); // Reset the selection
+    }
+});
+
+
 
 });
 

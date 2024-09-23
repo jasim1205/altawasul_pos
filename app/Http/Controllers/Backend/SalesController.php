@@ -135,8 +135,9 @@ class SalesController extends Controller
     public function edit($id)
     {
         $company = Company::get();
-        $category = Category::get();
-        $product = Product::get();
+        $category = [];
+        // $product = Product::get();
+        $product = [];
         $sale = Sales::findOrFail(encryptor('decrypt',$id));
         $saledetail = SaleDetails::where('sale_id',$sale->id)->get();
         return view('backend.sale.edit',compact('company','category','product','sale','saledetail'));

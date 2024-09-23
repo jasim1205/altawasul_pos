@@ -80,6 +80,10 @@
                                                 </select>
                                             </td>
                                             <td>
+                                                @php
+                                                    $company_id = $purdetail->company_id;
+                                                    $category = DB::table('categories')->where('company_id',$company_id)->get();
+                                                @endphp
                                                 {{-- <input type="text" name="company_id" value="{{ old('company_id',$purdetail->category->category_name) }}" id="" readonly style="width: 100px"> --}}
                                                 <select class="select2 category_id" onchange="doData(this);" name="category_id[]" readonly>
                                                     @foreach ($category as $value)
@@ -89,6 +93,11 @@
                                                 </select>
                                             </td>
                                             <td>
+                                                @php
+                                                    $category_id = $purdetail->category_id;
+                                                    $product = DB::table('products')->where('category_id',$category_id)->get();
+                                                @endphp
+
                                                 <select class="select2 product_id" onchange="doData(this);" name="product_id[]" readonly>
                                                     @foreach ($product as $value)
                                                         <option value="{{ $value->id }}" {{ old('product_id', $purdetail->product_id) == $value->id ? "selected" : ""}}>{{ $value->product_name }}</option>
@@ -545,24 +554,66 @@
         }
     });
 
+    // $(document).on('change', '.category_id', function() {
+    //     var category_id = $(this).val();
+    //     var row = $(this).closest('tr');
+    //     var company_id = row.find('.company_id').val();
+
+    //     if(category_id && company_id) {
+    //         $.ajax({
+    //             type: "GET",
+    //             url: "{{ route('getProductsByCategoryAndCompany') }}",
+    //             data: {'category_id': category_id, 'company_id': company_id},
+    //             dataType: "json",
+    //             success: function(res) {
+    //                 if(res) {
+    //                     var productSelect = row.find('.product_id');
+    //                     productSelect.empty();
+    //                     productSelect.append('<option value="">Select product</option>');
+    //                     $.each(res, function(key, value) {
+    //                         productSelect.append('<option value="'+ key +'">'+ value +'</option>');
+    //                     });
+    //                 }
+    //             }
+    //         });
+    //     } else {
+    //         row.find('.product_id').empty();
+    //     }
+    // });
+
+
     $(document).on('change', '.category_id', function() {
         var category_id = $(this).val();
         var row = $(this).closest('tr');
         var company_id = row.find('.company_id').val();
 
-        if(category_id && company_id) {
+        if(company_id && category_id) {
+            console.log('companyID:', company_id, 'categoryID:',category_id);
+            
             $.ajax({
                 type: "GET",
                 url: "{{ route('getProductsByCategoryAndCompany') }}",
                 data: {'category_id': category_id, 'company_id': company_id},
                 dataType: "json",
                 success: function(res) {
+                    console.log('product:',res);
+                    
                     if(res) {
                         var productSelect = row.find('.product_id');
                         productSelect.empty();
                         productSelect.append('<option value="">Select product</option>');
                         $.each(res, function(key, value) {
-                            productSelect.append('<option value="'+ key +'">'+ value +'</option>');
+                            console.log(value);
+                            
+                            // productSelect.append('<option value="'+ key +'">'+ value +'</option>');
+                            var stockQuantity = value.match(/\((\d+)\)/); // Extract the stock quantity from the string
+                            var stock = stockQuantity ? parseInt(stockQuantity[1]) : 0;
+
+                            if (stock <= 5) { // Define what you consider "low stock" (e.g., less than or equal to 5)
+                                productSelect.append('<option value="'+ key +'" style="color:red;">'+ value +'</option>');
+                            } else {
+                                productSelect.append('<option value="'+ key +'" style="color:green;">'+ value +'</option>');
+                            }
                         });
                     }
                 }
@@ -571,6 +622,7 @@
             row.find('.product_id').empty();
         }
     });
+
 });
 
 </script>

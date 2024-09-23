@@ -47,23 +47,44 @@ class PurchaseController extends Controller
         return response()->json($categories);
     }
 
+    // public function getProductsByCategoryAndCompany(Request $request)
+    // {
+    //     $company_id = $request->input('company_id');
+    //     $category_id = $request->input('category_id');
+
+    //     // Assuming you have a 'products' table with 'id' and 'product_name' columns
+    //     $products = Product::where('company_id', $company_id)
+    //                         ->where('category_id', $category_id)
+    //                         ->pluck('product_name', 'id');
+    //     // $products = Product::join('stocks', 'products.id', '=', 'stocks.product_id')
+    //     //                     ->where('products.company_id', $company_id)
+    //     //                     ->where('products.category_id', $category_id)
+    //     //                     ->where('stocks.quantity', '>', 0)
+    //     //                     ->pluck('products.product_name', 'products.id');
+
+    //     return response()->json($products);
+    // }
+
     public function getProductsByCategoryAndCompany(Request $request)
     {
-        $company_id = $request->input('company_id');
         $category_id = $request->input('category_id');
+        $company_id = $request->input('company_id');
 
-        // Assuming you have a 'products' table with 'id' and 'product_name' columns
-        $products = Product::where('company_id', $company_id)
-                            ->where('category_id', $category_id)
-                            ->pluck('product_name', 'id');
-        // $products = Product::join('stocks', 'products.id', '=', 'stocks.product_id')
-        //                     ->where('products.company_id', $company_id)
-        //                     ->where('products.category_id', $category_id)
-        //                     ->where('stocks.quantity', '>', 0)
-        //                     ->pluck('products.product_name', 'products.id');
+        // Assuming you have a Product model related to the Stock model
+        $products = Product::where('category_id', $category_id)
+                            ->where('company_id', $company_id)
+                            ->with('stock') // Ensure you have a relationship with the Stock model
+                            ->get();
 
-        return response()->json($products);
+        $response = [];
+        foreach($products as $product) {
+            $stockQuantity = $product->stock ? $product->stock->quantity : 0; // Get stock quantity or default to 0
+            $response[$product->id] = $product->product_name . ' (' . $stockQuantity . ')'; // Include stock in parentheses
+        }
+
+        return response()->json($response);
     }
+
     //**
     public function store(Request $request)
     {
@@ -167,8 +188,9 @@ class PurchaseController extends Controller
     public function edit($id)
     {
         $company = Company::get();
-        $category = Category::get();
-        $product = Product::get();
+        $category = [];
+        // $product = Product::get();
+        $product = [];
         $purchase = Purchase::findOrFail(encryptor('decrypt',$id));
         $purchaseDetails = $purchase->purchasedetails;
         // $purchaseDetail = PurchaseDetails::where('purchase_id',$id)->get();
