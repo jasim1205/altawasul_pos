@@ -14,8 +14,8 @@
 	<link href="{{ asset('public/syndron/assets/plugins/metismenu/css/metisMenu.min.css') }}" rel="stylesheet"/>
 	<link href="{{ asset('public/syndron/assets/plugins/datatable/css/dataTables.bootstrap5.min.css') }}" rel="stylesheet" />
 	<!-- loader-->
-	<link href="{{ asset('public/syndron/assets/css/pace.min.css') }}" rel="stylesheet"/>
-	<script src="{{ asset('public/syndron/assets/js/pace.min.js') }}"></script>
+	{{-- <link href="{{ asset('public/syndron/assets/css/pace.min.css') }}" rel="stylesheet"/>
+	<script src="{{ asset('public/syndron/assets/js/pace.min.js') }}"></script> --}}
 	<!-- Bootstrap CSS -->
 	<link href="{{ asset('public/syndron/assets/css/bootstrap.min.css') }}" rel="stylesheet">
 	<link href="{{ asset('public/syndron/assets/css/bootstrap-extended.css') }}" rel="stylesheet">
