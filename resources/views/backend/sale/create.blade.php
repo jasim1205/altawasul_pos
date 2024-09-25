@@ -420,43 +420,127 @@
     //         row.find('.product_id').empty();
     //     }
     // });
+    // $(document).on('change', '.category_id', function() {
+    //     var category_id = $(this).val();
+    //     var row = $(this).closest('tr');
+    //     var company_id = row.find('.company_id').val();
+
+    //     if(category_id && company_id) {
+    //         $.ajax({
+    //             type: "GET",
+    //             url: "{{ route('getProductsByCategoryAndCompany') }}",
+    //             data: {'category_id': category_id, 'company_id': company_id},
+    //             dataType: "json",
+    //             success: function(res) {
+    //                 if(res) {
+    //                     var productSelect = row.find('.product_id');
+    //                     productSelect.empty();
+    //                     productSelect.append('<option value="">Select product</option>');
+    //                     $.each(res, function(key, value) {
+    //                         // Fetch stock information for each product
+    //                         $.ajax({
+    //                             type: "GET",
+    //                             url: "{{ route('salegetStockByProduct') }}",
+    //                             data: {'product_id': key},
+    //                             dataType: "json",
+    //                             success: function(stock) {
+    //                                 var stockText = stock ? ' (Stock: ' + stock.quantity + ')' : '';
+    //                                 productSelect.append('<option value="'+ key +'">'+ value + stockText +'</option>');
+
+    //                             }
+    //                         });
+    //                     });
+    //                 }
+    //             }
+    //         });
+    //     } else {
+    //         row.find('.product_id').empty();
+    //     }
+    // });
+
+    // $(document).on('change', '.category_id', function() {
+    //     var category_id = $(this).val();
+    //     var row = $(this).closest('tr');
+    //     var company_id = row.find('.company_id').val();
+
+    //     if(category_id && company_id) {
+    //         $.ajax({
+    //             type: "GET",
+    //             url: "{{ route('getProductsByCategoryAndCompany') }}",
+    //             data: {'category_id': category_id, 'company_id': company_id},
+    //             dataType: "json",
+    //             success: function(res) {
+    //                 if(res) {
+    //                     var productSelect = row.find('.product_id');
+    //                     productSelect.empty();
+    //                     productSelect.append('<option value="">Select product</option>');
+    //                     $.each(res, function(key, value) {
+    //                          productSelect.append('<option value="'+ key +'">'+ value +'</option>');
+    //                         // $.ajax({
+    //                         //     type: "GET",
+    //                         //     url: "{{ route('getStockByProduct') }}",
+    //                         //     data: {'product_id': key},
+    //                         //     dataType: "json",
+    //                         //     success: function(stock) {
+    //                         //         var stockText = stock ? ' (Stock: ' + stock.quantity + ')' : '';
+    //                         //         productSelect.append('<option value="'+ key +'">'+ value + stockText +'</option>');
+    //                         //     }
+    //                         // });
+    //                     });
+    //                 }
+    //             }
+    //         });
+    //     } else {
+    //         row.find('.product_id').empty();
+    //     }
+    // });
+
+
     $(document).on('change', '.category_id', function() {
-        var category_id = $(this).val();
-        var row = $(this).closest('tr');
-        var company_id = row.find('.company_id').val();
+    var category_id = $(this).val();
+    var row = $(this).closest('tr');
+    var company_id = row.find('.company_id').val();
 
-        if(category_id && company_id) {
-            $.ajax({
-                type: "GET",
-                url: "{{ route('getProductsByCategoryAndCompany') }}",
-                data: {'category_id': category_id, 'company_id': company_id},
-                dataType: "json",
-                success: function(res) {
-                    if(res) {
-                        var productSelect = row.find('.product_id');
-                        productSelect.empty();
-                        productSelect.append('<option value="">Select product</option>');
-                        $.each(res, function(key, value) {
-                            // Fetch stock information for each product
-                            $.ajax({
-                                type: "GET",
-                                url: "{{ route('salegetStockByProduct') }}",
-                                data: {'product_id': key},
-                                dataType: "json",
-                                success: function(stock) {
-                                    var stockText = stock ? ' (Stock: ' + stock.quantity + ')' : '';
-                                    productSelect.append('<option value="'+ key +'">'+ value + stockText +'</option>');
+    if(category_id && company_id) {
+        $.ajax({
+            type: "GET",
+            url: "{{ route('getProductsByCategoryAndCompany') }}",
+            data: {'category_id': category_id, 'company_id': company_id},
+            dataType: "json",
+            success: function(res) {
+                if(res) {
+                    var productSelect = row.find('.product_id');
+                    productSelect.empty();
+                    productSelect.append('<option value="">Select product</option>');
+                    $.each(res, function(key, value) {
+                        var stockQuantity = value.match(/\((\d+)\)/); // Extract stock quantity from parentheses
+                        var stock = stockQuantity ? parseInt(stockQuantity[1]) : 0;
 
-                                }
-                            });
-                        });
-                    }
+                        if (stock <= 5) { // Highlight products with low stock in red
+                            productSelect.append('<option value="'+ key +'" style="color:red;" data-stock="'+ stock +'">'+ value +'</option>');
+                        } else {
+                            productSelect.append('<option value="'+ key +'" data-stock="'+ stock +'">'+ value +'</option>');
+                        }
+                    });
                 }
-            });
-        } else {
-            row.find('.product_id').empty();
-        }
-    });
+            }
+        });
+    } else {
+        row.find('.product_id').empty();
+    }
+});
+
+// Check stock on product selection
+$(document).on('change', '.product_id', function() {
+    var selectedOption = $(this).find('option:selected'); // Get the selected product option
+    var stock = selectedOption.data('stock'); // Get the stock value from data attribute
+
+    if (stock === 0) {
+        alert("This product is out of stock and cannot be selected.");
+        $(this).val(''); // Reset the selection
+    }
+});
+
 
 });
 
