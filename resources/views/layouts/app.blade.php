@@ -120,6 +120,8 @@
                     </li>
                     <li> <a href="{{ route('yearly_report') }}"><i class='bx bx-radio-circle'></i>Yearly Report</a>
                     </li>
+                    <li> <a href="{{ route('supplier_report') }}"><i class='bx bx-radio-circle'></i>supplier Report</a>
+                    </li>
                 </ul>
           <li>
           {{-- <li class="menu-label">UI Elements</li>
@@ -542,6 +544,7 @@
             var prtContent = document.getElementById(divName);
             var WinPrint = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
             WinPrint.document.write('<link rel="stylesheet" href="{{ asset('public/syndron/assets/css/app.css') }}" type="text/css"/>');
+            WinPrint.document.write('<link href="{{ asset('public/syndron/assets/css/bootstrap.min.css') }}" rel="stylesheet">');
             WinPrint.document.write(prtContent.innerHTML);
             WinPrint.document.close();
             WinPrint.onload =function(){

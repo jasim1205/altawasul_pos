@@ -69,6 +69,7 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
     Route::get('yearly-report', [report::class, 'yearlyReport'])->name('yearly_report');
     // routes/web.php
     Route::get('monthly-details/{year}/{month}', [report::class, 'monthlyDetailsReport'])->name('Monthly_Details');
+    Route::get('supplier-report', [report::class, 'supplier'])->name('supplier_report');
 
 });
 

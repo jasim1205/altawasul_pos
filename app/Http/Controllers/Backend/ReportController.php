@@ -8,6 +8,7 @@ use App\Models\PurchaseDetails;
 use App\Models\Sales;
 use App\Models\SaleDetails;
 use App\Models\DailyExpense;
+use App\Models\Supplier;
 use Illuminate\Http\Request;
 
 class ReportController extends Controller
@@ -135,5 +136,19 @@ class ReportController extends Controller
 
         return view('backend.report.monthlydetails', compact('year', 'month', 'purchases', 'sales', 'expenses', 'totalPurchase', 'totalSale', 'totalExpense'));
     }
+
+    public function supplier(Request $request){
+        // Get start date and end date from the request
+        $startDate = $request->start_date ?? \Carbon\Carbon::now()->format('Y-m-d');
+        $endDate = $request->end_date ?? \Carbon\Carbon::now()->format('Y-m-d');
+        $supplier = Supplier::get();
+        $report = Purchase::whereBetween('date', [$startDate, $endDate]);
+        if($startDate && $endDate && $request->supplier_id){
+            $report->where('supplier_id',$request->supplier_id)->get();
+        }
+
+        return view('backend.report.supplier_report',compact('startDate','endDate','supplier'));
+    }
+    
 
 }
