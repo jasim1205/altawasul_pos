@@ -18,6 +18,9 @@ return new class extends Migration
             $table->unsignedBigInteger('supplier_id')->index();
             $table->foreign('supplier_id')->references('id')->on('suppliers')->onDelete('cascade');
             $table->date('date');
+            $table->string('tm_no')->nullable();
+            $table->string('rf_no')->nullable();
+            $table->string('explanation')->nullable();
             $table->integer('total_quantity');
             $table->decimal('total_quantity_amount',10,2)->nullable();
             $table->integer('total_tax')->nullable();

@@ -33,17 +33,27 @@
                         @csrf
                         @method('PUT')
                     <div class="row">
-                        <div class="col-sm-3">
+                        <div class="col-sm-4">
                             <label for="">Supplier Name</label>
-                            <input type="text" name="supplier_name" value="{{ old('supplier_name',$purchase->supplier?->supplier_name) }}" id="" class="form-control">
+                            <select class="select2 form-select" name="supplier_id">
+                                <option value="">Select supplier</option>
+                                @foreach ($supplier as $value)
+                                    <option value="{{ $value->id }}" {{old('supplier_id',$purchase->supplier_id)== $value->id ? "selected" : ""}}>{{ $value->supplier_name }}</option>
+                                @endforeach
+                            </select>
+                            {{-- <input type="text" name="supplier_name" id="" class="form-control" style="height:30px;"> --}}
                         </div>
-                        <div class="col-sm-3">
-                            <label for="">Email</label>
-                            <input type="text" name="email" value="{{ old('email',$purchase->supplier?->email) }}" id="" class="form-control">
+                        <div class="col-sm-4">
+                            <label for="">Tm No</label>
+                            <input type="text" name="tm_no" id="" value="{{ old('tm_no',$purchase->tm_no) }}" class="form-control" style="height:30px;">
                         </div>
-                        <div class="col-sm-3">
-                            <label for="">Contact</label>
-                            <input type="text" name="contact_no" value="{{ old('contact_no',$purchase->supplier?->contact_no) }}" id="" class="form-control">
+                        <div class="col-sm-4">
+                            <label for="">Rf No</label>
+                            <input type="text" name="rf_no" value="{{ old('rf_no',$purchase->rf_no) }}" id="" class="form-control" style="height:30px;">
+                        </div>
+                        <div class="col-sm-4">
+                            <label for="">Explanation</label>
+                            <input type="text" name="explanation" value="{{ old('explanation',$purchase->explanation) }}" id="" class="form-control" style="height:30px;">
                         </div>
                         <div class="col-sm-3">
                             <label for="">Date</label>

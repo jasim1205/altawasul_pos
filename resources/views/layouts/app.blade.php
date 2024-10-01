@@ -76,6 +76,8 @@
               </li>
               <li> <a href="{{ route('product.index') }}"><i class='bx bx-radio-circle'></i>Product List</a>
               </li>
+              <li> <a href="{{ route('supplier.index') }}"><i class='bx bx-radio-circle'></i>Supplier List</a>
+              </li>
             </ul>
           <li>
             <a href="{{ route('purchase.index') }}" class="has-arrow">

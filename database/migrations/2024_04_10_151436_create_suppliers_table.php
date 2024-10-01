@@ -16,9 +16,10 @@ return new class extends Migration
             $table->string('supplier_name');
             $table->string('email');
             $table->string('contact_no');
+            $table->text('address')->nullable();
             // $table->unsignedBigInteger('product_id')->index()->nullable();
             // $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
-            $table->date('date');
+            $table->date('date')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
