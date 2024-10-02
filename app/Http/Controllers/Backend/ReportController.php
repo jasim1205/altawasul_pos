@@ -143,11 +143,18 @@ class ReportController extends Controller
         $endDate = $request->end_date ?? \Carbon\Carbon::now()->format('Y-m-d');
         $supplier = Supplier::get();
         $report = Purchase::whereBetween('date', [$startDate, $endDate]);
-        if($startDate && $endDate && $request->supplier_id){
-            $report->where('supplier_id',$request->supplier_id)->get();
+        // Initialize the purchase report query
+    
+        // // Apply supplier filter if a supplier is selected
+        if($request->supplier_id){
+            $report->where('supplier_id', $request->supplier_id);
+             $selectedSupplier = Supplier::find($request->supplier_id); // Get the selected supplier
         }
-
-        return view('backend.report.supplier_report',compact('startDate','endDate','supplier'));
+       
+        // Execute the query to get the data
+        $reportData = $report->get();
+        // dd($request->all());
+        return view('backend.report.supplier_report',compact('startDate','endDate','supplier','reportData','selectedSupplier'));
     }
     
 

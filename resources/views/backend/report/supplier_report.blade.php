@@ -18,11 +18,11 @@
                             <input type="date" class="form-control" value="{{ request('end_date') }}" name="end_date" id="end_date" required>
                         </div>
                         <div class="col-3 mb-2">
-                            <label for="employee">Employee Name</label>
-                            <select class="form-control px-4 p1-2" name="employee_id" >
-                                <option value="">All Employee</option>
+                            <label for="">Supplier Name</label>
+                            <select class="form-control px-4 p1-2" name="supplier_id" >
+                                <option value="">All Supplier</option>
                                 @foreach($supplier as $value)
-                                <option value="{{ $value->id }}" {{ request('employee_id') == $value->id ? 'selected' :'' }}>{{ $value->supplier_name }}</option>
+                                <option value="{{ $value->id }}" {{ request('supplier_id') == $value->id ? 'selected' :'' }}>{{ $value->supplier_name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -39,10 +39,46 @@
                 </div>
             </div>
         </div>
+        @if($reportData->isNotEmpty())
         <div class="card-body">
-            
-            
+            <div class="row">
+                <div class="col-md-6">
+                    <h4>Debtor Balance Report</h4>
+                    <p>Statement Value Date</p>
+                </div>
+                <div class="col-md-6">
+                    <p>{{$selectedSupplier->supplier_name}}</p>
+                    <p>Period : <span>{{$startDate}} -{{$endDate}}</span></p>
+                </div>
+            </div>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>SL</th>
+                        <th>Tm No</th>
+                        <th>Rf No</th>
+                        <th>Explanation</th>
+                        <th>Debit</th>
+                        <th>Credit</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($reportData as $value)
+                        <tr>
+                            <td>{{ __(++$loop->index) }}</td>
+                            <td>{{__($value->tm_no)}}</td>
+                            <td>{{__($value->rf_no)}}</td>
+                            <td>{{__($value->explanation)}}</td>
+                            <td>{{__($value->grand_total_amount)}}</td>
+                            <td>{{__($value->pay_amount)}}</td>
+                            <td>{{$value->grand_total_amount - $value->pay_amount}}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
+        @endif
     </div>
 
 
