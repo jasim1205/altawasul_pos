@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title',trans('Purchase'))
+@section('title',trans('Sale'))
 @section('page',trans('Statement'))
 @section('content')
 <style>
@@ -12,7 +12,7 @@
         <div class="card-header">
             <div class="row">
                 <div class="col-sm-12">
-                    <form action="{{ route('supplier_report') }}" method="get">
+                    <form action="{{ route('customer_report') }}" method="get">
                     @csrf
                     <div class="row">
                         <div class="col-md-3">
@@ -25,10 +25,10 @@
                         </div>
                         <div class="col-md-3 mb-2">
                             <label for="">Supplier Name</label>
-                            <select class="form-control px-4 p1-2" name="supplier_id" >
+                            <select class="form-control px-4 p1-2" name="customer_id" >
                                 <option value="">All Supplier</option>
-                                @foreach($supplier as $value)
-                                <option value="{{ $value->id }}" {{ request('supplier_id') == $value->id ? 'selected' :'' }}>{{ $value->supplier_name }}</option>
+                                @foreach($customer as $value)
+                                <option value="{{ $value->id }}" {{ request('customer_id') == $value->id ? 'selected' :'' }}>{{ $value->customer_name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -57,7 +57,7 @@
                     <p>Statement Value Date</p>
                 </div>
                 <div class="col-md-6 text-end">
-                    <p>{{$selectedSupplier?->supplier_name}}</p>
+                    <p>{{$selectedCustomer?->customer_name}}</p>
                     <p>Period : <span>{{$startDate}} -{{$endDate}}</span></p>
                 </div>
             </div>
@@ -88,6 +88,10 @@
                 </tbody>
             </table>
         </div>
+        @else
+            <div>
+                <h1 class="text-center">No Data Found</h1>
+            </div>
         @endif
     </div>
 

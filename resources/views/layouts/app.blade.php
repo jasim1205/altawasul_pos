@@ -78,6 +78,8 @@
               </li>
               <li> <a href="{{ route('supplier.index') }}"><i class='bx bx-radio-circle'></i>Supplier List</a>
               </li>
+              <li> <a href="{{ route('customer.index') }}"><i class='bx bx-radio-circle'></i>Customer List</a>
+              </li>
             </ul>
           <li>
             <a href="{{ route('purchase.index') }}" class="has-arrow">
@@ -123,6 +125,8 @@
                     <li> <a href="{{ route('yearly_report') }}"><i class='bx bx-radio-circle'></i>Yearly Report</a>
                     </li>
                     <li> <a href="{{ route('supplier_report') }}"><i class='bx bx-radio-circle'></i>supplier Report</a>
+                    </li>
+                    <li> <a href="{{ route('customer_report') }}"><i class='bx bx-radio-circle'></i>customer Report</a>
                     </li>
                 </ul>
           <li>

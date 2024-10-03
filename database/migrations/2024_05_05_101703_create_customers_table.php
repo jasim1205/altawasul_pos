@@ -16,7 +16,8 @@ return new class extends Migration
             $table->string('customer_name');
             $table->string('email');
             $table->string('contact_no');
-            $table->date('date');
+            $table->text('address')->nullable();
+            $table->date('date')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

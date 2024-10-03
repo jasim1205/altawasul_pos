@@ -9,6 +9,7 @@ use App\Models\Sales;
 use App\Models\SaleDetails;
 use App\Models\DailyExpense;
 use App\Models\Supplier;
+use App\Models\Customer;
 use Illuminate\Http\Request;
 
 class ReportController extends Controller
@@ -145,16 +146,38 @@ class ReportController extends Controller
         $report = Purchase::whereBetween('date', [$startDate, $endDate]);
         // Initialize the purchase report query
     
+        $selectedSupplier = null;
         // // Apply supplier filter if a supplier is selected
         if($request->supplier_id){
             $report->where('supplier_id', $request->supplier_id);
-             $selectedSupplier = Supplier::find($request->supplier_id); // Get the selected supplier
+            $selectedSupplier = Supplier::find($request->supplier_id); // Get the selected supplier
         }
        
         // Execute the query to get the data
         $reportData = $report->get();
         // dd($request->all());
         return view('backend.report.supplier_report',compact('startDate','endDate','supplier','reportData','selectedSupplier'));
+    }
+
+    public function customer_report(Request $request){
+        // Get start date and end date from the request
+        $startDate = $request->start_date ?? \Carbon\Carbon::now()->format('Y-m-d');
+        $endDate = $request->end_date ?? \Carbon\Carbon::now()->format('Y-m-d');
+        $customer = Customer::get();
+        $report = Sales::whereBetween('date', [$startDate, $endDate]);
+        // Initialize the purchase report query
+    
+        $selectedCustomer = null;
+        // // Apply supplier filter if a supplier is selected
+        if($request->customer_id){
+            $report->where('customer_id', $request->customer_id);
+            $selectedCustomer = Customer::find($request->supplier_id); // Get the selected supplier
+        }
+       
+        // Execute the query to get the data
+        $reportData = $report->get();
+        // dd($request->all());
+        return view('backend.report.customer_report',compact('startDate','endDate','customer','reportData','selectedCustomer'));
     }
     
 

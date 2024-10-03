@@ -15,6 +15,7 @@ use App\Http\Controllers\Backend\SalesController as sale;
 use App\Http\Controllers\Backend\DailyExpenseController as dailyexpense;
 use App\Http\Controllers\Backend\ReportController as report;
 use App\Http\Controllers\Backend\SupplierController as supplier;
+use App\Http\Controllers\Backend\CustomerController as customer;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,6 +47,7 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
     Route::resource('category', category::class);
     Route::resource('product', product::class);
     Route::resource('supplier', supplier::class);
+    Route::resource('customer', customer::class);
     Route::resource('stock', stock::class);
     Route::resource('purchase', purchase::class);
     Route::get('invoice/{id}',[purchase::class, 'invoice'])->name('invoice');
@@ -72,6 +74,7 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
     // routes/web.php
     Route::get('monthly-details/{year}/{month}', [report::class, 'monthlyDetailsReport'])->name('Monthly_Details');
     Route::get('supplier-report', [report::class, 'supplier'])->name('supplier_report');
+    Route::get('customer-report', [report::class, 'customer_report'])->name('customer_report');
     
 });
 
