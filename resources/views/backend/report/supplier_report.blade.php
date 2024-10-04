@@ -25,7 +25,7 @@
                         </div>
                         <div class="col-md-3 mb-2">
                             <label for="">Supplier Name</label>
-                            <select class="form-control px-4 p1-2" name="supplier_id" >
+                            <select class="form-control px-4 p1-2" name="supplier_id" required>
                                 <option value="">All Supplier</option>
                                 @foreach($supplier as $value)
                                 <option value="{{ $value->id }}" {{ request('supplier_id') == $value->id ? 'selected' :'' }}>{{ $value->supplier_name }}</option>
@@ -43,7 +43,7 @@
                 </div>
             </div>
         </div>
-        @if($reportData->isNotEmpty())
+        {{-- @if($reportData->isNotEmpty()) --}}
         <div class="card-body" id="print_area">
             <div class="row report_heading">
                 <h3 class="text-uppercase">Al-Tawasul Auto spare parts l.l.c</h3>
@@ -88,7 +88,7 @@
                 </tbody>
             </table>
         </div>
-        @endif
+        {{-- @endif --}}
     </div>
 
 

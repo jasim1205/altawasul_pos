@@ -35,7 +35,8 @@ class SalesController extends Controller
         $company = Company::get();
         $category = Category::get();
         $product = Product::get();
-        return view('backend.sale.create',compact('company','category','product'));
+        $customer = Customer::get();
+        return view('backend.sale.create',compact('company','category','product','customer'));
     }
 
     /**
@@ -47,17 +48,20 @@ class SalesController extends Controller
             DB::beginTransaction();
 
             // Save supplier information
-            $customer = new Customer;
-            $customer->customer_name = $request->customer_name;
-            $customer->email = $request->email;
-            $customer->contact_no = $request->contact_no;
-            $customer->date = $request->date;
-            $customer->save();
+            // $customer = new Customer;
+            // $customer->customer_name = $request->customer_name;
+            // $customer->email = $request->email;
+            // $customer->contact_no = $request->contact_no;
+            // $customer->date = $request->date;
+            // $customer->save();
 
             // Save purchase information
             $sale = new Sales;
-            $sale->customer_id = $customer->id; // Link purchase to supplier
+            $sale->customer_id = $request->customer_id; // Link purchase to supplier
             $sale->date = $request->date;
+            $sale->tm_no = $request->tm_no;
+            $sale->rf_no = $request->rf_no;
+            $sale->explanation = $request->explanation;
             $sale->total_quantity = $request->total_quantity;
             $sale->total_quantity_amount = $request->total_quantity_amount;
             $sale->total_discount = $request->total_discount;
@@ -138,9 +142,10 @@ class SalesController extends Controller
         $category = [];
         // $product = Product::get();
         $product = [];
+        $customer = Customer::get();
         $sale = Sales::findOrFail(encryptor('decrypt',$id));
         $saledetail = SaleDetails::where('sale_id',$sale->id)->get();
-        return view('backend.sale.edit',compact('company','category','product','sale','saledetail'));
+        return view('backend.sale.edit',compact('company','category','product','sale','saledetail','customer'));
     }
 
     /**
@@ -159,14 +164,18 @@ class SalesController extends Controller
             $oldSaleDetails = SaleDetails::where('sale_id', $sale->id)->get();
 
             // Update customer information
-            $customer->customer_name = $request->customer_name;
-            $customer->email = $request->email;
-            $customer->contact_no = $request->contact_no;
-            $customer->date = $request->date;
-            $customer->save();
+            // $customer->customer_name = $request->customer_name;
+            // $customer->email = $request->email;
+            // $customer->contact_no = $request->contact_no;
+            // $customer->date = $request->date;
+            // $customer->save();
 
             // Update sale information
+            $sale->customer_id = $request->customer_id;
             $sale->date = $request->date;
+            $sale->tm_no = $request->tm_no;
+            $sale->rf_no = $request->rf_no;
+            $sale->explanation = $request->explanation;
             $sale->total_quantity = $request->total_quantity;
             $sale->total_quantity_amount = $request->total_quantity_amount;
             $sale->total_discount = $request->total_discount;

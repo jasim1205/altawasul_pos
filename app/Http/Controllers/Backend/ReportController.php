@@ -143,18 +143,21 @@ class ReportController extends Controller
         $startDate = $request->start_date ?? \Carbon\Carbon::now()->format('Y-m-d');
         $endDate = $request->end_date ?? \Carbon\Carbon::now()->format('Y-m-d');
         $supplier = Supplier::get();
-        $report = Purchase::whereBetween('date', [$startDate, $endDate]);
+        $reportData = [];
         // Initialize the purchase report query
     
         $selectedSupplier = null;
         // // Apply supplier filter if a supplier is selected
-        if($request->supplier_id){
-            $report->where('supplier_id', $request->supplier_id);
-            $selectedSupplier = Supplier::find($request->supplier_id); // Get the selected supplier
+        if($request->start_date && $request->end_date){
+            $report = Purchase::whereBetween('date', [$startDate, $endDate]);
+            if($request->supplier_id){
+                $report->where('supplier_id', $request->supplier_id);
+                $selectedSupplier = Supplier::find($request->supplier_id); // Get the selected supplier
+            } 
+            $reportData = $report->get();
         }
        
         // Execute the query to get the data
-        $reportData = $report->get();
         // dd($request->all());
         return view('backend.report.supplier_report',compact('startDate','endDate','supplier','reportData','selectedSupplier'));
     }
@@ -164,18 +167,21 @@ class ReportController extends Controller
         $startDate = $request->start_date ?? \Carbon\Carbon::now()->format('Y-m-d');
         $endDate = $request->end_date ?? \Carbon\Carbon::now()->format('Y-m-d');
         $customer = Customer::get();
-        $report = Sales::whereBetween('date', [$startDate, $endDate]);
+        $reportData = [];
         // Initialize the purchase report query
     
         $selectedCustomer = null;
         // // Apply supplier filter if a supplier is selected
-        if($request->customer_id){
-            $report->where('customer_id', $request->customer_id);
-            $selectedCustomer = Customer::find($request->supplier_id); // Get the selected supplier
+        if($request->start_date && $request->end_date){
+            $report = Sales::whereBetween('date', [$startDate, $endDate]);
+            if($request->customer_id){
+                $report->where('customer_id', $request->customer_id);
+                $selectedCustomer = Customer::find($request->customer_id); // Get the selected supplier
+            }
+            $reportData = $report->get();
         }
        
         // Execute the query to get the data
-        $reportData = $report->get();
         // dd($request->all());
         return view('backend.report.customer_report',compact('startDate','endDate','customer','reportData','selectedCustomer'));
     }

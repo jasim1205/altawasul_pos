@@ -32,7 +32,29 @@
                 <form action="{{route('sale.store')}}" method="post" enctype="multipart/form-data">
                         @csrf
                     <div class="row">
-                        <div class="col-sm-3">
+                        <div class="col-sm-4">
+                            <label for="">Customer Name</label>
+                            <select class="select2 form-select" name="customer_id">
+                                <option value="">Select supplier</option>
+                                @foreach ($customer as $value)
+                                    <option value="{{ $value->id }}">{{ $value->customer_name }}</option>
+                                @endforeach
+                            </select>
+                            {{-- <input type="text" name="supplier_name" id="" class="form-control" style="height:30px;"> --}}
+                        </div>
+                        <div class="col-sm-4">
+                            <label for="">Tm No</label>
+                            <input type="text" name="tm_no" id="" class="form-control" style="height:30px;">
+                        </div>
+                        <div class="col-sm-4">
+                            <label for="">Rf No</label>
+                            <input type="text" name="rf_no" id="" class="form-control" style="height:30px;">
+                        </div>
+                        <div class="col-sm-4">
+                            <label for="">Explanation</label>
+                            <input type="text" name="explanation" id="" class="form-control" style="height:30px;">
+                        </div>
+                        {{-- <div class="col-sm-3">
                             <label for="">Customer Name</label>
                             <input type="text" name="customer_name" id="" class="form-control" style="height:30px;">
                         </div>
@@ -43,7 +65,7 @@
                         <div class="col-sm-3">
                             <label for="">Contact</label>
                             <input type="text" name="contact_no" id="" class="form-control" style="height:30px;">
-                        </div>
+                        </div> --}}
                         <div class="col-sm-3">
                             <label for="">Date</label>
                             <input type="date" name="date" id="current_date" class="form-control" style="height:30px;">

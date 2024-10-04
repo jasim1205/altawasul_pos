@@ -24,9 +24,9 @@
                             <input type="date" class="form-control" value="{{ request('end_date') }}" name="end_date" id="end_date" required>
                         </div>
                         <div class="col-md-3 mb-2">
-                            <label for="">Supplier Name</label>
-                            <select class="form-control px-4 p1-2" name="customer_id" >
-                                <option value="">All Supplier</option>
+                            <label for="">Customer Name</label>
+                            <select class="form-control px-4 p1-2" name="customer_id" required>
+                                <option value="">All Customer</option>
                                 @foreach($customer as $value)
                                 <option value="{{ $value->id }}" {{ request('customer_id') == $value->id ? 'selected' :'' }}>{{ $value->customer_name }}</option>
                                 @endforeach
@@ -43,7 +43,7 @@
                 </div>
             </div>
         </div>
-        @if($reportData->isNotEmpty())
+        {{-- @if($reportData->isNotEmpty()) --}}
         <div class="card-body" id="print_area">
             <div class="row report_heading">
                 <h3 class="text-uppercase">Al-Tawasul Auto spare parts l.l.c</h3>
@@ -88,11 +88,11 @@
                 </tbody>
             </table>
         </div>
-        @else
+        {{-- @else
             <div>
                 <h1 class="text-center">No Data Found</h1>
-            </div>
-        @endif
+            </div> --}}
+        {{-- @endif --}}
     </div>
 
 

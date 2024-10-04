@@ -420,6 +420,7 @@ public function update(Request $request, $id)
         $purchase->date = $request->date;
         $purchase->tm_no = $request->tm_no;
         $purchase->rf_no = $request->rf_no;
+        $purchase->explanation = $request->explanation;
         $purchase->total_quantity = $request->total_quantity;
         $purchase->total_quantity_amount = $request->total_quantity_amount;
         $purchase->total_discount = $request->total_discount;
