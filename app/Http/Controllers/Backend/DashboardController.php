@@ -23,13 +23,17 @@ class DashboardController extends Controller
             $currentYear = $currentDate->year; // Current year
 
 
-            $purchase = Purchase::where('date',$currentDate)->sum('total_quantity');
-            $sale = Sales::where('date',$currentDate)->sum('total_quantity');
-            $expense = DailyExpense::where('date',$currentDate)->sum('amount');
+            $purchase = Purchase::whereDate('date', $currentDate->toDateString())->sum('total_quantity');
+            $sale = Sales::whereDate('date', $currentDate->toDateString())->sum('total_quantity');
+            $expense = DailyExpense::whereDate('date', $currentDate->toDateString())->sum('amount');
 
-            $monthlypurchase = Purchase::where('date',[$startOfMonth,$endOfMonth])->sum('total_quantity');
-            $monthlysale = Sales::where('date',[$startOfMonth,$endOfMonth])->sum('total_quantity');
-            $monthlyexpense = DailyExpense::where('date',[$startOfMonth,$endOfMonth])->sum('amount');
+            // $purchase = Purchase::where('date',$currentDate)->sum('total_quantity');
+            // $sale = Sales::where('date',$currentDate)->sum('total_quantity');
+            // $expense = DailyExpense::where('date',$currentDate)->sum('amount');
+
+            $monthlypurchase = Purchase::whereBetween('date',[$startOfMonth,$endOfMonth])->sum('total_quantity');
+            $monthlysale = Sales::whereBetween('date',[$startOfMonth,$endOfMonth])->sum('total_quantity');
+            $monthlyexpense = DailyExpense::whereBetween('date',[$startOfMonth,$endOfMonth])->sum('amount');
 
             $totalpurchase = Purchase::sum('total_quantity');
             $totalsale = Sales::sum('total_quantity');

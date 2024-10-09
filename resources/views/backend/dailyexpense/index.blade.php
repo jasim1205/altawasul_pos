@@ -43,7 +43,8 @@
                                 <td>{{ __(++$loop->index) }}</td>
                                 <td>{{ __($value->purpose_title) }}</td>
                                 <td>{{ __($value->amount) }}</td>
-                                <td>{{ __($value->date) }}</td>
+                                <td>{{ \Carbon\Carbon::parse($value->date)->format('d/M/Y') }}</td>
+                                {{-- <td>{{ date('j-M-y',strtotime($value->date)) }}</td> --}}
                                 <td>{{ __($value->remarks) }}</td>
                                 {{-- <td><img src="{{ asset('public/uploads/product/'.$value->product_image) }}" width="50px"></td> --}}
                                 <td class="white-space-nowrap">

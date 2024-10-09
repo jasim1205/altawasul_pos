@@ -38,21 +38,21 @@
                     <div id="test-l-1" role="tabpanel" class="bs-stepper-pane" aria-labelledby="stepper1trigger1">
                         <div class="row g-3">
                             <div class="col-12 col-lg-6">
-                                <label for="FisrtName" class="form-label">Company Name</label>
+                                <label for="FisrtName" class="form-label">Purpose</label>
                                <input type="text" name="purpose_title" value="{{ old('purpose_title',$dailyexpense->purpose_title) }}" id="" class="form-control">
                                 @error('purpose_title')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
                             <div class="col-12 col-lg-6">
-                                <label for="name" class="form-label">Category Name</label>
+                                <label for="name" class="form-label">Amount</label>
                                 <input type="text" name="amount"  value="{{ old('amount',$dailyexpense->amount) }}" id="" class="form-control">
                                 @error('amount')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
                             <div class="col-12 col-lg-6">
-                                <label for="name" class="form-label">Product Name</label>
+                                <label for="name" class="form-label">Date</label>
                                 <input type="date" name="date" class="form-control" value="{{ old('date',$dailyexpense->date) }}" id="current_date" p/>
 
                             </div>

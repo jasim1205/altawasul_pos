@@ -44,7 +44,7 @@
                                 @enderror
                             </div>
                             <div class="col-12 col-lg-6">
-                                <label for="name" class="form-label">Mount</label>
+                                <label for="name" class="form-label">Amount</label>
                                 <input type="text" name="amount"  value="{{ old('amount') }}" id="" class="form-control">
                                 @error('amount')
                                     <span class="text-danger">{{ $message }}</span>
@@ -53,7 +53,6 @@
                             <div class="col-12 col-lg-6">
                                 <label for="name" class="form-label">Date</label>
                                 <input type="date" name="date" class="form-control" value="{{ old('date') }}" id="current_date" p/>
-
                             </div>
                             <div class="col-12 col-lg-6">
                                 <label for="" class="form-label">Remarks</label>
