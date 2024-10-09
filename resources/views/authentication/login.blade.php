@@ -11,15 +11,16 @@
     }
 </style>
 
-<div class="col-sm-6 col-lg-4 mx-auto">
-    <div class="card p-3 my-5 mx-4 shadow-lg">
+<div class="col-sm-6 col-lg-4 m-auto mt-5">
+    <div class="card p-3 my-5 shadow">
         <form action="{{route('login.check')}}" method="POST">
         @csrf
         <!-- <a href="index.html"
             ><img src="{{asset('public/assets/compiled/svg/logo.svg')}}" class="w-25" alt="Logo"
         /></a> -->
+        <h1 class="text-center fw-bold">Al-Tawasul</h1>
         <h1 class="text-center fw-bold">Login</h1>
-        <div class="form-group">
+        <div class="form-group my-4">
             <input type="text" class="form-control" name="username" placeholder="Username" />
             {{--<div class="form-control-icon">
                 <i class="bi bi-person"></i>

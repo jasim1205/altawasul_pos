@@ -2,7 +2,7 @@
 @section('title','Login')
 @section('content')
 <div class="col-sm-6 col-lg-4 mx-auto">
-    <div class="card p-3 my-5 shadow-lg">
+    <div class="card p-3 my-5 shadow">
         <form action="{{route('register.store')}}" method="POST">
             @csrf
             <!-- <div class="auth-logo">
