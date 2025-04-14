@@ -9,6 +9,8 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Http\Traits\ImageHandleTraits;
 Use File;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -66,6 +68,24 @@ class ProductController extends Controller
                 $request->product_image->move(public_path('uploads/product'),$imageName);
                 $product->product_image = $imageName;
             }
+            //  if ($product->save()) {
+            //     // Generate QR Code Data
+            //     $qrData = "Product: {$product->product_name}\n";
+            //     $qrData .= "Company: " . $product->company->name . "\n";
+            //     $qrData .= "Code: {$product->id}\n";
+            //     $qrData .= "Price: {$product->unit_price}";
+
+            //     // Generate and save the QR code
+            //     $qrCodePath = 'uploads/qr_codes/' . $product->id . '.svg';
+            //     QrCode::format('svg')->size(200)->generate($qrData, public_path($qrCodePath));
+
+            //     // Save QR code path in the database
+            //     $product->qr_code = $qrCodePath;
+            //     $product->save();
+
+            //     $this->notice::success('Product Successfully Saved with QR Code');
+            //     return redirect()->route('product.index');
+            // }
           
             if($product->save()){
                 $this->notice::success('Product Successfully Saved');

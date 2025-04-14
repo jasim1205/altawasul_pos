@@ -82,10 +82,38 @@
               </li>
             </ul>
           <li>
+            <a href="{{ route('supplier.index') }}" class="has-arrow">
+              <div class="parent-icon"><i class="bx bx-category"></i>
+              </div>
+              <div class="menu-title">Supplier</div>
+            </a>
+          </li>
+          <li>
             <a href="{{ route('purchase.index') }}" class="has-arrow">
               <div class="parent-icon"><i class="bx bx-category"></i>
               </div>
               <div class="menu-title">Purchase</div>
+            </a>
+          </li>
+          <li>
+            <a href="{{ route('creditpurchase.index') }}" class="has-arrow">
+              <div class="parent-icon"><i class="bx bx-category"></i>
+              </div>
+              <div class="menu-title">Credit Purchase</div>
+            </a>
+          </li>
+          <li>
+            <a href="{{ route('usedpurchase.index') }}" class="has-arrow">
+              <div class="parent-icon"><i class="bx bx-category"></i>
+              </div>
+              <div class="menu-title">Used Purchase</div>
+            </a>
+          </li>
+          <li>
+            <a href="{{ route('bngpurchase.index') }}" class="has-arrow">
+              <div class="parent-icon"><i class="bx bx-category"></i>
+              </div>
+              <div class="menu-title">BNG Purchase</div>
             </a>
           </li>
           <li>

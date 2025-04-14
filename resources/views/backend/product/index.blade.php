@@ -1,6 +1,6 @@
 @extends('layouts.app')
-@section('title',trans('Product'))
-@section('page',trans('List'))
+@section('title', trans('Product'))
+@section('page', trans('List'))
 @section('content')
 
     <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
@@ -16,51 +16,67 @@
         </div>
         <div class="ms-auto">
             <div class="btn-group">
-                <a class="btn btn-primary" href="{{route('product.create')}}"><i class="fa fa-plus"></i></a>
+                <a class="btn btn-primary" href="{{ route('product.create') }}"><i class="fa fa-plus"></i></a>
             </div>
         </div>
     </div>
     <!--end breadcrumb-->
     {{-- <h6 class="mb-0 text-uppercase">Product</h6> --}}
-    <hr/>
+    <hr />
     <div class="card">
         <div class="card-body">
             <div class="table-responsive">
                 <table id="example" class="table table-striped table-bordered" style="width:100%">
                     <thead>
                         <tr>
-                            <th scope="col">{{__('#SL')}}</th>
+                            <th scope="col">{{ __('#SL') }}</th>
                             <th>Company</th>
                             <th>Category</th>
                             <th>Product Name</th>
                             <th>Product Model</th>
                             {{-- <th>Unit Price</th> --}}
                             <th>Product Image</th>
+                            <th>QR Code</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                         @forelse ($product as $value)
-                            <tr> 
+                        @forelse ($product as $value)
+                            <tr>
                                 <td>{{ __(++$loop->index) }}</td>
                                 <td>{{ __($value->company?->company_name) }}</td>
                                 <td>{{ __($value->category?->category_name) }}</td>
                                 <td>{{ __($value->product_name) }}</td>
                                 <td>{{ __($value->product_model) }}</td>
                                 {{-- <td>{{ __($value->unit_price) }}</td> --}}
-                                <td><img src="{{ asset('public/uploads/product/'.$value->product_image) }}" width="50px"></td>
+                                <td><img src="{{ asset('public/uploads/product/' . $value->product_image) }}"
+                                        width="50px">
+                                </td>
+                                {{-- <td>{!! QrCode::size(100)->generate($value->product_name) !!}
+                                </td> --}}
+                                <td>
+                                    {!! QrCode::size(50)->generate(
+                                        "Product: {$value->product_name}\n" .
+                                            "Model: {$value->product_model}\n" .
+                                            "Company: {$value->company?->company_name}\n" .
+                                            "Category: {$value->category?->category_name}\n" .
+                                            'Mobile: 0555611560',
+                                    ) !!}
+                                </td>
+
                                 <td class="white-space-nowrap">
                                     <div class="d-flex">
-                                        <a href="{{route('product.edit',encryptor('encrypt',$value->id))}}">
+                                        <a href="{{ route('product.edit', encryptor('encrypt', $value->id)) }}">
                                             <i class="fa fa-edit"></i>
                                         </a>
-                                        <form action="{{route('product.destroy',encryptor('encrypt',$value->id))}}" method="post">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" style="border:none">
-                                                    <span class=""><i class="fa fa-trash text-danger"></i></span>
-                                                </button>
-                                            </form>
+                                        <form action="{{ route('product.destroy', encryptor('encrypt', $value->id)) }}"
+                                            method="post">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" style="border:none">
+                                                <span class=""><i class="fa fa-trash text-danger"></i></span>
+                                            </button>
+                                        </form>
                                     </div>
                                 </td>
                             </tr>
@@ -75,7 +91,7 @@
         </div>
     </div>
 
-{{-- <div class="page-heading">
+    {{-- <div class="page-heading">
     <div class="page-title">
         <div class="row">
             <div class="col-12 col-md-6 order-md-1 order-last">

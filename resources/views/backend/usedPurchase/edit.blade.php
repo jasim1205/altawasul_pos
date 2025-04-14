@@ -1,6 +1,6 @@
 @extends('layouts.app')
-@section('title',trans('Expense'))
-@section('page',trans('Create'))
+@section('title',trans('Used Purchase'))
+@section('page',trans('Edit'))
 @section('content')
 
 <!--breadcrumb-->
@@ -11,52 +11,54 @@
             <ol class="breadcrumb mb-0 p-0">
                 <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">Add New Product</li>
+                <li class="breadcrumb-item active" aria-current="page">Edit Used Purchase</li>
             </ol>
         </nav>
     </div>
     <div class="ms-auto">
         <div class="btn-group">
-            <a class="btn btn-primary" href="{{route('product.index')}}"><i class="fa fa-list"></i></a>
+            <a class="btn btn-primary" href="{{route('usedpurchase.index')}}"><i class="fa fa-list"></i></a>
         </div>
     </div>
 </div>
 <!--end breadcrumb-->
 <!--start stepper one-->
-<h6 class="text-uppercase">Product</h6>
+<h6 class="text-uppercase">Purchase</h6>
 <hr>
 <div id="stepper1" class="bs-stepper">
     <div class="card">
         <div class="card-header">
-            <h4 class="card-title">Add New</h4>
+            <h4 class="card-title">Edit</h4>
         </div>
         <div class="card-body">
             <div class="bs-stepper-content">
-                <form action="{{route('dailyexpense.store')}}" method="post" enctype="multipart/form-data">
+                <form action="{{route('usedpurchase.update',encryptor('encrypt',$usedPurchase->id))}}" method="post" enctype="multipart/form-data">
                         @csrf
+                        @method('Patch')
                     <div id="test-l-1" role="tabpanel" class="bs-stepper-pane" aria-labelledby="stepper1trigger1">
                         <div class="row g-3">
                             <div class="col-12 col-lg-6">
                                 <label for="FisrtName" class="form-label">Purpose</label>
-                               <input type="text" name="purpose_title" value="{{ old('purpose_title') }}" id="" class="form-control">
-                                @error('purpose_title')
+                               <input type="text" name="purchase_title" value="{{ old('purchase_title',$usedPurchase->purchase_title) }}" id="" class="form-control">
+                                @error('purchase_title')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
                             <div class="col-12 col-lg-6">
                                 <label for="name" class="form-label">Amount</label>
-                                <input type="text" name="amount"  value="{{ old('amount') }}" id="" class="form-control">
+                                <input type="text" name="amount"  value="{{ old('amount',$usedPurchase->amount) }}" id="" class="form-control">
                                 @error('amount')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
                             <div class="col-12 col-lg-6">
                                 <label for="name" class="form-label">Date</label>
-                                <input type="date" name="date" class="form-control" value="{{ old('date') }}" id="current_date" p/>
+                                <input type="date" name="date" class="form-control" value="{{ old('date',$usedPurchase->date) }}" id="current_date" p/>
+
                             </div>
                             <div class="col-12 col-lg-6">
                                 <label for="" class="form-label">Remarks</label>
-                                <textarea name="remarks" id="" class="form-control">{{old('remarks')}}</textarea>
+                                <textarea name="remarks" id="" class="form-control">{{old('remarks',$usedPurchase->remarks)}}</textarea>
                             </div>
                             <div class="col-12 col-lg-6">
                                 <button type="submit" class="btn btn-primary px-4">Save</button>

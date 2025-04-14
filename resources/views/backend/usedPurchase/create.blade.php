@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title',trans('Expense'))
+@section('title',trans('Used Purchase'))
 @section('page',trans('Create'))
 @section('content')
 
@@ -11,19 +11,19 @@
             <ol class="breadcrumb mb-0 p-0">
                 <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">Add New Product</li>
+                <li class="breadcrumb-item active" aria-current="page">Add New Purchase</li>
             </ol>
         </nav>
     </div>
     <div class="ms-auto">
         <div class="btn-group">
-            <a class="btn btn-primary" href="{{route('product.index')}}"><i class="fa fa-list"></i></a>
+            <a class="btn btn-primary" href="{{route('usedpurchase.index')}}"><i class="fa fa-list"></i></a>
         </div>
     </div>
 </div>
 <!--end breadcrumb-->
 <!--start stepper one-->
-<h6 class="text-uppercase">Product</h6>
+<h6 class="text-uppercase">Purchase</h6>
 <hr>
 <div id="stepper1" class="bs-stepper">
     <div class="card">
@@ -32,14 +32,14 @@
         </div>
         <div class="card-body">
             <div class="bs-stepper-content">
-                <form action="{{route('dailyexpense.store')}}" method="post" enctype="multipart/form-data">
+                <form action="{{route('usedpurchase.store')}}" method="post" enctype="multipart/form-data">
                         @csrf
                     <div id="test-l-1" role="tabpanel" class="bs-stepper-pane" aria-labelledby="stepper1trigger1">
                         <div class="row g-3">
                             <div class="col-12 col-lg-6">
-                                <label for="FisrtName" class="form-label">Purpose</label>
-                               <input type="text" name="purpose_title" value="{{ old('purpose_title') }}" id="" class="form-control">
-                                @error('purpose_title')
+                                <label for="FisrtName" class="form-label">Purpose/Description</label>
+                               <input type="text" name="purchase_title" value="{{ old('purchase_title') }}" id="" class="form-control">
+                                @error('purchase_title')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>

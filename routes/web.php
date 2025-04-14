@@ -16,6 +16,9 @@ use App\Http\Controllers\Backend\DailyExpenseController as dailyexpense;
 use App\Http\Controllers\Backend\ReportController as report;
 use App\Http\Controllers\Backend\SupplierController as supplier;
 use App\Http\Controllers\Backend\CustomerController as customer;
+use App\Http\Controllers\Backend\UsedPurchaseController as usedPurchase;
+use App\Http\Controllers\Backend\BngPurchaseController as bngpurchase;
+use App\Http\Controllers\Backend\CreditPurchaseController as creditpurchase;
 
 /*
 |--------------------------------------------------------------------------
@@ -75,6 +78,9 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
     Route::get('monthly-details/{year}/{month}', [report::class, 'monthlyDetailsReport'])->name('Monthly_Details');
     Route::get('supplier-report', [report::class, 'supplier'])->name('supplier_report');
     Route::get('customer-report', [report::class, 'customer_report'])->name('customer_report');
+    Route::resource('usedpurchase', usedPurchase::class);
+    Route::resource('bngpurchase', bngpurchase::class);
+    Route::resource('creditpurchase', creditpurchase::class);
     
 });
 

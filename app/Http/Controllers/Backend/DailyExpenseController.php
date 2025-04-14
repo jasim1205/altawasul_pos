@@ -37,7 +37,7 @@ class DailyExpenseController extends Controller
             $request->validate([
                 'purpose_title' => 'required|string',
                 'amount' => 'required',
-                'remarks' => 'required|string',
+                // 'remarks' => 'required|string',
                 // 'product_model' => 'required|string',
                 // 'unit_price' => 'required|numeric',
                 'file' => 'nullable|mimes:jpeg,jpg,png|max:3072', // Adjust max file size as needed (2048 KB = 3 MB)
@@ -92,7 +92,7 @@ class DailyExpenseController extends Controller
             $request->validate([
                 'purpose_title' => 'required|string',
                 'amount' => 'required',
-                'remarks' => 'required|string',
+                // 'remarks' => 'required|string',
                 // 'product_model' => 'required|string',
                 // 'unit_price' => 'required|numeric',
                 'file' => 'nullable|mimes:jpeg,jpg,png|max:3072', // Adjust max file size as needed (2048 KB = 3 MB)

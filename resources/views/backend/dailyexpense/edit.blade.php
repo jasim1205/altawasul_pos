@@ -1,6 +1,6 @@
 @extends('layouts.app')
-@section('title',trans('Product'))
-@section('page',trans('Create'))
+@section('title',trans('Expense'))
+@section('page',trans('Edit'))
 @section('content')
 
 <!--breadcrumb-->
@@ -11,13 +11,13 @@
             <ol class="breadcrumb mb-0 p-0">
                 <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">Add New Product</li>
+                <li class="breadcrumb-item active" aria-current="page">Edit Expense</li>
             </ol>
         </nav>
     </div>
     <div class="ms-auto">
         <div class="btn-group">
-            <a class="btn btn-primary" href="{{route('product.index')}}"><i class="fa fa-list"></i></a>
+            <a class="btn btn-primary" href="{{route('dailyexpense.index')}}"><i class="fa fa-list"></i></a>
         </div>
     </div>
 </div>
