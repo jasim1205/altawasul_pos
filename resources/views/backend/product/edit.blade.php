@@ -45,14 +45,14 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="col-12 col-lg-6">
+                            {{-- <div class="col-12 col-lg-6">
                                 <label for="name" class="form-label">Category Name</label>
                                 <select name="category_id" id="category_id" class="form-control">
                                     <option value="{{ $value->id }}" {{old('category_id',$product->category_id=$value->id ? 'selected' : '') }}>
                                         {{ $value->category_name }}
                                     </option>
                                 </select>
-                            </div>
+                            </div> --}}
                             <div class="col-12 col-lg-6">
                                 <label for="name" class="form-label">Product Name</label>
                                 <input type="text" name="product_name" value="{{ old('product_name',$product->product_name) }}" class="form-control" id="name" placeholder="Enter a product name"/>

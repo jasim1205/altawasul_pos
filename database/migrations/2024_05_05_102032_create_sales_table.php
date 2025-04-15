@@ -22,6 +22,7 @@ return new class extends Migration
             $table->integer('total_quantity');
             $table->decimal('total_quantity_amount',10,2)->nullable();
             $table->integer('total_tax')->nullable();
+            $table->decimal('total_tax_amount',10,2)->nullable();
             $table->decimal('total_subamount',10,2)->nullable();
             $table->integer('total_discount')->nullable();
             $table->decimal('grand_total_amount',10,2);

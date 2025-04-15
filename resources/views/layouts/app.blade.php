@@ -72,20 +72,27 @@
             <ul>
               <li> <a href="{{ route('company.index') }}"><i class='bx bx-radio-circle'></i>Company List</a>
               </li>
-              <li> <a href="{{ route('category.index') }}"><i class='bx bx-radio-circle'></i>Category List</a>
-              </li>
+              {{-- <li> <a href="{{ route('category.index') }}"><i class='bx bx-radio-circle'></i>Category List</a>
+              </li> --}}
               <li> <a href="{{ route('product.index') }}"><i class='bx bx-radio-circle'></i>Product List</a>
               </li>
-              <li> <a href="{{ route('supplier.index') }}"><i class='bx bx-radio-circle'></i>Supplier List</a>
-              </li>
-              <li> <a href="{{ route('customer.index') }}"><i class='bx bx-radio-circle'></i>Customer List</a>
-              </li>
+              {{-- <li> <a href="{{ route('supplier.index') }}"><i class='bx bx-radio-circle'></i>Supplier List</a>
+              </li> --}}
+              {{-- <li> <a href="{{ route('customer.index') }}"><i class='bx bx-radio-circle'></i>Customer List</a>
+              </li> --}}
             </ul>
           <li>
             <a href="{{ route('supplier.index') }}" class="has-arrow">
               <div class="parent-icon"><i class="bx bx-category"></i>
               </div>
               <div class="menu-title">Supplier</div>
+            </a>
+          </li>
+          <li>
+            <a href="{{ route('customer.index') }}" class="has-arrow">
+              <div class="parent-icon"><i class="bx bx-category"></i>
+              </div>
+              <div class="menu-title">Customer</div>
             </a>
           </li>
           <li>

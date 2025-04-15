@@ -76,12 +76,13 @@
                                     <thead>
                                         <tr class="text-center">
                                             <th scope="col">{{__('Company')}}</th>
-                                            <th scope="col">{{__('Category')}}</th>
+                                            {{-- <th scope="col">{{__('Category')}}</th> --}}
                                             <th scope="col">{{__('Product')}}</th>
                                             <th scope="col">{{__('Unit Price')}}</th>
                                             <th scope="col">{{__('Quantity')}}</th>
                                             <th scope="col">{{__('Amount')}}</th>
                                             <th scope="col">{{__('Tax(%)')}}</th>
+                                            <th scope="col">{{__('Tax(%)-Amount')}}</th>
                                             <th scope="col">{{__('Sub Amount')}}</th>
                                             <th scope="col">{{__('Discount Type')}}</th>
                                             <th scope="col">{{__('Discount')}}</th>
@@ -100,7 +101,7 @@
                                                     @endforeach
                                                 </select>
                                             </td>
-                                            <td>
+                                            {{-- <td>
                                                 @php
                                                    $company_id = $sdetail->company_id;
                                                    $category = DB::table('categories')->where('company_id',$company_id)->get();
@@ -111,14 +112,14 @@
                                                     @endforeach
 
                                                 </select>
-                                                {{-- <select class="select2 category_id" onchange="doData(this);" name="category_id[]">
+                                                <select class="select2 category_id" onchange="doData(this);" name="category_id[]">
                                                     <option value="">Select Category</option>
-                                                </select> --}}
-                                            </td>
+                                                </select> 
+                                            </td>--}}
                                             <td>
                                                 @php
-                                                   $category_id = $sdetail->category_id;
-                                                   $product = DB::table('products')->where('category_id',$category_id)->get();
+                                                   $company_id = $sdetail->company_id;
+                                                   $product = DB::table('products')->where('company_id',$company_id)->get();
                                                 @endphp
                                                 <select class="select2 product_id" onchange="doData(this);" name="product_id[]" readonly>
                                                     @foreach ($product as $value)
@@ -133,6 +134,7 @@
                                             <td><input class="form-control toquantity" type="text" name="quantity[]" value="{{ old('quantity',$sdetail->quantity) }}" style="width: 80px; height:25px;"></td>
                                             <td><input class="form-control amount"  type="text" name="amount[]" value="{{ old('amount',$sdetail->amount) }}" style="width: 100px; height:25px;"></td>
                                             <td><input class="form-control totax"  type="text" name="tax[]" value="{{ old('tax',$sdetail->tax) }}" style="width: 80px; height:25px;"></td>
+                                            <td><input class="form-control totax_amount"  type="text" name="tax_amount[]" value="{{ old('tax_amount',$sdetail->tax_amount) }}" style="width: 80px; height:25px;"></td>
                                             <td><input class="form-control subamount" type="text" name="sub_amount[]" value="{{ old('sub_amount',$sdetail->sub_amount) }}" style="width: 100px; height:25px;"></td>
                                             <td>
                                                 <select name="discount_type[]" id="" class="select2 form-control discount_type p-0 text-center" style="width: 80px; height:25px;">
@@ -150,11 +152,12 @@
                                         @endforeach
                                     </tbody>
                                     <tfoot>
-                                        <th colspan="3">Total</th>
+                                        <th colspan="2">Total</th>
                                         <th><span class="total_unitprice" id="total_unitprice" ></span></th>
                                         <th><span class="total_quantity" id="total_quantity" ></span></th>
                                         <th><span class="total_amount" id="total_amount"></span></th>
                                         <th><span class="total_tax" id="total_tax"></span></th>
+                                        <th><span class="total_tax_amount" id="total_tax_amount"></span></th>
                                         <th><span class="total_subamount" id="total_subamount"></span></th>
                                         <th></th>
                                         <th colspan=""><span class="total_discount" id="total_discount"></span></th>
@@ -166,6 +169,7 @@
                                         <input type="hidden" name="total_quantity_amount" id="total_quantity_amount_hidden">
                                         <input type="hidden" name="total_discount" id="total_discount_hidden">
                                         <input type="hidden" name="total_tax" id="total_tax_hidden">
+                                        <input type="hidden" name="total_tax_amount" id="total_tax_amount_hidden">
                                         <input type="hidden" name="total_subamount" id="total_subamount_hidden">
                                         <input type="hidden" name="grand_total_amount" id="grand_total_amount_hidden">
                                     </tfoot>
@@ -232,10 +236,12 @@
             var unitPrice = parseFloat(row.find('.uprice').val()) || 0;
             var quantity = parseFloat(row.find('.toquantity').val()) || 0;
             var tax = parseFloat(row.find('.totax').val()) || 0;
+            var tax_amount = parseFloat(row.find('.totax_amount').val()) || 0;
             var discountType = row.find('.discount_type').val();
             var discount = parseFloat(row.find('.todiscount').val()) || 0;
 
             var amount = unitPrice * quantity;
+            var tax_amount = amount*tax/100;
             var subAmount = amount + (amount * tax / 100);
             var totalAmount;
 
@@ -248,6 +254,7 @@
             }
 
             row.find('.amount').val(amount.toFixed(2));
+            row.find('.totax_amount').val(tax_amount.toFixed(2));
             row.find('.subamount').val(subAmount.toFixed(2));
             row.find('.toamount').val(totalAmount.toFixed(2));
         });
@@ -259,10 +266,11 @@
             calculateTotalSubAmount();
             calculateTotalDiscount();
             calculateGrandTotalAmount();
+            calculateTotalTaxAmount();
         }
 
         // Add event listeners for input changes
-        $(document).on('input', '#purchaseHead .uprice, #purchaseHead .toquantity, #purchaseHead .totax, #purchaseHead .todiscount, #purchaseHead .discount_type', function() {
+        $(document).on('input', '#purchaseHead .uprice, #purchaseHead .toquantity, #purchaseHead .totax, #purchaseHead .totax_amount, #purchaseHead .todiscount, #purchaseHead .discount_type', function() {
             calculateAmounts();
         });
 
@@ -313,6 +321,15 @@
         });
         $('#total_tax').text(totalTax);
         $('[name="total_tax"]').val(totalTax); // Update hidden input field
+    }
+    function calculateTotalTaxAmount() {
+        let totalTaxAmount = 0;
+        $('#purchaseHead .totax_amount').each(function() {
+            const tax_amount = parseFloat($(this).val()) || 0;
+            totalTaxAmount += tax_amount;
+        });
+        $('#total_tax_amount').text(totalTaxAmount.toFixed(2));
+        $('[name="total_tax_amount"]').val(totalTaxAmount.toFixed(2)); // Update hidden input field
     }
 
     // Function to calculate total sub amount
@@ -372,11 +389,11 @@
                                 @endforeach
                             </select>
                         </td>
-                        <td>
+                        {{--<td>
                             <select class="select2 category_id" onchange="doData(this);" name="category_id[]">
                                 <option value="">Select Category</option>
                             </select>
-                        </td>
+                        </td>--}}
                         <td>
                             <select class="select2 product_id" onchange="doData(this);" name="product_id[]">
                                 <option value="">Select Product</option>
@@ -386,6 +403,7 @@
                         <td><input class="form-control toquantity" type="text" name="quantity[]"style="width: 80px; height:25px;"></td>
                         <td><input class="form-control amount" type="text" name="amount[]" style="width: 100px; height:25px;"></td>
                         <td><input class="form-control totax" type="text" name="tax[]"style="width: 80px; height:25px;"></td>
+                        <td><input class="form-control totax_amount" type="text" name="tax_amount[]"style="width: 80px; height:25px;"></td>
                         <td><input class="form-control subamount" type="text" name="sub_amount[]"style="width: 100px; height:25px;"></td>
                         <td><select name="discount_type[]" id="" class="select2 text-center p-0 form-control discount_type" style="width: 80px; height:25px;">
                                 <option value="">select</option>

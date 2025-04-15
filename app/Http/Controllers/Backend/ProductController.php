@@ -50,7 +50,7 @@ class ProductController extends Controller
         try{
             $request->validate([
                 'company_id' => 'required|integer',
-                'category_id' => 'required|integer',
+                // 'category_id' => 'required|integer',
                 'product_name' => 'required|string',
                 'product_model' => 'required|string',
                 // 'unit_price' => 'required|numeric',
@@ -59,7 +59,7 @@ class ProductController extends Controller
 
             $product = new Product;
             $product->company_id = $request->company_id;
-            $product->category_id = $request->company_id;
+            // $product->category_id = $request->company_id;
             $product->product_name = $request->product_name;
             $product->product_model = $request->product_model;
             $product->unit_price = $request->unit_price;
@@ -124,7 +124,7 @@ class ProductController extends Controller
         try{
             $product = Product::findOrFail(encryptor('decrypt',$id));
             $product->company_id = $request->company_id;
-            $product->category_id = $request->company_id;
+            // $product->category_id = $request->company_id;
             $product->product_name = $request->product_name;
             $product->product_model = $request->product_model;
             $product->unit_price = $request->unit_price;

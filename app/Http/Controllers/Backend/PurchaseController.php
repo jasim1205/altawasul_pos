@@ -68,12 +68,12 @@ class PurchaseController extends Controller
 
     public function getProductsByCategoryAndCompany(Request $request)
     {
-        $category_id = $request->input('category_id');
+        // $category_id = $request->input('category_id');
         $company_id = $request->input('company_id');
 
         // Assuming you have a Product model related to the Stock model
-        $products = Product::where('category_id', $category_id)
-                            ->where('company_id', $company_id)
+        $products = Product::where('company_id', $company_id)
+                            // ->where('category_id', $category_id)
                             ->with('stock') // Ensure you have a relationship with the Stock model
                             ->get();
 
@@ -111,6 +111,7 @@ class PurchaseController extends Controller
             $purchase->total_quantity_amount = $request->total_quantity_amount;
             $purchase->total_discount = $request->total_discount;
             $purchase->total_tax = $request->total_tax;
+            $purchase->total_tax_amount = $request->total_tax_amount;
             $purchase->total_subamount = $request->total_subamount;
             $purchase->grand_total_amount = $request->grand_total_amount;
             $purchase->pay_amount = $request->pay_amount;
@@ -123,13 +124,14 @@ class PurchaseController extends Controller
                     $purchaseDetail = new PurchaseDetails;
                     $purchaseDetail->purchase_id = $purchase->id; // Link purchase detail to purchase
                     $purchaseDetail->company_id = $companyId;
-                    $purchaseDetail->category_id = $request->category_id[$key];
+                    // $purchaseDetail->category_id = $request->category_id[$key];
                     $purchaseDetail->product_id = $request->product_id[$key];
                     $purchaseDetail->unit_price = $request->unit_price[$key];
                     $purchaseDetail->quantity = $request->quantity[$key];
                     $purchaseDetail->amount = $request->amount[$key];
                     $purchaseDetail->sub_amount = $request->sub_amount[$key];
                     $purchaseDetail->tax = $request->tax[$key];
+                    $purchaseDetail->tax_amount = $request->tax_amount[$key];
                     $purchaseDetail->discount_type = $request->discount_type[$key];
                     $purchaseDetail->discount = $request->discount[$key];
                     $purchaseDetail->total_amount = $request->total_amount[$key];
@@ -425,6 +427,7 @@ public function update(Request $request, $id)
         $purchase->total_quantity_amount = $request->total_quantity_amount;
         $purchase->total_discount = $request->total_discount;
         $purchase->total_tax = $request->total_tax;
+        $purchase->total_tax_amount = $request->total_tax_amount;
         $purchase->total_subamount = $request->total_subamount;
         $purchase->grand_total_amount = $request->grand_total_amount;
         $purchase->pay_amount = $request->pay_amount;
@@ -459,13 +462,14 @@ public function update(Request $request, $id)
                     $purchaseDetail = new PurchaseDetails;
                     $purchaseDetail->purchase_id = $purchase->id; // Link purchase detail to purchase
                     $purchaseDetail->company_id = $companyId;
-                    $purchaseDetail->category_id = $request->category_id[$key];
+                    // $purchaseDetail->category_id = $request->category_id[$key];
                     $purchaseDetail->product_id = $request->product_id[$key];
                     $purchaseDetail->unit_price = $request->unit_price[$key];
                     $purchaseDetail->quantity = $request->quantity[$key];
                     $purchaseDetail->amount = $request->amount[$key];
                     $purchaseDetail->sub_amount = $request->sub_amount[$key];
                     $purchaseDetail->tax = $request->tax[$key];
+                    $purchaseDetail->tax_amount = $request->tax_amount[$key];
                     $purchaseDetail->discount_type = $request->discount_type[$key];
                     $purchaseDetail->discount = $request->discount[$key];
                     $purchaseDetail->total_amount = $request->total_amount[$key];

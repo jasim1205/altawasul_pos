@@ -66,6 +66,7 @@ class SalesController extends Controller
             $sale->total_quantity_amount = $request->total_quantity_amount;
             $sale->total_discount = $request->total_discount;
             $sale->total_tax = $request->total_tax;
+            $sale->total_tax_amount = $request->total_tax_amount;
             $sale->total_subamount = $request->total_subamount;
             $sale->grand_total_amount = $request->grand_total_amount;
             $sale->paid = $request->paid;
@@ -78,13 +79,14 @@ class SalesController extends Controller
                     $saledetails = new SaleDetails;
                     $saledetails->sale_id = $sale->id; // Link purchase detail to purchase
                     $saledetails->company_id = $companyId;
-                    $saledetails->category_id = $request->category_id[$key];
+                    // $saledetails->category_id = $request->category_id[$key];
                     $saledetails->product_id = $request->product_id[$key];
                     $saledetails->unit_price = $request->unit_price[$key];
                     $saledetails->quantity = $request->quantity[$key];
                     $saledetails->amount = $request->amount[$key];
                     $saledetails->sub_amount = $request->sub_amount[$key];
                     $saledetails->tax = $request->tax[$key];
+                    $saledetails->tax_amount = $request->tax_amount[$key];
                     $saledetails->discount_type = $request->discount_type[$key];
                     $saledetails->discount = $request->discount[$key];
                     $saledetails->total_amount = $request->total_amount[$key];
@@ -180,6 +182,7 @@ class SalesController extends Controller
             $sale->total_quantity_amount = $request->total_quantity_amount;
             $sale->total_discount = $request->total_discount;
             $sale->total_tax = $request->total_tax;
+            $sale->total_tax_amount = $request->total_tax_amount;
             $sale->total_subamount = $request->total_subamount;
             $sale->grand_total_amount = $request->grand_total_amount;
             $sale->paid = $request->paid;
@@ -204,13 +207,14 @@ class SalesController extends Controller
                     $saledetails = new SaleDetails;
                     $saledetails->sale_id = $sale->id;
                     $saledetails->company_id = $companyId;
-                    $saledetails->category_id = $request->category_id[$key];
+                    // $saledetails->category_id = $request->category_id[$key];
                     $saledetails->product_id = $request->product_id[$key];
                     $saledetails->unit_price = $request->unit_price[$key];
                     $saledetails->quantity = $request->quantity[$key];
                     $saledetails->amount = $request->amount[$key];
                     $saledetails->sub_amount = $request->sub_amount[$key];
                     $saledetails->tax = $request->tax[$key];
+                    $saledetails->tax_amount = $request->tax_amount[$key];
                     $saledetails->discount_type = $request->discount_type[$key];
                     $saledetails->discount = $request->discount[$key];
                     $saledetails->total_amount = $request->total_amount[$key];

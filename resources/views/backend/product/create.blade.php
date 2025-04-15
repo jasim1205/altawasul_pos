@@ -48,21 +48,21 @@
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
-                            <div class="col-12 col-lg-6">
+                           {{--  <div class="col-12 col-lg-6">
                                 <label for="name" class="form-label">Category Name</label>
                                 <select name="category_id" id="category_id" class="form-control">
                                     <option value="">Select Category</option>
                                 </select>
-                                {{-- <select name="category_id" id="category_id" class="form-control">
+                                <select name="category_id" id="category_id" class="form-control">
                                     <option value="">Select Category</option>
                                     @foreach ($category as $value)
                                         <option value="{{ $value->id }}">{{ $value->category_name }}</option>
                                     @endforeach
-                                </select> --}}
+                                </select> 
                                 @error('category_id')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
-                            </div>
+                            </div>--}}
                             <div class="col-12 col-lg-6">
                                 <label for="name" class="form-label">Product Name</label>
                                 <input type="text" name="product_name" class="form-control" id="name" placeholder="Enter a product name"/>

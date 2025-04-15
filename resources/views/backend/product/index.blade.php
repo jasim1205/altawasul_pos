@@ -31,7 +31,7 @@
                         <tr>
                             <th scope="col">{{ __('#SL') }}</th>
                             <th>Company</th>
-                            <th>Category</th>
+                            {{-- <th>Category</th> --}}
                             <th>Product Name</th>
                             <th>Product Model</th>
                             {{-- <th>Unit Price</th> --}}
@@ -45,7 +45,7 @@
                             <tr>
                                 <td>{{ __(++$loop->index) }}</td>
                                 <td>{{ __($value->company?->company_name) }}</td>
-                                <td>{{ __($value->category?->category_name) }}</td>
+                                {{-- <td>{{ __($value->category?->category_name) }}</td> --}}
                                 <td>{{ __($value->product_name) }}</td>
                                 <td>{{ __($value->product_model) }}</td>
                                 {{-- <td>{{ __($value->unit_price) }}</td> --}}
