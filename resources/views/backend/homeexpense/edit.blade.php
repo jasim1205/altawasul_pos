@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title',trans('Expense'))
+@section('title',trans('Home Expense'))
 @section('page',trans('Edit'))
 @section('content')
 
@@ -11,13 +11,13 @@
             <ol class="breadcrumb mb-0 p-0">
                 <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">Edit Expense</li>
+                <li class="breadcrumb-item active" aria-current="page">Edit Home Expense</li>
             </ol>
         </nav>
     </div>
     <div class="ms-auto">
         <div class="btn-group">
-            <a class="btn btn-primary" href="{{route('dailyexpense.index')}}"><i class="fa fa-list"></i></a>
+            <a class="btn btn-primary" href="{{route('homeexpense.index')}}"><i class="fa fa-list"></i></a>
         </div>
     </div>
 </div>
@@ -32,33 +32,33 @@
         </div>
         <div class="card-body">
             <div class="bs-stepper-content">
-                <form action="{{route('dailyexpense.update',encryptor('encrypt',$dailyexpense->id))}}" method="post" enctype="multipart/form-data">
+                <form action="{{route('homeexpense.update',encryptor('encrypt',$homeexpense->id))}}" method="post" enctype="multipart/form-data">
                         @csrf
                         @method('Patch')
                     <div id="test-l-1" role="tabpanel" class="bs-stepper-pane" aria-labelledby="stepper1trigger1">
                         <div class="row g-3">
                             <div class="col-12 col-lg-6">
                                 <label for="FisrtName" class="form-label">Expense Title</label>
-                               <input type="text" name="expense_title" value="{{ old('expense_title',$dailyexpense->expense_title) }}" id="" class="form-control">
+                               <input type="text" name="expense_title" value="{{ old('expense_title',$homeexpense->expense_title) }}" id="" class="form-control">
                                 @error('expense_title')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
                             <div class="col-12 col-lg-6">
                                 <label for="name" class="form-label">Amount</label>
-                                <input type="text" name="amount"  value="{{ old('amount',$dailyexpense->amount) }}" id="" class="form-control">
+                                <input type="text" name="amount"  value="{{ old('amount',$homeexpense->amount) }}" id="" class="form-control">
                                 @error('amount')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
                             <div class="col-12 col-lg-6">
                                 <label for="name" class="form-label">Date</label>
-                                <input type="date" name="date" class="form-control" value="{{ old('date',$dailyexpense->date) }}" id="current_date" p/>
+                                <input type="date" name="date" class="form-control" value="{{ old('date',$homeexpense->date) }}" id="current_date" p/>
 
                             </div>
                             <div class="col-12 col-lg-6">
                                 <label for="" class="form-label">Remarks</label>
-                                <textarea name="remarks" id="" class="form-control">{{old('remarks',$dailyexpense->remarks)}}</textarea>
+                                <textarea name="remarks" id="" class="form-control">{{old('remarks',$homeexpense->remarks)}}</textarea>
                             </div>
                             <div class="col-12 col-lg-6">
                                 <button type="submit" class="btn btn-primary px-4">Save</button>

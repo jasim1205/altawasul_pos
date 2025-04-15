@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('daily_expenses', function (Blueprint $table) {
+        Schema::create('home_expenses', function (Blueprint $table) {
             $table->id();
             $table->string('expense_title');
             $table->decimal('amount',8,2);
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('daily_expenses');
+        Schema::dropIfExists('home_expenses');
     }
 };

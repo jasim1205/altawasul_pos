@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title',trans('Expense'))
+@section('title',trans('Home Expense'))
 @section('page',trans('List'))
 @section('content')
 
@@ -10,13 +10,13 @@
                 <ol class="breadcrumb mb-0 p-0">
                     <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
                     </li>
-                    <li class="breadcrumb-item active" aria-current="page">Daily Expense List</li>
+                    <li class="breadcrumb-item active" aria-current="page">Home Expense List</li>
                 </ol>
             </nav>
         </div>
         <div class="ms-auto">
             <div class="btn-group">
-                <a class="btn btn-primary" href="{{route('dailyexpense.create')}}"><i class="fa fa-plus"></i></a>
+                <a class="btn btn-primary" href="{{route('homeexpense.create')}}"><i class="fa fa-plus"></i></a>
             </div>
         </div>
     </div>
@@ -38,7 +38,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                         @forelse ($dailyexpense as $value)
+                         @forelse ($homeexpense as $value)
                             <tr>
                                 <td>{{ __(++$loop->index) }}</td>
                                 <td>{{ __($value->expense_title) }}</td>
@@ -49,10 +49,10 @@
                                 {{-- <td><img src="{{ asset('public/uploads/product/'.$value->product_image) }}" width="50px"></td> --}}
                                 <td class="white-space-nowrap">
                                     <div class="d-flex">
-                                        <a href="{{route('dailyexpense.edit',encryptor('encrypt',$value->id))}}">
+                                        <a href="{{route('homeexpense.edit',encryptor('encrypt',$value->id))}}">
                                             <i class="fa fa-edit"></i>
                                         </a>
-                                        <form action="{{route('dailyexpense.destroy',encryptor('encrypt',$value->id))}}" method="post">
+                                        <form action="{{route('homeexpense.destroy',encryptor('encrypt',$value->id))}}" method="post">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" style="border:none">
@@ -64,7 +64,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="7" class="text-center fw-bolder">Daily Expense No found</td>
+                                <td colspan="7" class="text-center fw-bolder">Home Expense No found</td>
                             </tr>
                         @endforelse
                     </tbody>

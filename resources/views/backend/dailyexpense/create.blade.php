@@ -37,9 +37,9 @@
                     <div id="test-l-1" role="tabpanel" class="bs-stepper-pane" aria-labelledby="stepper1trigger1">
                         <div class="row g-3">
                             <div class="col-12 col-lg-6">
-                                <label for="FisrtName" class="form-label">Purpose</label>
-                               <input type="text" name="purpose_title" value="{{ old('purpose_title') }}" id="" class="form-control">
-                                @error('purpose_title')
+                                <label for="FisrtName" class="form-label">Expense Title</label>
+                               <input type="text" name="expense_title" value="{{ old('expense_title') }}" id="" class="form-control">
+                                @error('expense_title')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>

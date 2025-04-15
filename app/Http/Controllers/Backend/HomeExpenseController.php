@@ -1,23 +1,20 @@
 <?php
 
-
 namespace App\Http\Controllers\Backend;
 
-
-
-use App\Models\DailyExpense;
+use App\Models\HomeExpense;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class DailyExpenseController extends Controller
+class HomeExpenseController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $dailyexpense = DailyExpense::orderBy('date','Desc')->get();
-        return view('backend.dailyexpense.index',compact('dailyexpense'));
+         $homeexpense = HomeExpense::orderBy('date','Desc')->get();
+        return view('backend.homeexpense.index',compact('homeexpense'));
     }
 
     /**
@@ -25,7 +22,7 @@ class DailyExpenseController extends Controller
      */
     public function create()
     {
-        return view('backend.dailyexpense.create');
+        return view('backend.homeexpense.create');
     }
 
     /**
@@ -33,7 +30,7 @@ class DailyExpenseController extends Controller
      */
     public function store(Request $request)
     {
-        try{
+         try{
             $request->validate([
                 'expense_title' => 'required|string',
                 'amount' => 'required',
@@ -43,7 +40,7 @@ class DailyExpenseController extends Controller
                 'file' => 'nullable|mimes:jpeg,jpg,png|max:3072', // Adjust max file size as needed (2048 KB = 3 MB)
             ]);
 
-            $expense = new DailyExpense;
+            $expense = new HomeExpense;
             $expense->expense_title = $request->expense_title;
             $expense->amount = $request->amount;
             $expense->date = $request->date;
@@ -55,21 +52,21 @@ class DailyExpenseController extends Controller
             // }
 
             if($expense->save()){
-                $this->notice::success('Daily Expense Successfully Saved');
-                return redirect()->route('dailyexpense.index');
+                $this->notice::success('Home Expense Successfully Saved');
+                return redirect()->route('homeexpense.index');
             }
         }catch(Exception $e){
 
             dd($e);
             $this->notice::success('Something Wrong! Please try again');
-            return redirect()->route('product.create');
+            return redirect()->route('homeexpense.create');
         }
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(DailyExpense $dailyExpense)
+    public function show(HomeExpense $homeExpense)
     {
         //
     }
@@ -77,10 +74,10 @@ class DailyExpenseController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit( $id)
+    public function edit($id)
     {
-        $dailyexpense = DailyExpense::findOrFail(encryptor('decrypt',$id));
-        return view('backend.dailyexpense.edit',compact('dailyexpense'));
+        $homeexpense = HomeExpense::findOrFail(encryptor('decrypt',$id));
+        return view('backend.homeexpense.edit',compact('homeexpense'));
     }
 
     /**
@@ -98,7 +95,7 @@ class DailyExpenseController extends Controller
                 'file' => 'nullable|mimes:jpeg,jpg,png|max:3072', // Adjust max file size as needed (2048 KB = 3 MB)
             ]);
 
-            $expense = DailyExpense::findOrFail(encryptor('decrypt',$id));
+            $expense = homeexpense::findOrFail(encryptor('decrypt',$id));
             $expense->expense_title = $request->expense_title;
             $expense->amount = $request->amount;
             $expense->date = $request->date;
@@ -106,26 +103,26 @@ class DailyExpenseController extends Controller
 
 
             if($expense->save()){
-                $this->notice::success('Daily Expense Successfully Update');
-                return redirect()->route('dailyexpense.index');
+                $this->notice::success('HOme Expense Successfully Update');
+                return redirect()->route('homeexpense.index');
             }
         }catch(Exception $e){
 
             dd($e);
             $this->notice::success('Something Wrong! Please try again');
-            return redirect()->route('product.create');
+            return redirect()->route('homeexpense.create');
         }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy( $id)
+    public function destroy($id)
     {
-        $expense = DailyExpense::findOrFail(encryptor('decrypt',$id));
-        if($expense->delete()){
-            $this->notice::success('Daily Expense Successfully Delete');
-            return redirect()->route('dailyexpense.index');
+        $homeexpense = HomeExpense::findOrFail(encryptor('decrypt',$id));
+        if($homeexpense->delete()){
+            $this->notice::success('Home Expense Successfully Delete');
+            return redirect()->route('homeexpense.index');
         }
     }
 }

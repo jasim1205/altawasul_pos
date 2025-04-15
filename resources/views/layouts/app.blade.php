@@ -145,6 +145,13 @@
             </a>
           </li>
           <li>
+            <a href="{{ route('homeexpense.index') }}" class="has-arrow">
+              <div class="parent-icon"><i class="bx bx-category"></i>
+              </div>
+              <div class="menu-title">Home Expense</div>
+            </a>
+          </li>
+          <li>
                 <a href="javascript:;" class="has-arrow">
                 <div class="parent-icon"><i class="bx bx-category"></i>
                 </div>
