@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('companies', function (Blueprint $table) {
             $table->id();
             $table->string('company_name');
-            $table->string('email')->unique();
-            $table->string('contact_no')->unique();
-            $table->text('address');
+            $table->string('email')->unique()->nullable();
+            $table->string('contact_no')->unique()->nullable();
+            $table->text('address')->nullable();
             $table->integer('status')->default(1)->comment('1=>active 2=>inactive');
             $table->timestamps();
             $table->softDeletes();

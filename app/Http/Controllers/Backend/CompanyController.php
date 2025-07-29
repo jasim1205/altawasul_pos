@@ -33,9 +33,9 @@ class CompanyController extends Controller
         try{
             $request->validate([
                 'company_name' => 'required|string',
-                'email' => 'required|email',
-                'contact_no' => 'required|integer',
-                'address' => 'required|string',
+                // 'email' => 'required|email',
+                // 'contact_no' => 'required|integer',
+                // 'address' => 'required|string',
             ]);
             $company = new Company;
             $company->company_name = $request->company_name;

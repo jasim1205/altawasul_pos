@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('product_name');
             $table->string('product_model');
             $table->double('unit_price',8,2)->nullable();
+            $table->double('old_price',8,2)->nullable();
             $table->string('product_image');
             $table->integer('status')->default(1)->comment('1=>active 2=>inactive');
             $table->timestamps();

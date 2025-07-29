@@ -45,23 +45,23 @@
                             <div class="col-12 col-lg-6">
                                 <label for="name" class="form-label">Company Email</label>
                                 <input type="email;" name="email" class="form-control" id="name" placeholder="Enter a company Email"/>
-                                @error('email')
+                                {{-- @error('email')
                                     <span class="text-danger">{{ $message }}</span>
-                                @enderror
+                                @enderror --}}
                             </div>
                             <div class="col-12 col-lg-6">
                                 <label for="name" class="form-label">Company Phone</label>
                                 <input type="text" name="contact_no" class="form-control" id="name" placeholder="Enter a company contact"/>
-                                @error('contact_no')
+                                {{-- @error('contact_no')
                                     <span class="text-danger">{{ $message }}</span>
-                                @enderror
+                                @enderror --}}
                             </div>
                             <div class="col-12 col-lg-6">
                                 <label for="name" class="form-label">Address</label>
                                 <input type="text" name="address" class="form-control" id="name" placeholder="Enter a company name"/>
-                                @error('address')
+                                {{-- @error('address')
                                     <span class="text-danger">{{ $message }}</span>
-                                @enderror
+                                @enderror --}}
                             </div>
                             <div class="col-12 col-lg-6">
                                 <button type="submit" class="btn btn-primary px-4">Save</button>

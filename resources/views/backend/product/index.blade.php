@@ -34,7 +34,8 @@
                             {{-- <th>Category</th> --}}
                             <th>Product Name</th>
                             <th>Product Model</th>
-                            {{-- <th>Unit Price</th> --}}
+                            <th>Old Price</th>
+                            <th>Unit Price</th>
                             <th>Product Image</th>
                             <th>QR Code</th>
                             <th>Action</th>
@@ -48,7 +49,8 @@
                                 {{-- <td>{{ __($value->category?->category_name) }}</td> --}}
                                 <td>{{ __($value->product_name) }}</td>
                                 <td>{{ __($value->product_model) }}</td>
-                                {{-- <td>{{ __($value->unit_price) }}</td> --}}
+                                <td>{{ __($value->old_price) }}</td>
+                                <td>{{ __($value->unit_price) }}</td>
                                 <td><img src="{{ asset('public/uploads/product/' . $value->product_image) }}"
                                         width="50px">
                                 </td>
@@ -82,11 +84,12 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="7" class="text-center fw-bolder">Product No found</td>
+                                <td colspan="9" class="text-center fw-bolder">Product No found</td>
                             </tr>
                         @endforelse
                     </tbody>
                 </table>
+                
             </div>
         </div>
     </div>

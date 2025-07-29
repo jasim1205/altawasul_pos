@@ -57,10 +57,17 @@
                                 <label for="name" class="form-label">Product Name</label>
                                 <input type="text" name="product_name" value="{{ old('product_name',$product->product_name) }}" class="form-control" id="name" placeholder="Enter a product name"/>
                             </div>
-                            {{-- <div class="col-12 col-lg-6">
+                            <div class="col-12 col-lg-6">
+                                <label for="" class="form-label">Old Price</label>
+                                <input type="text" name="old_price" value="{{ old('old_price',$product->old_price) }}" class="form-control" id="" placeholder="Enter a unit price"/>
+                                @error('old_price')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="col-12 col-lg-6">
                                 <label for="" class="form-label">Unit Price</label>
                                  <input type="text" name="unit_price" value="{{ old('unit_price',$product->unit_price) }}" class="form-control" id="name" placeholder="Enter a unit price"/>
-                            </div> --}}
+                            </div>
                             <div class="col-12 col-lg-6">
                                <label for="name" class="form-label">Product Model</label>
                                 <input type="text" name="product_model" value="{{ old('product_model',$product->product_model) }}"  class="form-control" id="name" placeholder="Enter a product model"/>

@@ -62,6 +62,7 @@ class ProductController extends Controller
             // $product->category_id = $request->company_id;
             $product->product_name = $request->product_name;
             $product->product_model = $request->product_model;
+            $product->old_price = $request->old_price;
             $product->unit_price = $request->unit_price;
             if($request->hasFile('product_image')){
                 $imageName = rand(111,999).'.'.$request->product_image->extension();
@@ -127,6 +128,7 @@ class ProductController extends Controller
             // $product->category_id = $request->company_id;
             $product->product_name = $request->product_name;
             $product->product_model = $request->product_model;
+            $product->old_price = $request->old_price;
             $product->unit_price = $request->unit_price;
             $path = 'uploads/product';
             if($request->hasFile('product_image')){
