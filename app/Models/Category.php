@@ -22,4 +22,5 @@ class Category extends Model
     public function sale_details(){
         return $this->hasMany(SaleDetails::class,'category_id','id');
     }
+    
 }
