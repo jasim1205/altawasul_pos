@@ -1,6 +1,6 @@
 @extends('layouts.app')
-@section('title',trans('Product'))
-@section('page',trans('List'))
+@section('title', trans('Product'))
+@section('page', trans('List'))
 @section('content')
 
     <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
@@ -14,22 +14,38 @@
                 </ol>
             </nav>
         </div>
+        <div class="btn-group">
+            <a class="btn btn-outline-primary mx-2" href="{{ route('stock.reportForm') }}">Report</a>
+        </div>
+        <div class="ms-auto d-flex">
+            <form action="{{ route('stock.index') }}" method="GET">
+                <div class="input-group">
+                    <input type="text" name="search" class="form-control"
+                        placeholder="Search by product name, model, origin, or code" value="{{ request('search') }}"
+                        style="padding:5px;">
+                    <button type="submit" class="btn btn-outline-primary">Search</button>
+                    <a href="{{ route('stock.index') }}" class="btn btn-outline-warning">Reset</a>
+                </div>
+
+            </form>
+        </div>
+
         {{-- <div class="ms-auto">
             <div class="btn-group">
                 <a class="btn btn-primary" href="{{route('product.create')}}"><i class="fa fa-plus"></i></a>
             </div>
         </div> --}}
     </div>
-    <hr/>
+    <hr />
     <div class="card">
         <div class="card-body">
             <div class="table-responsive">
                 <table id="example" class="table table-striped table-bordered" style="width:100%">
                     <thead>
                         <tr>
-                            <th scope="col">{{__('#SL')}}</th>
-                            <th>Company</th>
-                            <th>Category</th>
+                            <th scope="col">{{ __('#SL') }}</th>
+                            {{-- <th>Company</th>
+                            <th>Category</th> --}}
                             <th>Product Name</th>
                             <th>Product Model</th>
                             <th>Stock</th>
@@ -37,16 +53,17 @@
                         </tr>
                     </thead>
                     <tbody>
-                         @forelse ($stock as $value)
+                        @forelse ($stock as $value)
                             <tr>
                                 <td>{{ __(++$loop->index) }}</td>
-                                <td>{{ __($value->product->company?->company_name) }}</td>
-                                <td>{{ __($value->product->category?->category_name) }}</td>
+                                {{-- <td>{{ __($value->product->company?->company_name) }}</td>
+                                <td>{{ __($value->product->category?->category_name) }}</td> --}}
                                 <td>{{ __($value->product?->product_name) }}</td>
                                 <td>{{ __($value->product?->product_model) }}</td>
-                                <td style="color: {{ $value->quantity <= 5 ? 'red' : 'green' }};font-weight:bold">{{ __($value->quantity) }}</td>
                                 <td style="color: {{ $value->quantity <= 5 ? 'red' : 'green' }};font-weight:bold">
-                                    {{ $value->quantity <=5 ? "Low Stock":"Available" }}
+                                    {{ __($value->quantity) }}</td>
+                                <td style="color: {{ $value->quantity <= 5 ? 'red' : 'green' }};font-weight:bold">
+                                    {{ $value->quantity <= 5 ? 'Low Stock' : 'Available' }}
                                 </td>
                             </tr>
                         @empty
@@ -60,7 +77,7 @@
         </div>
     </div>
 
-{{-- <div class="page-heading">
+    {{-- <div class="page-heading">
     <div class="page-title">
         <div class="row">
             <div class="col-12 col-md-6 order-md-1 order-last">

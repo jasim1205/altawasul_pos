@@ -119,13 +119,13 @@ class PurchaseController extends Controller
             $purchase->save();
 
             // Save purchase details
-            if ($request->has('company_id')) {
-                foreach ($request->company_id as $key => $companyId) {
+            if ($request->has('product_id')) {
+                foreach ($request->product_id as $key => $productId) {
                     $purchaseDetail = new PurchaseDetails;
                     $purchaseDetail->purchase_id = $purchase->id; // Link purchase detail to purchase
-                    $purchaseDetail->company_id = $companyId;
+                    // $purchaseDetail->company_id = $request->company_id[$key];
                     // $purchaseDetail->category_id = $request->category_id[$key];
-                    $purchaseDetail->product_id = $request->product_id[$key];
+                    $purchaseDetail->product_id = $productId;
                     $purchaseDetail->unit_price = $request->unit_price[$key];
                     $purchaseDetail->quantity = $request->quantity[$key];
                     $purchaseDetail->amount = $request->amount[$key];
@@ -455,13 +455,13 @@ public function update(Request $request, $id)
         PurchaseDetails::where('purchase_id', $purchase->id)->delete();
 
         // Store new purchase details and update stock
-        if ($request->has('company_id')) {
-            foreach ($request->company_id as $key => $companyId) {
-                if ($companyId) {
+        if ($request->has('product_id')) {
+            foreach ($request->product_id as $key => $productId) {
+                if ($productId) {
                     // Store new purchase detail
                     $purchaseDetail = new PurchaseDetails;
                     $purchaseDetail->purchase_id = $purchase->id; // Link purchase detail to purchase
-                    $purchaseDetail->company_id = $companyId;
+                    // $purchaseDetail->company_id = $companyId;
                     // $purchaseDetail->category_id = $request->category_id[$key];
                     $purchaseDetail->product_id = $request->product_id[$key];
                     $purchaseDetail->unit_price = $request->unit_price[$key];

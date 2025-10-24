@@ -13,14 +13,17 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('company_id')->index();
+            $table->unsignedBigInteger('company_id')->index()->nullable();
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
             $table->unsignedBigInteger('category_id')->nullable()->index();
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->string('product_name');
             $table->string('product_model');
-            $table->double('unit_price',8,2)->nullable();
-            $table->double('old_price',8,2)->nullable();
+            $table->string('cost_code')->nullable();
+            $table->string('oem')->nullable();
+            $table->string('cross_reference')->nullable();
+            $table->string('origin')->nullable();
+            $table->double('cost_unit_price',8,2)->nullable();
             $table->string('product_image');
             $table->integer('status')->default(1)->comment('1=>active 2=>inactive');
             $table->timestamps();

@@ -71,7 +71,7 @@
                                 <table class="table table-striped mb-0 mt-3">
                                     <thead>
                                         <tr class="text-center">
-                                            <th scope="col">{{ __('Company') }}</th>
+                                            {{-- <th scope="col">{{ __('Company') }}</th> --}}
                                             {{-- <th scope="col">{{__('Category')}}</th> --}}
                                             <th scope="col">{{ __('Product') }}</th>
                                             <th scope="col">{{ __('Unit Price') }}</th>
@@ -89,8 +89,8 @@
                                     <tbody id="purchaseHead">
                                         @foreach ($purchaseDetails as $purdetail)
                                             <tr>
-                                                <td>
-                                                    {{-- <input type="text" name="company_id" value="{{ old('company_id',$purdetail->company->company_name) }}" id="" readonly style="width: 100px"> --}}
+                                                {{-- <td>
+                                                    <input type="text" name="company_id" value="{{ old('company_id',$purdetail->company->company_name) }}" id="" readonly style="width: 100px"> 
                                                     <select class="select2 company_id" onchange="doData(this);"
                                                         name="company_id[]" readonly>
                                                         <option value="">Select Company</option>
@@ -99,8 +99,8 @@
                                                                 {{ old('company_id', $purdetail->company_id) == $value->id ? 'selected' : '' }}>
                                                                 {{ $value->company_name }}</option>
                                                         @endforeach
-                                                    </select>
-                                                </td>
+                                                    </select> 
+                                                </td>--}}
                                                 {{-- <td>
                                                 @php
                                                     $company_id = $purdetail->company_id;
@@ -115,20 +115,17 @@
                                                 </select>
                                             </td> --}}
                                                 <td>
-                                                    @php
+                                                    {{-- @php
                                                         $category_id = $purdetail->category_id;
                                                         $product = DB::table('products')
                                                             ->where('category_id', $category_id)
                                                             ->get();
-                                                    @endphp
+                                                    @endphp --}}
                                                     @php
-                                                        $company_id = $purdetail->company_id;
-                                                        $product = DB::table('products')
-                                                            ->where('company_id', $company_id)
-                                                            ->get();
+                                                        $product = DB::table('products')->get();
                                                     @endphp
 
-                                                    <select class="select2 product_id" onchange="doData(this);"
+                                                    <select class="select2 product_id"
                                                         name="product_id[]" readonly>
                                                         @foreach ($product as $value)
                                                             <option value="{{ $value->id }}"

@@ -40,7 +40,7 @@
                                         <option value="{{ $value->id }}">{{ $value->customer_name }}</option>
                                     @endforeach
                                 </select>
-                                {{-- <input type="text" name="supplier_name" id="" class="form-control" style="height:30px;"> --}}
+                                
                             </div>
                             <div class="col-sm-4">
                                 <label for="">Tm No</label>
@@ -78,7 +78,7 @@
                                 <table class="table table-striped mb-0 mt-3">
                                     <thead>
                                         <tr class="text-center">
-                                            <th scope="col">{{ __('Company') }}</th>
+                                            {{-- <th scope="col">{{ __('Company') }}</th> --}}
                                             {{-- <th scope="col">{{ __('Category') }}</th> --}}
                                             <th scope="col">{{ __('Product') }}</th>
                                             <th scope="col">{{ __('Unit Price') }}</th>
@@ -95,7 +95,7 @@
                                     </thead>
                                     <tbody id="purchaseHead">
                                         <tr>
-                                            <td>
+                                            {{-- <td>
                                                 <select class="select2 company_id" onchange="doData(this);"
                                                     name="company_id[]">
                                                     <option value="">Select Company</option>
@@ -105,7 +105,7 @@
                                                     @endforeach
                                                 </select>
                                             </td>
-                                            {{-- <td>
+                                            <td>
                                                 <select class="select2 category_id" onchange="doData(this);"
                                                     name="category_id[]">
                                                     <option value="">Select Category</option>
@@ -115,6 +115,10 @@
                                                 <select class="select2 product_id" onchange="doData(this);"
                                                     name="product_id[]">
                                                     <option value="">Select Product</option>
+                                                    @foreach ($product as $value)
+                                                        <option value="{{ $value->id }}">{{ $value->product_name }}
+                                                        </option>
+                                                    @endforeach
                                                 </select>
                                             </td>
                                             <td><input class="form-control uprice" type="text" name="unit_price[]"

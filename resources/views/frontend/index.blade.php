@@ -111,7 +111,7 @@
                                     </div>
                                 </div>
                                 <div class="product-body">
-                                    <p class="product-name">{{ $item->company->company_name }}</p>
+                                    <p class="product-name">{{ $item->company?->company_name }}</p>
                                     <h3 class="product-name"><a href="#">{{ $item->product_name }}</a></h3>
                                     <h4 class="product-price">{{ $item->unit_price }} <del
                                             class="product-old-price">{{ $item->old_price }}</del></h4>

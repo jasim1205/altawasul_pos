@@ -74,11 +74,11 @@ class SalesController extends Controller
             $sale->save();
 
             // Save purchase details
-            if ($request->has('company_id')) {
-                foreach ($request->company_id as $key => $companyId) {
+            if ($request->has('product_id')) {
+                foreach ($request->product_id as $key => $productId) {
                     $saledetails = new SaleDetails;
                     $saledetails->sale_id = $sale->id; // Link purchase detail to purchase
-                    $saledetails->company_id = $companyId;
+                    // $saledetails->company_id = $companyId;
                     // $saledetails->category_id = $request->category_id[$key];
                     $saledetails->product_id = $request->product_id[$key];
                     $saledetails->unit_price = $request->unit_price[$key];
@@ -202,11 +202,11 @@ class SalesController extends Controller
             SaleDetails::where('sale_id', $sale->id)->delete();
 
             // Save new sale details and update stock
-            if ($request->has('company_id')) {
-                foreach ($request->company_id as $key => $companyId) {
+            if ($request->has('product_id')) {
+                foreach ($request->product_id as $key => $productId) {
                     $saledetails = new SaleDetails;
                     $saledetails->sale_id = $sale->id;
-                    $saledetails->company_id = $companyId;
+                    // $saledetails->company_id = $companyId;
                     // $saledetails->category_id = $request->category_id[$key];
                     $saledetails->product_id = $request->product_id[$key];
                     $saledetails->unit_price = $request->unit_price[$key];

@@ -40,7 +40,7 @@
                                         <option value="{{ $value->id }}">{{ $value->supplier_name }}</option>
                                     @endforeach
                                 </select>
-                                {{-- <input type="text" name="supplier_name" id="" class="form-control" style="height:30px;"> --}}
+                                
                             </div>
                             <div class="col-sm-4">
                                 <label for="">Tm No</label>
@@ -67,11 +67,12 @@
                                     <table class="table table-striped mb-0 mt-3">
                                         <thead>
                                             <tr class="text-center">
-                                                <th scope="col"><span onClick='addRow();' class="add-row text-primary"><i
+                                                {{-- <th scope="col"><span onClick='addRow();' class="add-row text-primary"><i
                                                             class="fa fa-plus"></i></span>
-                                                    {{ __('Company') }}</th>
+                                                    {{ __('Company') }}</th> --}}
                                                 {{-- <th scope="col">{{__('Category')}}</th> --}}
-                                                <th scope="col">{{ __('Product') }}</th>
+                                                <th scope="col"><span onClick='addRow();' class="add-row text-primary"><i
+                                                    class="fa fa-plus"></i></span>{{ __('Product') }}</th>
                                                 <th scope="col">{{ __('Unit Price') }}</th>
                                                 <th scope="col">{{ __('Quantity') }}</th>
                                                 <th scope="col">{{ __('Amount') }}</th>
@@ -86,7 +87,7 @@
                                         </thead>
                                         <tbody id="purchaseHead">
                                             <tr>
-                                                <td>
+                                                {{-- <td>
                                                     <select class="select2 company_id" onchange="doData(this);"
                                                         name="company_id[]">
                                                         <option value="">Select Company</option>
@@ -95,19 +96,23 @@
                                                             </option>
                                                         @endforeach
                                                     </select>
-                                                </td>
+                                                </td> --}}
                                                 {{-- <td>
                                                 <select class="select2 category_id" onchange="doData(this);" name="category_id[]">
                                                     <option value="">Select Category</option>
                                                 </select>
                                             </td> --}}
                                                 <td>
-                                                    <select class="select2 product_id" onchange="doData(this);"
+                                                    <select class="select2 product-select"
                                                         name="product_id[]">
                                                         <option value="">Select Product</option>
+                                                        @foreach ($product as $value)
+                                                            <option value="{{ $value->id }}" data-price="{{ $value->cost_unit_price }}">{{ $value->product_name }}
+                                                            </option>
+                                                        @endforeach
                                                     </select>
                                                 </td>
-                                                <td><input class="form-control uprice" type="text" name="unit_price[]"
+                                                <td><input class="form-control uprice reaonly" type="text" name="unit_price[]"
                                                         style="width: 80px; height:25px;"></td>
                                                 <td><input class="form-control toquantity" type="text" name="quantity[]"
                                                         style="width: 80px; height:25px;"></td>
@@ -165,13 +170,7 @@
                                         </tfoot>
                                     </table>
                                 </div>
-                                {{-- <div class="col-sm-8 mt-3 d-flex">
-                                <select name="status" id="" class="form-control" style="width:100%; height:35px">
-                                    <option value="1">Unpaid</option>
-                                    <option value="2">Paid</option>
-                                </select>
-                                <button type="submit" class="btn btn-primary mx-3 px-5">Save</button>
-                            </div> --}}
+                                
                                 <div class="row">
                                     <div class="col-sm-4 mt-3">
                                         <input type="text" name="pay_amount" id="pay_amount" class="form-control"
@@ -198,143 +197,24 @@
         </div>
     </div>
 
-    {{-- <div class="page-heading">
-    <div class="page-title">
-        <div class="row">
-            <div class="col-12 col-md-6 order-md-1 order-last">
-            <h3>Purchase</h3>
-            </div>
-            <div class="col-12 col-md-6 order-md-2 order-first">
-            <nav
-                aria-label="breadcrumb"
-                class="breadcrumb-header float-start float-lg-end"
-            >
-                <ol class="breadcrumb">
-                <li class="breadcrumb-item">
-                    <a href="{{route('dashboard')}}">Dashboard</a>
-                </li>
-                <li class="breadcrumb-item active" aria-current="page">
-                    Create
-                </li>
-                </ol>
-            </nav>
-            </div>
-        </div>
-    </div>
-    <div class="page-content">
-        <section class="section">
-            <div class="card">
-                <div class="card-header">
-                    <h4 class="card-title">Add New</h4>
-                </div>
-                <div class="card-body">
-                    <form action="{{route('purchase.store')}}" method="post" enctype="multipart/form-data">
-                        @csrf
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <label for="">Supplier Name</label>
-                                <input type="text" name="supplier_name" id="" class="form-control">
-                            </div>
-                            <div class="col-sm-3">
-                                <label for="">Email</label>
-                                <input type="text" name="email" id="" class="form-control">
-                            </div>
-                            <div class="col-sm-3">
-                                <label for="">Contact</label>
-                                <input type="text" name="contact_no" id="" class="form-control">
-                            </div>
-                            <div class="col-sm-3">
-                                <label for="">Date</label>
-                                <input type="date" name="date" id="current_date" class="form-control">
-                            </div>
-                                <div class="table-responsive">
-                                    <table class="table table-striped mb-0 mt-3">
-                                        <thead>
-                                            <tr class="text-center">
-                                                <th scope="col">{{__('Company')}}</th>
-                                                <th scope="col">{{__('Category')}}</th>
-                                                <th scope="col">{{__('Product')}}</th>
-                                                <th scope="col">{{__('Unit Price')}}</th>
-                                                <th scope="col">{{__('Quantity')}}</th>
-                                                <th scope="col">{{__('Amount')}}</th>
-                                                <th scope="col">{{__('Tax(%)')}}</th>
-                                                <th scope="col">{{__('Sub Amount')}}</th>
-                                                <th scope="col">{{__('Discount Type')}}</th>
-                                                <th scope="col">{{__('Discount')}}</th>
-                                                <th scope="col">{{__('Total Amount')}}</th>
-                                                <th class="white-space-nowrap">{{__('Action')}}</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="purchaseHead">
-                                            <tr>
-                                                <td>
-                                                    <select class="select2 company_id" onchange="doData(this);" name="company_id[]">
-                                                        <option value="">Select Product</option>
-                                                        @foreach ($company as $value)
-                                                            <option value="{{ $value->id }}">{{ $value->company_name }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </td>
-                                                <td>
-                                                    <select class="select2 category_id" onchange="doData(this);" name="category_id[]">
-                                                        <option value="">Select Category</option>
-                                                    </select>
-                                                </td>
-                                                <td>
-                                                    <select class="select2 product_id" onchange="doData(this);" name="product_id[]">
-                                                        <option value="">Select Product</option>
-                                                    </select>
-                                                </td>
-                                                <td><input class="form-control uprice" type="text" name="unit_price[]" style="width: 50px"></td>
-                                                <td><input class="form-control toquantity" type="text" name="quantity[]"></td>
-                                                <td><input class="form-control amount" type="text" name="amount[]"></td>
-                                                <td><input class="form-control totax"  type="text" name="tax[]" style="width: 50px"></td>
-                                                <td><input class="form-control subamount" type="text" name="sub_amount[]"></td>
-                                                <td><select name="discount_type[]" id="" class="form-control discount_type">
-                                                    <option value="">select</option>
-                                                    <option value="1">%</option>
-                                                    <option value="0">Fixed</option>
-                                                </select></td>
-                                                <td><input class="form-control todiscount" type="text" name="discount[]"></td>
-                                                <td><input class="form-control toamount" type="text" name="total_amount[]"></td>
-                                                <td>
-
-                                                    <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                        <tfoot>
-                                            <th colspan="3">Total</th>
-                                            <th><span class="total_unitprice" id="total_unitprice" ></span></th>
-                                            <th><span class="total_quantity" id="total_quantity" ></span></th>
-                                            <th><span class="total_amount" id="total_amount"></span></th>
-                                            <th><span class="total_tax" id="total_tax"></span></th>
-                                            <th><span class="total_subamount" id="total_subamount"></span></th>
-                                            <th></th>
-                                            <th colspan=""><span class="total_discount" id="total_discount"></span></th>
-                                            <th colspan="2"><span class="grand_total_amount" id="grand_total_amount"></span></th>
-
-
-                                            <input type="hidden" name="total_quantity" id="total_quantity_hidden">
-                                            <input type="hidden" name="total_quantity_amount" id="total_quantity_amount_hidden">
-                                            <input type="hidden" name="total_discount" id="total_discount_hidden">
-                                            <input type="hidden" name="total_tax" id="total_tax_hidden">
-                                            <input type="hidden" name="total_subamount" id="total_subamount_hidden">
-                                            <input type="hidden" name="grand_total_amount" id="grand_total_amount_hidden">
-                                        </tfoot>
-                                    </table>
-                                </div>
-                             <div>
-                                <button type="submit" class="btn btn-primary mt-3">Save</button>
-                             </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </section>
-    </div>
-</div> --}}
+   
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Initialize Select2
+            $('.select2').select2({
+                // width: '100%',
+                placeholder: "Select Product"
+            });
+
+            // When product changes
+            $(document).on('change', '.product-select', function () {
+                let unitPrice = $(this).find(':selected').data('price');
+                $(this).closest('tr').find('.uprice').val(unitPrice ? unitPrice : '');
+            });
+        });
+    </script>
+        
 
     <script>
         // Set current date to the date input field
@@ -530,7 +410,7 @@
         // Function to add a new row
         function addRow() {
             var row = `<tr>
-                        <td>
+                       {{-- <td>
                             <select class="select2 company_id" onchange="doData(this);" name="company_id[]">
                                 <option value="">Select Company</option>
                                 @foreach ($company as $value)
@@ -538,14 +418,17 @@
                                 @endforeach
                             </select>
                         </td>
-                        {{-- <td>
+                         <td>
                             <select class="select2 category_id" onchange="doData(this);" name="category_id[]">
                                 <option value="">Select Category</option>
                             </select>
                         </td> --}}
                         <td>
-                            <select class="select2 product_id" onchange="doData(this);" name="product_id[]">
+                            <select class="select2 product_id product-select" name="product_id[]">
                                 <option value="">Select Product</option>
+                                @foreach ($product as $value)
+                                    <option value="{{ $value->id }}" data-price="{{ $value->cost_unit_price }}">{{ $value->product_name }}</option>
+                                @endforeach
                             </select>
                         </td>
                         <td><input class="form-control uprice" type="text" name="unit_price[]" style="width: 80px; height:25px;"></td>
@@ -554,7 +437,7 @@
                         <td><input class="form-control totax" type="text" name="tax[]"style="width: 80px; height:25px;"></td>
                         <td><input class="form-control totax_amount" type="text" name="tax_amount[]"style="width: 80px; height:25px;"></td>
                         <td><input class="form-control subamount" type="text" name="sub_amount[]"style="width: 100px; height:25px;"></td>
-                        <td><select name="discount_type[]" id="" class="select2 text-center p-0 form-control discount_type" style="width: 80px; height:25px;">
+                        <td><select name="discount_type[]" id="" class=" text-center p-0 form-control discount_type" style="width: 80px; height:25px;">
                                 <option value="">select</option>
                                 <option value="1">%</option>
                                 <option value="0">Fixed</option>
@@ -567,6 +450,11 @@
                         </td>
                     </tr>`;
             $('#purchaseHead').append(row);
+            // Re-initialize Select2 for the new elements
+            $('#purchaseHead').find('.select2').select2({
+                // width: '100%',
+                placeholder: 'Select'
+            });
         };
 
         function RemoveRow(e) {
@@ -683,42 +571,7 @@
                     row.find('.product_id').empty();
                 }
             });
-            // $(document).on('change', '.category_id', function() {
-            //     var category_id = $(this).val();
-            //     var row = $(this).closest('tr');
-            //     var company_id = row.find('.company_id').val();
-
-            //     if(category_id && company_id) {
-            //         $.ajax({
-            //             type: "GET",
-            //             url: "{{ route('getProductsByCategoryAndCompany') }}",
-            //             data: {'category_id': category_id, 'company_id': company_id},
-            //             dataType: "json",
-            //             success: function(res) {
-            //                 if(res) {
-            //                     var productSelect = row.find('.product_id');
-            //                     productSelect.empty();
-            //                     productSelect.append('<option value="">Select product</option>');
-            //                     $.each(res, function(key, value) {
-            //                          productSelect.append('<option value="'+ key +'">'+ value +'</option>');
-            //                         $.ajax({
-            //                             type: "GET",
-            //                             url: "{{ route('getStockByProduct') }}",
-            //                             data: {'product_id': key},
-            //                             dataType: "json",
-            //                             success: function(stock) {
-            //                                 var stockText = stock ? ' (Stock: ' + stock.quantity + ')' : '';
-            //                                 productSelect.append('<option value="'+ key +'">'+ value + stockText +'</option>');
-            //                             }
-            //                         });
-            //                     });
-            //                 }
-            //             }
-            //         });
-            //     } else {
-            //         row.find('.product_id').empty();
-            //     }
-            // });
+            
         });
     </script>
 

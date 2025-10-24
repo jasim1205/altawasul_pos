@@ -32,13 +32,13 @@ use App\Http\Controllers\FrontendController as frontend;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::get('/', [frontend::class, 'frontend'])->name('frontend');
+// Route::get('/', [frontend::class, 'frontend'])->name('frontend');
 Route::get('/product/{id}',[frontend::class, 'productDetail'])->name('productid');
 
 
 Route::get('/register', [auth::class,'signUpForm'])->name('register');
 Route::post('/register', [auth::class,'signUpStore'])->name('register.store');
-Route::get('/login', [auth::class,'signInForm'])->name('login');
+Route::get('/', [auth::class,'signInForm'])->name('login');
 Route::post('/login', [auth::class,'signInCheck'])->name('login.check');
 Route::get('/logout', [auth::class,'signOut'])->name('logOut');
 
@@ -88,6 +88,12 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
     Route::resource('usedpurchase', usedPurchase::class);
     Route::resource('bngpurchase', bngpurchase::class);
     Route::resource('creditpurchase', creditpurchase::class);
+
+
+    Route::get('product-report', [product::class, 'reportForm'])->name('product.reportForm');
+    Route::post('product/generate', [product::class, 'generatePDF'])->name('product.generatePDF');
+    Route::get('stock-report', [stock::class, 'stockReportForm'])->name('stock.reportForm');
+    Route::post('stock/generate', [stock::class, 'generateStockPDF'])->name('stock.generatePDF');
     
 });
 

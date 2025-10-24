@@ -34,7 +34,8 @@ return new class extends Migration
             'contact_no' => '1',
             'role_id' => '1',
             'password' => Hash::make(1),
-            'status' => 1
+            'status' => 1,
+            'full_access' => 1,
         ]);
     }
 

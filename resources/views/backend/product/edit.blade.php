@@ -36,7 +36,7 @@
                         @method('PATCH')
                     <div id="test-l-1" role="tabpanel" class="bs-stepper-pane" aria-labelledby="stepper1trigger1">
                         <div class="row g-3">
-                            <div class="col-12 col-lg-6">
+                            {{-- <div class="col-12 col-lg-6">
                                 <label for="FisrtName" class="form-label">Company Name</label>
                                 <select name="company_id" id="company_id" class="form-control">
                                     <option value="">Select Company</option>
@@ -44,7 +44,7 @@
                                         <option value="{{ $value->id }}" {{ old('company_id',$product->company_id==$value->id?"selected":"") }} >{{ $value->company_name }}</option>
                                     @endforeach
                                 </select>
-                            </div>
+                            </div> --}}
                             {{-- <div class="col-12 col-lg-6">
                                 <label for="name" class="form-label">Category Name</label>
                                 <select name="category_id" id="category_id" class="form-control">
@@ -57,20 +57,31 @@
                                 <label for="name" class="form-label">Product Name</label>
                                 <input type="text" name="product_name" value="{{ old('product_name',$product->product_name) }}" class="form-control" id="name" placeholder="Enter a product name"/>
                             </div>
+                            
                             <div class="col-12 col-lg-6">
-                                <label for="" class="form-label">Old Price</label>
-                                <input type="text" name="old_price" value="{{ old('old_price',$product->old_price) }}" class="form-control" id="" placeholder="Enter a unit price"/>
-                                @error('old_price')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
+                                <label for="" class="form-label">Cost Unit Price</label>
+                                 <input type="text" name="cost_unit_price" value="{{ old('cost_unit_price',$product->cost_unit_price) }}" class="form-control" id="name" placeholder="Enter a unit price"/>
                             </div>
                             <div class="col-12 col-lg-6">
-                                <label for="" class="form-label">Unit Price</label>
-                                 <input type="text" name="unit_price" value="{{ old('unit_price',$product->unit_price) }}" class="form-control" id="name" placeholder="Enter a unit price"/>
+                                <label for="" class="form-label">Cost Code</label>
+                                 <input type="text" name="cost_code" value="{{ old('cost_code',$product->cost_code) }}" class="form-control" id="name" placeholder="Enter a cost code"/>
                             </div>
                             <div class="col-12 col-lg-6">
                                <label for="name" class="form-label">Product Model</label>
                                 <input type="text" name="product_model" value="{{ old('product_model',$product->product_model) }}"  class="form-control" id="name" placeholder="Enter a product model"/>
+                            </div>
+                            <div class="col-12 col-lg-6">
+                               <label for="name" class="form-label">Origin</label>
+                                <input type="text" name="origin" value="{{ old('origin',$product->origin) }}"  class="form-control" id="name" placeholder="Enter a product origin"/>
+                            </div>
+                            
+                            <div class="col-12 col-lg-6">
+                               <label for="name" class="form-label">OEM</label>
+                                <input type="text" name="oem" value="{{ old('oem',$product->oem) }}"  class="form-control" id="name" placeholder="Enter OEM"/>
+                            </div>
+                            <div class="col-12 col-lg-6">
+                               <label for="name" class="form-label">Cross Reference</label>
+                                <input type="text" name="cross_reference" value="{{ old('cross_reference',$product->cross_reference) }}"  class="form-control" id="name" placeholder="Enter Cross Reference"/>
                             </div>
                             <div class="col-12 col-lg-6">
                                 <label for="" class="form-label">Image</label>

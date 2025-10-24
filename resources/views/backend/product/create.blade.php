@@ -36,7 +36,7 @@
                         @csrf
                     <div id="test-l-1" role="tabpanel" class="bs-stepper-pane" aria-labelledby="stepper1trigger1">
                         <div class="row g-3">
-                            <div class="col-12 col-lg-6">
+                            {{-- <div class="col-12 col-lg-6">
                                 <label for="FisrtName" class="form-label">Company Name</label>
                                 <select name="company_id" id="company_id" class="form-control">
                                     <option value="">Select Company</option>
@@ -47,7 +47,7 @@
                                 @error('company_id')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
-                            </div>
+                            </div> --}}
                            {{--  <div class="col-12 col-lg-6">
                                 <label for="name" class="form-label">Category Name</label>
                                 <select name="category_id" id="category_id" class="form-control">
@@ -70,17 +70,18 @@
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
+                            
                             <div class="col-12 col-lg-6">
-                                <label for="" class="form-label">Old Price</label>
-                                <input type="text" name="old_price" class="form-control" id="" placeholder="Enter a unit price"/>
-                                @error('old_price')
+                                <label for="" class="form-label">Cost Unit Price</label>
+                                <input type="text" name="cost_unit_price" class="form-control" id="" placeholder="Enter a unit price"/>
+                                @error('cost_unit_price')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
                             <div class="col-12 col-lg-6">
-                                <label for="" class="form-label">Unit Price</label>
-                                <input type="text" name="unit_price" class="form-control" id="" placeholder="Enter a unit price"/>
-                                @error('unit_price')
+                                <label for="" class="form-label">Cost Code</label>
+                                <input type="text" name="cost_code" class="form-control" id="" placeholder="Enter a cost code"/>
+                                @error('cost_code')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
@@ -91,6 +92,28 @@
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
+                            <div class="col-12 col-lg-6">
+                               <label for="name" class="form-label">Origin/Made</label>
+                                <input type="text" name="origin" class="form-control" id="" placeholder="Enter a origin"/>
+                                @error('origin')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="col-12 col-lg-6">
+                               <label for="name" class="form-label">OEM</label>
+                                <input type="text" name="oem" class="form-control" id="" placeholder="Enter OEM"/>
+                                @error('oem')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="col-12 col-lg-6">
+                               <label for="name" class="form-label">Cross Reference</label>
+                                <input type="text" name="cross_reference" class="form-control" id="" placeholder="Enter Cross Reference"/>
+                                @error('cross_reference')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                           
                             <div class="col-12 col-lg-6">
                                 <label for="" class="form-label">Image</label>
                                 <input type="file" name="product_image" class="form-control" id=""/>
