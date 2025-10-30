@@ -162,6 +162,7 @@
                                                 <td><input class="form-control totax_amount" type="text"
                                                         name="tax_amount[]" value="{{ $purdetail->tax_amount }}"
                                                         style="width: 80px; height:25px;"></td>
+                                                        
                                                 <td><input class="form-control subamount" type="text" name="sub_amount[]"
                                                         value="{{ $purdetail->sub_amount }}"
                                                         style="width: 100px; height:25px;"></td>
