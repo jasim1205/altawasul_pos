@@ -1,66 +1,78 @@
 @extends('layouts.app')
-@section('title', trans('Purchase'))
-@section('page', trans('Create'))
+@section('title', 'Purchase')
+@section('page-title', 'Home')
+@section('page-subtitle', 'Create Purchase')
 @section('content')
-    <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-        <div class="breadcrumb-title pe-3">Forms</div>
-        <div class="ps-3">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb mb-0 p-0">
-                    <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
-                    </li>
-                    <li class="breadcrumb-item active" aria-current="page">Add New Purchase</li>
-                </ol>
-            </nav>
-        </div>
-        <div class="ms-auto">
-            <div class="btn-group">
-                <a class="btn btn-primary" href="{{ route('purchase.index') }}"><i class="fa fa-list"></i></a>
-            </div>
+    <style>
+         thead tr th {
+            background-color: #198754 !important;
+            color: white !important;
+        }
+        .input-group-text {
+            background-color: #3A58B3;
+            color: white;
+            width: 25%;
+        }
+
+        .star {
+            color: rgb(248, 62, 62);
+        }
+
+    </style>
+    <div class="ml-auto d-flex">
+        <div class="btn-group ms-auto">
+            <a class="btn btn-primary" href="{{ route('purchase.index') }}"><i class="fa fa-list"></i></a>
         </div>
     </div>
-    <!--end breadcrumb-->
-
     <hr>
     <div id="stepper1" class="bs-stepper">
         <div class="card">
-            <div class="card-header">
-                <h4 class="card-title">Create New Purchase</h4>
-            </div>
             <div class="card-body">
                 <div class="bs-stepper-content">
                     <form action="{{ route('purchase.store') }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
-                            <div class="col-sm-4">
-                                <label for="">Supplier Name</label>
-                                <select class="select2 form-select" name="supplier_id">
-                                    <option value="">Select supplier</option>
-                                    @foreach ($supplier as $value)
-                                        <option value="{{ $value->id }}">{{ $value->supplier_name }}</option>
-                                    @endforeach
-                                </select>
-                                
+                            <div class="col-md-4">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon1">Supplier Name <span class="star">*</span></span>
+                                    <select class="select2 form-select" name="supplier_id">
+                                        <option value="">Select supplier</option>
+                                        @foreach ($supplier as $value)
+                                            <option value="{{ $value->id }}">{{ $value->supplier_name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('supplier_id')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
                             </div>
-                            <div class="col-sm-4">
-                                <label for="">Tm No</label>
-                                <input type="text" name="tm_no" id="" class="form-control"
-                                    style="height:30px;">
+                            <div class="col-md-4">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon1">Tm No <span class="star">*</span></span>
+                                    <input type="text" name="tm_no" id="" class="form-control" aria-label="Username"
+                                        aria-describedby="basic-addon1">
+                                </div>
                             </div>
-                            <div class="col-sm-4">
-                                <label for="">Rf No</label>
-                                <input type="text" name="rf_no" id="" class="form-control"
-                                    style="height:30px;">
+                            <div class="col-md-4">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon1">Rf No <span class="star">*</span></span>
+                                    <input type="text" name="rf_no" id="" class="form-control" aria-label="Username"
+                                        aria-describedby="basic-addon1">
+                                </div>
                             </div>
-                            <div class="col-sm-4">
-                                <label for="">Explanation</label>
-                                <input type="text" name="explanation" id="" class="form-control"
-                                    style="height:30px;">
+                            <div class="col-md-4">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon1">Explanation</span>
+                                    <input type="text" name="explanation" id="" class="form-control"
+                                        aria-label="Username" aria-describedby="basic-addon1">
+                                </div>
                             </div>
-                            <div class="col-sm-4">
-                                <label for="">Date</label>
-                                <input type="date" name="date" id="current_date" class="form-control"
-                                    style="height:30px;">
+                            <div class="col-md-4">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon1">Date</span>
+                                    <input type="date" name="date" id="current_date" class="form-control"
+                                        aria-label="Username" aria-describedby="basic-addon1">
+                                </div>
                             </div>
                             <div class="table-div">
                                 <div class="table-responsive">
@@ -196,14 +208,12 @@
             </div>
         </div>
     </div>
-
-   
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function () {
             // Initialize Select2
             $('.select2').select2({
-                // width: '100%',
+                width: '75%',
                 placeholder: "Select Product"
             });
 
@@ -424,7 +434,7 @@
                             </select>
                         </td> --}}
                         <td>
-                            <select class="select2 product_id product-select" name="product_id[]">
+                            <select class="select2 product-select" name="product_id[]">
                                 <option value="">Select Product</option>
                                 @foreach ($product as $value)
                                     <option value="{{ $value->id }}" data-price="{{ $value->cost_unit_price }}">{{ $value->product_name }}</option>

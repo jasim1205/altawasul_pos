@@ -1,589 +1,305 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<!-- Mirrored from codervent.com/syndron/demo/vertical/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 29 Jul 2023 03:54:59 GMT -->
+
 <head>
-	<!-- Required meta tags -->
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<!--favicon-->
-	<link rel="icon" href="{{ asset('public/syndron/assets/images/favicon-32x32.png') }}" type="image/png"/>
-	<!--plugins-->
-	<link href="{{ asset('public/syndron/assets/plugins/vectormap/jquery-jvectormap-2.0.2.css') }}" rel="stylesheet"/>
-	<link href="{{ asset('public/syndron/assets/plugins/simplebar/css/simplebar.css') }}" rel="stylesheet" />
-	<link href="{{ asset('public/syndron/assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css') }}" rel="stylesheet" />
-	<link href="{{ asset('public/syndron/assets/plugins/metismenu/css/metisMenu.min.css') }}" rel="stylesheet"/>
-	<link href="{{ asset('public/syndron/assets/plugins/datatable/css/dataTables.bootstrap5.min.css') }}" rel="stylesheet" />
-	<!-- loader-->
-	{{-- <link href="{{ asset('public/syndron/assets/css/pace.min.css') }}" rel="stylesheet"/>
-	<script src="{{ asset('public/syndron/assets/js/pace.min.js') }}"></script> --}}
-	<!-- Bootstrap CSS -->
-	<link href="{{ asset('public/syndron/assets/css/bootstrap.min.css') }}" rel="stylesheet">
-	<link href="{{ asset('public/syndron/assets/css/bootstrap-extended.css') }}" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&amp;display=swap" rel="stylesheet">
-	<link href="{{ asset('public/syndron/assets/css/app.css') }}" rel="stylesheet">
-	<link href="{{ asset('public/syndron/assets/css/icons.css') }}" rel="stylesheet">
-	<!-- Theme Style CSS -->
-	<link rel="stylesheet" href="{{ asset('public/syndron/assets/css/dark-theme.css') }}"/>
-	<link rel="stylesheet" href="{{ asset('public/syndron/assets/css/semi-dark.css') }}"/>
-	<link rel="stylesheet" href="{{ asset('public/syndron/assets/css/header-colors.css') }}"/>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Dashboard - NiceAdmin Bootstrap Template</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- Vendor CSS Files -->
+  <link href="{{ asset('public/assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+  <link href="{{ asset('public/assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+  <link href="{{ asset('public/assets/vendor/boxicons/css/boxicons.min.css') }}" rel="stylesheet">
+  <link href="{{ asset('public/assets/vendor/quill/quill.snow.css') }}" rel="stylesheet">
+  <link href="{{ asset('public/assets/vendor/quill/quill.bubble.css') }}" rel="stylesheet">
+  <link href="{{ asset('public/assets/vendor/remixicon/remixicon.css') }}" rel="stylesheet">
+  <link href="{{ asset('public/assets/vendor/simple-datatables/style.css') }}" rel="stylesheet">
+  
   <link rel="stylesheet" href="https://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
-  <!-- Select2 CSS -->
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
-<!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- Template Main CSS File -->
+  <link href="{{ asset('public/assets/css/style.css') }}" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
-<!-- Select2 JS -->
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
-       
-  @stack('styles')
-	<title>@yield('title',env('APP_NAME'))  | Al-Tawasul</title>
+  <style>
+    header{
+      background-color: #3a58b3 !important;
+    }
+    .color-logo{
+      color: white !important;
+    }
+  </style>
 </head>
 
 <body>
-    <!--wrapper-->
-    <div class="wrapper">
-      <!--sidebar wrapper -->
-      <div class="sidebar-wrapper" data-simplebar="true">
-        <div class="sidebar-header">
-          <div>
-            {{-- <img src="assets/images/logo-icon.png" class="logo-icon" alt="logo icon"> --}}
-          </div>
-          <div>
-            <h4 class="logo-text">Al-Tawasul</h4>
-          </div>
-          <div class="toggle-icon ms-auto"><i class='bx bx-arrow-back'></i>
-          </div>
-        </div>
-        <!--navigation-->
-        <ul class="metismenu" id="menu">
-          <li>
-            <a href="{{ route('dashboard') }}" class="has-arrow">
-              <div class="parent-icon"><i class='bx bx-home-alt'></i>
-              </div>
-              <div class="menu-title">Dashboard</div>
-            </a>
-            <ul>
-              {{-- <li> <a href="index.html"><i class='bx bx-radio-circle'></i>eCommerce</a>
-              </li>
-              <li> <a href="index2.html"><i class='bx bx-radio-circle'></i>Analytics</a>
-              </li> --}}
-            </ul>
-          </li>
-          <li>
-            <a href="javascript:;" class="has-arrow">
-              <div class="parent-icon"><i class="bx bx-category"></i>
-              </div>
-              <div class="menu-title">Application</div>
-            </a>
-            <ul>
-              <li> <a href="{{ route('company.index') }}"><i class='bx bx-radio-circle'></i>Company List</a>
-              </li>
-              {{-- <li> <a href="{{ route('category.index') }}"><i class='bx bx-radio-circle'></i>Category List</a>
-              </li> --}}
-              <li> <a href="{{ route('product.index') }}"><i class='bx bx-radio-circle'></i>Product List</a>
-              </li>
-              {{-- <li> <a href="{{ route('supplier.index') }}"><i class='bx bx-radio-circle'></i>Supplier List</a>
-              </li> --}}
-              {{-- <li> <a href="{{ route('customer.index') }}"><i class='bx bx-radio-circle'></i>Customer List</a>
-              </li> --}}
-            </ul>
-          <li>
-            <a href="{{ route('supplier.index') }}" class="has-arrow">
-              <div class="parent-icon"><i class="bx bx-category"></i>
-              </div>
-              <div class="menu-title">Supplier</div>
-            </a>
-          </li>
-          <li>
-            <a href="{{ route('customer.index') }}" class="has-arrow">
-              <div class="parent-icon"><i class="bx bx-category"></i>
-              </div>
-              <div class="menu-title">Customer</div>
-            </a>
-          </li>
-          <li>
-            <a href="{{ route('purchase.index') }}" class="has-arrow">
-              <div class="parent-icon"><i class="bx bx-category"></i>
-              </div>
-              <div class="menu-title">Purchase</div>
-            </a>
-          </li>
-          <li>
-            <a href="{{ route('creditpurchase.index') }}" class="has-arrow">
-              <div class="parent-icon"><i class="bx bx-category"></i>
-              </div>
-              <div class="menu-title">Credit Purchase</div>
-            </a>
-          </li>
-          <li>
-            <a href="{{ route('usedpurchase.index') }}" class="has-arrow">
-              <div class="parent-icon"><i class="bx bx-category"></i>
-              </div>
-              <div class="menu-title">Used Purchase</div>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="header fixed-top d-flex align-items-center">
+
+    <div class="d-flex align-items-center justify-content-between text-white">
+      <a href="index.html" class="logo d-flex align-items-center text-white">
+        <img src="{{ asset('public/assets/img/logo.png') }}" alt="" class="color-logo">
+        <span class="d-none d-lg-block text-white">Al-TAWASUL</span>
+      </a>
+      <i class="bi bi-list toggle-sidebar-btn"></i>
+    </div><!-- End Logo -->
+
+    <!-- End Search Bar -->
+
+    <nav class="header-nav ms-auto">
+      <ul class="d-flex align-items-center">
+
+        <li class="nav-item dropdown pe-3">
+
+          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+            <span class="d-none d-md-block dropdown-toggle ps-2 text-white">K. Anderson</span>
+          </a><!-- End Profile Iamge Icon -->
+
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+            <li class="dropdown-header">
+              <h6>Kevin Anderson</h6>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <!-- <li>
+              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                <i class="bi bi-person"></i>
+                <span>My Profile</span>
+              </a>
+            </li> -->
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+           
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="#">
+                <i class="bi bi-box-arrow-right"></i>
+                <span>Sign Out</span>
+              </a>
+            </li>
+
+          </ul><!-- End Profile Dropdown Items -->
+        </li><!-- End Profile Nav -->
+
+      </ul>
+    </nav><!-- End Icons Navigation -->
+
+  </header><!-- End Header -->
+
+  <!-- ======= Sidebar ======= -->
+  <aside id="sidebar" class="sidebar">
+
+    <ul class="sidebar-nav" id="sidebar-nav">
+
+      <li class="nav-item">
+        <a class="nav-link " href="index.html">
+          <i class="bi bi-grid"></i>
+          <span>Dashboard</span>
+        </a>
+      </li><!-- End Dashboard Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-menu-button-wide"></i><span>Product</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          {{-- <li>
+            <a href="{{ route('company.index') }}">
+              <i class="bi bi-circle"></i><span>Company</span>
             </a>
           </li>
           <li>
-            <a href="{{ route('bngpurchase.index') }}" class="has-arrow">
-              <div class="parent-icon"><i class="bx bx-category"></i>
-              </div>
-              <div class="menu-title">BNG Purchase</div>
-            </a>
-          </li>
-          <li>
-            <a href="{{ route('stock.index') }}" class="has-arrow">
-              <div class="parent-icon"><i class="bx bx-category"></i>
-              </div>
-              <div class="menu-title">Stock</div>
-            </a>
-          </li>
-          <li>
-            <a href="{{ route('sale.index') }}" class="has-arrow">
-              <div class="parent-icon"><i class="bx bx-category"></i>
-              </div>
-              <div class="menu-title">Sale</div>
-            </a>
-          </li>
-          <li>
-            <a href="{{ route('dailyexpense.index') }}" class="has-arrow">
-              <div class="parent-icon"><i class="bx bx-category"></i>
-              </div>
-              <div class="menu-title">Daily Expense</div>
-            </a>
-          </li>
-          <li>
-            <a href="{{ route('homeexpense.index') }}" class="has-arrow">
-              <div class="parent-icon"><i class="bx bx-category"></i>
-              </div>
-              <div class="menu-title">Home Expense</div>
-            </a>
-          </li>
-          <li>
-                <a href="javascript:;" class="has-arrow">
-                <div class="parent-icon"><i class="bx bx-category"></i>
-                </div>
-                <div class="menu-title">Report</div>
-                </a>
-                <ul>
-                    <li> <a href="{{ route('yearly_purchase') }}"><i class='bx bx-radio-circle'></i>Yearly Purchase Report</a>
-                    </li>
-                    <li> <a href="{{ route('yearly_sale') }}"><i class='bx bx-radio-circle'></i>Yearly Sales Report</a>
-                    </li>
-                    <li> <a href="{{ route('yearly_expense') }}"><i class='bx bx-radio-circle'></i>Yearly Expense</a>
-                    </li>
-                    <li> <a href="{{ route('yearly_report') }}"><i class='bx bx-radio-circle'></i>Yearly Report</a>
-                    </li>
-                    <li> <a href="{{ route('supplier_report') }}"><i class='bx bx-radio-circle'></i>supplier Report</a>
-                    </li>
-                    <li> <a href="{{ route('customer_report') }}"><i class='bx bx-radio-circle'></i>customer Report</a>
-                    </li>
-                </ul>
-          <li>
-          {{-- <li class="menu-label">UI Elements</li>
-          <li>
-            <a href="widgets.html">
-              <div class="parent-icon"><i class='bx bx-cookie'></i>
-              </div>
-              <div class="menu-title">Widgets</div>
-            </a>
-          </li>
-          <li>
-            <a href="javascript:;" class="has-arrow">
-              <div class="parent-icon"><i class='bx bx-cart'></i>
-              </div>
-              <div class="menu-title">eCommerce</div>
-            </a>
-            <ul>
-              <li> <a href="ecommerce-products.html"><i class='bx bx-radio-circle'></i>Products</a>
-              </li>
-              <li> <a href="ecommerce-products-details.html"><i class='bx bx-radio-circle'></i>Product Details</a>
-              </li>
-              <li> <a href="ecommerce-add-new-products.html"><i class='bx bx-radio-circle'></i>Add New Products</a>
-              </li>
-              <li> <a href="ecommerce-orders.html"><i class='bx bx-radio-circle'></i>Orders</a>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <a class="has-arrow" href="javascript:;">
-              <div class="parent-icon"><i class='bx bx-bookmark-heart'></i>
-              </div>
-              <div class="menu-title">Components</div>
-            </a>
-            <ul>
-              <li> <a href="component-alerts.html"><i class='bx bx-radio-circle'></i>Alerts</a>
-              </li>
-              <li> <a href="component-accordions.html"><i class='bx bx-radio-circle'></i>Accordions</a>
-              </li>
-              <li> <a href="component-badges.html"><i class='bx bx-radio-circle'></i>Badges</a>
-              </li>
-              <li> <a href="component-buttons.html"><i class='bx bx-radio-circle'></i>Buttons</a>
-              </li>
-              <li> <a href="component-cards.html"><i class='bx bx-radio-circle'></i>Cards</a>
-              </li>
-              <li> <a href="component-carousels.html"><i class='bx bx-radio-circle'></i>Carousels</a>
-              </li>
-              <li> <a href="component-list-groups.html"><i class='bx bx-radio-circle'></i>List Groups</a>
-              </li>
-              <li> <a href="component-media-object.html"><i class='bx bx-radio-circle'></i>Media Objects</a>
-              </li>
-              <li> <a href="component-modals.html"><i class='bx bx-radio-circle'></i>Modals</a>
-              </li>
-              <li> <a href="component-navs-tabs.html"><i class='bx bx-radio-circle'></i>Navs & Tabs</a>
-              </li>
-              <li> <a href="component-navbar.html"><i class='bx bx-radio-circle'></i>Navbar</a>
-              </li>
-              <li> <a href="component-paginations.html"><i class='bx bx-radio-circle'></i>Pagination</a>
-              </li>
-              <li> <a href="component-popovers-tooltips.html"><i class='bx bx-radio-circle'></i>Popovers & Tooltips</a>
-              </li>
-              <li> <a href="component-progress-bars.html"><i class='bx bx-radio-circle'></i>Progress</a>
-              </li>
-              <li> <a href="component-spinners.html"><i class='bx bx-radio-circle'></i>Spinners</a>
-              </li>
-              <li> <a href="component-notifications.html"><i class='bx bx-radio-circle'></i>Notifications</a>
-              </li>
-              <li> <a href="component-avtars-chips.html"><i class='bx bx-radio-circle'></i>Avatrs & Chips</a>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <a class="has-arrow" href="javascript:;">
-              <div class="parent-icon"><i class="bx bx-repeat"></i>
-              </div>
-              <div class="menu-title">Content</div>
-            </a>
-            <ul>
-              <li> <a href="content-grid-system.html"><i class='bx bx-radio-circle'></i>Grid System</a>
-              </li>
-              <li> <a href="content-typography.html"><i class='bx bx-radio-circle'></i>Typography</a>
-              </li>
-              <li> <a href="content-text-utilities.html"><i class='bx bx-radio-circle'></i>Text Utilities</a>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <a class="has-arrow" href="javascript:;">
-              <div class="parent-icon"> <i class="bx bx-donate-blood"></i>
-              </div>
-              <div class="menu-title">Icons</div>
-            </a>
-            <ul>
-              <li> <a href="icons-line-icons.html"><i class='bx bx-radio-circle'></i>Line Icons</a>
-              </li>
-              <li> <a href="icons-boxicons.html"><i class='bx bx-radio-circle'></i>Boxicons</a>
-              </li>
-              <li> <a href="icons-feather-icons.html"><i class='bx bx-radio-circle'></i>Feather Icons</a>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <a href="form-froala-editor.html">
-              <div class="parent-icon"><i class='bx bx-code-alt'></i>
-              </div>
-              <div class="menu-title">Froala Editor</div>
-            </a>
-          </li>
-          <li class="menu-label">Forms & Tables</li>
-          <li>
-            <a class="has-arrow" href="javascript:;">
-              <div class="parent-icon"><i class='bx bx-message-square-edit'></i>
-              </div>
-              <div class="menu-title">Forms</div>
-            </a>
-            <ul>
-              <li> <a href="form-elements.html"><i class='bx bx-radio-circle'></i>Form Elements</a>
-              </li>
-              <li> <a href="form-input-group.html"><i class='bx bx-radio-circle'></i>Input Groups</a>
-              </li>
-              <li> <a href="form-radios-and-checkboxes.html"><i class='bx bx-radio-circle'></i>Radios & Checkboxes</a>
-              </li>
-              <li> <a href="form-layouts.html"><i class='bx bx-radio-circle'></i>Forms Layouts</a>
-              </li>
-              <li> <a href="form-validations.html"><i class='bx bx-radio-circle'></i>Form Validation</a>
-              </li>
-              <li> <a href="form-wizard.html"><i class='bx bx-radio-circle'></i>Form Wizard</a>
-              </li>
-              <li> <a href="form-text-editor.html"><i class='bx bx-radio-circle'></i>Text Editor</a>
-              </li>
-              <li> <a href="form-file-upload.html"><i class='bx bx-radio-circle'></i>File Upload</a>
-              </li>
-              <li> <a href="form-date-time-pickes.html"><i class='bx bx-radio-circle'></i>Date Pickers</a>
-              </li>
-              <li> <a href="form-select2.html"><i class='bx bx-radio-circle'></i>Select2</a>
-              </li>
-              <li> <a href="form-repeater.html"><i class='bx bx-radio-circle'></i>Form Repeater</a>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <a class="has-arrow" href="javascript:;">
-              <div class="parent-icon"><i class="bx bx-grid-alt"></i>
-              </div>
-              <div class="menu-title">Tables</div>
-            </a>
-            <ul>
-              <li> <a href="table-basic-table.html"><i class='bx bx-radio-circle'></i>Basic Table</a>
-              </li>
-              <li> <a href="table-datatable.html"><i class='bx bx-radio-circle'></i>Data Table</a>
-              </li>
-            </ul>
-          </li>
-          <li class="menu-label">Pages</li>
-          <li>
-            <a class="has-arrow" href="javascript:;">
-              <div class="parent-icon"><i class="bx bx-lock"></i>
-              </div>
-              <div class="menu-title">Authentication</div>
-            </a>
-            <ul>
-              <li><a class="has-arrow" href="javascript:;"><i class='bx bx-radio-circle'></i>Basic</a>
-                <ul>
-                  <li><a href="auth-basic-signin.html" target="_blank"><i class='bx bx-radio-circle'></i>Sign In</a></li>
-                  <li><a href="auth-basic-signup.html" target="_blank"><i class='bx bx-radio-circle'></i>Sign Up</a></li>
-                  <li><a href="auth-basic-forgot-password.html" target="_blank"><i class='bx bx-radio-circle'></i>Forgot Password</a></li>
-                  <li><a href="auth-basic-reset-password.html" target="_blank"><i class='bx bx-radio-circle'></i>Reset Password</a></li>
-                </ul>
-              </li>
-              <li><a class="has-arrow" href="javascript:;"><i class='bx bx-radio-circle'></i>Cover</a>
-                <ul>
-                  <li><a href="auth-cover-signin.html" target="_blank"><i class='bx bx-radio-circle'></i>Sign In</a></li>
-                  <li><a href="auth-cover-signup.html" target="_blank"><i class='bx bx-radio-circle'></i>Sign Up</a></li>
-                  <li><a href="auth-cover-forgot-password.html" target="_blank"><i class='bx bx-radio-circle'></i>Forgot Password</a></li>
-                  <li><a href="auth-cover-reset-password.html" target="_blank"><i class='bx bx-radio-circle'></i>Reset Password</a></li>
-                </ul>
-              </li>
-              <li><a class="has-arrow" href="javascript:;"><i class='bx bx-radio-circle'></i>With Header Footer</a>
-                <ul>
-                  <li><a href="auth-header-footer-signin.html" target="_blank"><i class='bx bx-radio-circle'></i>Sign In</a></li>
-                  <li><a href="auth-header-footer-signup.html" target="_blank"><i class='bx bx-radio-circle'></i>Sign Up</a></li>
-                  <li><a href="auth-header-footer-forgot-password.html" target="_blank"><i class='bx bx-radio-circle'></i>Forgot Password</a></li>
-                  <li><a href="auth-header-footer-reset-password.html" target="_blank"><i class='bx bx-radio-circle'></i>Reset Password</a></li>
-                </ul>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <a href="user-profile.html">
-              <div class="parent-icon"><i class="bx bx-user-circle"></i>
-              </div>
-              <div class="menu-title">User Profile</div>
-            </a>
-          </li>
-          <li>
-            <a href="timeline.html">
-              <div class="parent-icon"> <i class="bx bx-video-recording"></i>
-              </div>
-              <div class="menu-title">Timeline</div>
-            </a>
-          </li>
-          <li>
-            <a class="has-arrow" href="javascript:;">
-              <div class="parent-icon"><i class="bx bx-error"></i>
-              </div>
-              <div class="menu-title">Errors</div>
-            </a>
-            <ul>
-              <li> <a href="errors-404-error.html" target="_blank"><i class='bx bx-radio-circle'></i>404 Error</a>
-              </li>
-              <li> <a href="errors-500-error.html" target="_blank"><i class='bx bx-radio-circle'></i>500 Error</a>
-              </li>
-              <li> <a href="errors-coming-soon.html" target="_blank"><i class='bx bx-radio-circle'></i>Coming Soon</a>
-              </li>
-              <li> <a href="error-blank-page.html" target="_blank"><i class='bx bx-radio-circle'></i>Blank Page</a>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <a href="faq.html">
-              <div class="parent-icon"><i class="bx bx-help-circle"></i>
-              </div>
-              <div class="menu-title">FAQ</div>
-            </a>
-          </li>
-          <li>
-            <a href="pricing-table.html">
-              <div class="parent-icon"><i class="bx bx-diamond"></i>
-              </div>
-              <div class="menu-title">Pricing</div>
-            </a>
-          </li>
-          <li class="menu-label">Charts & Maps</li>
-          <li>
-            <a class="has-arrow" href="javascript:;">
-              <div class="parent-icon"><i class="bx bx-line-chart"></i>
-              </div>
-              <div class="menu-title">Charts</div>
-            </a>
-            <ul>
-              <li> <a href="charts-apex-chart.html"><i class='bx bx-radio-circle'></i>Apex</a>
-              </li>
-              <li> <a href="charts-chartjs.html"><i class='bx bx-radio-circle'></i>Chartjs</a>
-              </li>
-              <li> <a href="charts-highcharts.html"><i class='bx bx-radio-circle'></i>Highcharts</a>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <a class="has-arrow" href="javascript:;">
-              <div class="parent-icon"><i class="bx bx-map-alt"></i>
-              </div>
-              <div class="menu-title">Maps</div>
-            </a>
-            <ul>
-              <li> <a href="map-google-maps.html"><i class='bx bx-radio-circle'></i>Google Maps</a>
-              </li>
-              <li> <a href="map-vector-maps.html"><i class='bx bx-radio-circle'></i>Vector Maps</a>
-              </li>
-            </ul>
-          </li>
-          <li class="menu-label">Others</li>
-          <li>
-            <a class="has-arrow" href="javascript:;">
-              <div class="parent-icon"><i class="bx bx-menu"></i>
-              </div>
-              <div class="menu-title">Menu Levels</div>
-            </a>
-            <ul>
-              <li> <a class="has-arrow" href="javascript:;"><i class='bx bx-radio-circle'></i>Level One</a>
-                <ul>
-                  <li> <a class="has-arrow" href="javascript:;"><i class='bx bx-radio-circle'></i>Level Two</a>
-                    <ul>
-                      <li> <a href="javascript:;"><i class='bx bx-radio-circle'></i>Level Three</a>
-                      </li>
-                    </ul>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <a href="javascript:;">
-              <div class="parent-icon"><i class="bx bx-folder"></i>
-              </div>
-              <div class="menu-title">Documentation</div>
-            </a>
-          </li>
-          <li>
-            <a href="https://themeforest.net/user/codervent" target="_blank">
-              <div class="parent-icon"><i class="bx bx-support"></i>
-              </div>
-              <div class="menu-title">Support</div>
+            <a href="{{ route('category.index') }}">
+              <i class="bi bi-circle"></i><span>Category</span>
             </a>
           </li> --}}
+          <li>
+            <a href="{{ route('product.create') }}">
+              <i class="bi bi-circle"></i><span>Create Product</span>
+            </a>
+          </li>
+          <li>
+            <a href="{{ route('product.index') }}">
+              <i class="bi bi-circle"></i><span>Product List</span>
+            </a>
+          </li>
+          
         </ul>
-        <!--end navigation-->
-      </div>
-      <!--end sidebar wrapper -->
-      <!--start header -->
-      <header>
-        <div class="topbar d-flex align-items-center">
-          <nav class="navbar navbar-expand gap-3">
-            <div class="mobile-toggle-menu"><i class='bx bx-menu'></i>
-            </div>
-              <div class="top-menu ms-auto">
-              <ul class="navbar-nav align-items-center gap-1">
-                <li class="nav-item dropdown dropdown-app">
-                  <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" data-bs-toggle="dropdown" href="javascript:;">
-                    <!-- <i class='bx bx-grid-alt'></i> -->
-                  </a>
-                  <div class="">
-                    <div class="app-container p-2 my-2">
-                    </div>
-                  </div>
-                </li>
-                <li class="nav-item dropdown dropdown-large">
-                  <a class="nav-link dropdown-toggle dropdown-toggle-nocaret position-relative" href="#" data-bs-toggle="dropdown">
-                    <!-- <i class='bx bx-bell'></i> -->
-                  </a>
-                  <div class="">
-                    <div class="header-notifications-list">
-                    </div>
-                  </div>
-                </li>
-                <li class="nav-item dropdown dropdown-large">
-                  <a class="nav-link dropdown-toggle dropdown-toggle-nocaret position-relative" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <!-- <i class='bx bx-shopping-bag'></i> -->
-                  </a>
-                  <div class="dropdown-menu dropdown-menu-end">
-                    <div class="header-message-list">
-                    </div>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="user-box dropdown px-3">
-              <a class="d-flex align-items-center nav-link dropdown-toggle gap-3 dropdown-toggle-nocaret" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                {{-- <img src="assets/images/avatars/avatar-2.png" class="user-img" alt="user avatar"> --}}
-                <div class="user-info">
-                  <p class="user-name mb-0">MD.Monir Hossain</p>
-                  {{-- <p class="designattion mb-0">Web Designer</p> --}}
-                </div>
-              </a>
-              <ul class="dropdown-menu dropdown-menu-end">
-                {{-- <li><a class="dropdown-item d-flex align-items-center" href="javascript:;"><i class="bx bx-user fs-5"></i><span>Profile</span></a>
-                </li>
-                <li><a class="dropdown-item d-flex align-items-center" href="javascript:;"><i class="bx bx-cog fs-5"></i><span>Settings</span></a>
-                </li>
-                <li><a class="dropdown-item d-flex align-items-center" href="javascript:;"><i class="bx bx-home-circle fs-5"></i><span>Dashboard</span></a>
-                </li>
-                <li><a class="dropdown-item d-flex align-items-center" href="javascript:;"><i class="bx bx-dollar-circle fs-5"></i><span>Earnings</span></a>
-                </li>
-                <li><a class="dropdown-item d-flex align-items-center" href="javascript:;"><i class="bx bx-download fs-5"></i><span>Downloads</span></a>
-                </li>
-                <li>
-                  <div class="dropdown-divider mb-0"></div>
-                </li> --}}
-                <li><a class="dropdown-item d-flex align-items-center" href="{{ route('logOut') }}"><i class="bx bx-log-out-circle"></i><span>Logout</span></a>
-                </li>
-              </ul>
-            </div>
-          </nav>
-        </div>
-      </header>
-      <!--end header -->
-      <!--start page wrapper -->
-      <div class="page-wrapper">
+      </li><!-- End Components Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed"  href="{{ route('supplier.index') }}">
+          <i class="bi bi-person"></i><span>Suppliers</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+       
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed"  href="{{ route('customer.index') }}">
+          <i class="bi bi-person"></i><span>Customers</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+       
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed"  href="{{ route('purchase.index') }}">
+          <i class="bi bi-menu-button-wide"></i><span>Purchases</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+       
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed"  href="{{ route('creditpurchase.index') }}">
+          <i class="bi bi-menu-button-wide"></i><span>Credit Purchases</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+       
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed"  href="{{ route('usedpurchase.index') }}">
+          <i class="bi bi-menu-button-wide"></i><span>Used Purchases</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+       
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed"  href="{{ route('bngpurchase.index') }}">
+          <i class="bi bi-menu-button-wide"></i><span>BNG Purchases</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+       
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed"  href="{{ route('stock.index') }}">
+          <i class="bi bi-menu-button-wide"></i><span>Stock</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+       
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed"  href="{{ route('sale.index') }}">
+          <i class="bi bi-menu-button-wide"></i><span>Sales</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+       
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed"  href="{{ route('dailyexpense.index') }}">
+          <i class="bi bi-menu-button-wide"></i><span>Daily Expenses</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+       
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed"  href="{{ route('homeexpense.index') }}">
+          <i class="bi bi-menu-button-wide"></i><span>Home Expenses</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+       
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-layout-text-window-reverse"></i><span>Report</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="{{ route('yearly_purchase') }}">
+              <i class="bi bi-circle"></i><span>Yearly Purchase Report</span>
+            </a>
+          </li>
+          <li>
+            <a href="{{ route('yearly_sale') }}">
+              <i class="bi bi-circle"></i><span>Yearly Sale Report</span>
+            </a>
+          </li>
+          <li>
+            <a href="{{ route('yearly_expense') }}">
+              <i class="bi bi-circle"></i><span>Yearly Expense Report</span>
+            </a>
+          </li>
+          <li>
+            <a href="{{ route('yearly_report') }}">
+              <i class="bi bi-circle"></i><span>Yearly Report</span>
+            </a>
+          </li>
+          <li>
+            <a href="{{ route('supplier_report') }}">
+              <i class="bi bi-circle"></i><span>Supplier Report</span>
+            </a>
+          </li>
+          <li>
+            <a href="{{ route('customer_report') }}">
+              <i class="bi bi-circle"></i><span>Customer Report</span>
+            </a>
+          </li>
+          
+        </ul>
+      </li><!-- End Tables Nav -->
+    </ul>
+
+  </aside><!-- End Sidebar-->
+
+  <main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>@yield('title')</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">@yield('page-title')</a></li>
+          <li class="breadcrumb-item active">@yield('page-subtitle')</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+      {{-- <div class="page-wrapper">
           <div class="page-content">
-              @yield('content')
+              
           </div>
+      </div> --}}
+      <section class="section dashboard">
+        @yield('content')
+      </section>
+    </main><!-- End #main -->
+
+    <!-- ======= Footer ======= -->
+    <footer id="footer" class="footer">
+      {{-- <div class="copyright">
+        &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
       </div>
-      <!--end page wrapper -->
-      <!--start overlay-->
-      <div class="overlay toggle-icon"></div>
-      <!--end overlay-->
-      <!--Start Back To Top Button-->
-        <a href="javaScript:;" class="back-to-top"><i class='bx bxs-up-arrow-alt'></i></a>
-      <!--End Back To Top Button-->
-      <footer class="page-footer">
-        <p class="mb-0">Copyright © {{ date('Y') }}. All right reserved.</p>
-      </footer>
-    </div>
-    <!--end wrapper-->
-
-
-    <!-- Bootstrap JS -->
-    <script src="{{ asset('public/syndron/assets/js/bootstrap.bundle.min.js') }}"></script>
-    <!--plugins-->
-    <script src="{{ asset('public/syndron/assets/js/jquery.min.js') }}"></script>
-    <script src="{{ asset('public/syndron/assets/plugins/simplebar/js/simplebar.min.js') }}"></script>
-    <script src="{{ asset('public/syndron/assets/plugins/metismenu/js/metisMenu.min.js') }}"></script>
-    <script src="{{ asset('public/syndron/assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js') }}"></script>
-    <script src="{{ asset('public/syndron/assets/plugins/apexcharts-bundle/js/apexcharts.min.js') }}"></script>
-    <script src="{{ asset('public/syndron/assets/plugins/datatable/js/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('public/syndron/assets/plugins/datatable/js/dataTables.bootstrap5.min.js') }}"></script>
-    <!-- Select2 CSS -->
-    {{-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> --}}
+      <div class="credits">
+        <!-- All the links in the footer should remain intact. -->
+        <!-- You can delete the links only if you purchased the pro version. -->
+        <!-- Licensing information: https://bootstrapmade.com/license/ -->
+        <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
+        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+      </div> --}}
+    </footer><!-- End Footer -->
+  
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  
+    <!-- Vendor JS Files -->
+    <script src="{{ asset('public/assets/vendor/apexcharts/apexcharts.min.js') }}"></script>
+    <script src="{{ asset('public/assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('public/assets/vendor/chart.js/chart.umd.js') }}"></script>
+    <script src="{{ asset('public/assets/vendor/echarts/echarts.min.js') }}"></script>
+    <script src="{{ asset('public/assets/vendor/quill/quill.min.js') }}"></script>
+    <script src="{{ asset('public/assets/vendor/simple-datatables/simple-datatables.js') }}"></script>
+    <script src="{{ asset('public/assets/vendor/tinymce/tinymce.min.js') }}"></script>
+    <script src="{{ asset('public/assets/vendor/php-email-form/validate.js') }}"></script>
     
-    <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     
-    <!-- Select2 JS -->
+  
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    
-    <script src="{{ asset('public/syndron/assets/js/index.js') }}"></script>
+    {{-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script> --}}
+    <!-- Template Main JS File -->
+    <script src="{{ asset('public/assets/js/main.js') }}"></script>
     <script>
       $(document).ready(function() {
         $('#example').DataTable();
@@ -621,7 +337,7 @@
     </script>
 
     <!--app JS-->
-    <script src="{{ asset('public/syndron/assets/js/app.js') }}"></script>
-</body>
-<!-- Mirrored from codervent.com/syndron/demo/vertical/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 29 Jul 2023 03:55:08 GMT -->
-</html>
+    {{-- <script src="{{ asset('public/syndron/assets/js/app.js') }}"></script> --}}
+  </body>
+  
+  </html>

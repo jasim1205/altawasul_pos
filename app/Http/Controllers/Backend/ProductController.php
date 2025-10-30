@@ -120,6 +120,7 @@ class ProductController extends Controller
                 // 'category_id' => 'required|integer',
                 'product_name' => 'required|string',
                 'product_model' => 'required|string',
+                'location_rak' => 'required|string',
                 // 'unit_price' => 'required|numeric',
                 'file' => 'nullable|mimes:jpeg,jpg,png|max:3072', // Adjust max file size as needed (2048 KB = 3 MB)
             ]);
@@ -129,6 +130,7 @@ class ProductController extends Controller
             // $product->category_id = $request->company_id;
             $product->product_name = $request->product_name;
             $product->product_model = $request->product_model;
+            $product->location_rak = $request->location_rak;
             $product->cost_code = $request->cost_code;
             // $product->old_price = $request->old_price;
             $product->oem = $request->oem;
@@ -200,6 +202,7 @@ class ProductController extends Controller
             // $product->category_id = $request->company_id;
             $product->product_name = $request->product_name;
             $product->product_model = $request->product_model;
+            $product->location_rak = $request->location_rak;
             $product->cost_code = $request->cost_code;
             $product->oem = $request->oem;
             $product->cross_reference = $request->cross_reference;

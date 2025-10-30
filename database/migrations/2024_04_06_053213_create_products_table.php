@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->string('product_name');
             $table->string('product_model');
+            $table->string('location_rak')nullable();
             $table->string('cost_code')->nullable();
             $table->string('oem')->nullable();
             $table->string('cross_reference')->nullable();
