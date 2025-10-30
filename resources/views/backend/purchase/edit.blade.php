@@ -35,6 +35,7 @@
                         @csrf
                         @method('PUT')
                         <div class="row">
+                            
                             <div class="col-sm-4">
                                 <div class="input-group mb-3">
                                     <span class="input-group-text" id="basic-addon1">Supplier Name <span
