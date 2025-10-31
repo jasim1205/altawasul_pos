@@ -19,8 +19,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $data=User::paginate(10);
-        return view('backend.user.index',compact('data'));
+        $user=User::paginate(10);
+        return view('backend.user.index',compact('user'));
     }
 
     /**
@@ -35,17 +35,17 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(AddNewRequest $request)
+    public function store(Request $request)
     {
 
         try{
             $data=new User();
-            $data->name=$request->userName;
-            $data->email=$request->EmailAddress;
-            $data->contact_no=$request->contactNumber;
-            $data->role_id=$request->roleId;
+            $data->name=$request->name;
+            $data->email=$request->email;
+            $data->contact_no=$request->contact_no;
+            $data->role_id=1;
             $data->status=$request->status;
-            $data->full_access=$request->fullAccess;
+            $data->full_access=1;
             $data->password=Hash::make($request->password);
             $data->remember_token = Str::random(60);
             if($request->hasFile('image')){
@@ -53,7 +53,7 @@ class UserController extends Controller
                 $request->image->move(public_path('uploads/users'), $imageName);
                 $data->image=$imageName;
             }
-
+// dd($data);
             if($data->save()){
                 $this->notice::success('Successfully saved');
                 return redirect()->route('user.index');
@@ -86,16 +86,14 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateRequest $request, $id)
+    public function update(Request $request, $id)
     {
         try{
             $data=User::findOrFail(encryptor('decrypt',$id));
-            $data->name=$request->userName;
-            $data->email=$request->EmailAddress;
-            $data->contact_no=$request->contactNumber;
-            $data->role_id=$request->roleId;
+            $data->name=$request->name;
+            $data->email=$request->email;
+            $data->contact_no=$request->contact_no;
             $data->status=$request->status;
-            $data->full_access=$request->fullAccess;
             if($request->password)
                 $data->password=Hash::make($request->password);
 

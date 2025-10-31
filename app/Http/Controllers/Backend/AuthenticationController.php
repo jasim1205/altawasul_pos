@@ -27,12 +27,12 @@ class AuthenticationController extends Controller
             $user->status = 1;
             $user->role_id=1;
             if($user->save())
-                return redirect('login')->with('success','Successfully Registred');
+                return redirect()->route('login')->with('success','Successfully Registred');
             else
-                return redirect('login')->with('danger','Please try again');
+                return redirect()->route('login')->with('danger','Please try again');
         }catch(Exception $e){
             dd($e);
-            return redirect('login')->with('danger','Please try again');
+            return redirect()->route('login')->with('danger','Please try again');
         }
     }
     public function signInForm(){
@@ -84,7 +84,7 @@ class AuthenticationController extends Controller
 
     public function signOut(){
         request()->session()->flush();
-        return redirect('/')->with('danger','Succfully Logged Out');
+        return redirect()->route('login')->with('danger','Succfully Logged Out');
     }
     public function show(User $data)
     {

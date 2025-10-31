@@ -32,7 +32,7 @@ a:hover {
 .input-group-text {
   background-color: #3A58B3;
   color: white;
-  width: 150px;
+  /* width: 150px; */
 }
 .star {
   color: rgb(248, 62, 62);
