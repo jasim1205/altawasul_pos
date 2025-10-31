@@ -35,7 +35,7 @@
                         @csrf
                         @method('PUT')
                         <div class="row">
-                            
+
                             <div class="col-sm-4">
                                 <div class="input-group mb-3">
                                     <span class="input-group-text" id="basic-addon1">Supplier Name <span
@@ -82,11 +82,9 @@
                                     id="current_date" class="form-control" readonly>
                             </div>
                             <div class="table-responsive">
-                                <table class="table table-striped mb-0 mt-3">
+                                <table class="table table-striped mb-0 mt-3" id="table">
                                     <thead>
                                         <tr class="text-center">
-                                            {{-- <th scope="col">{{ __('Company') }}</th> --}}
-                                            {{-- <th scope="col">{{__('Category')}}</th> --}}
                                             <th scope="col">{{ __('Product') }}</th>
                                             <th scope="col">{{ __('Unit Price') }}</th>
                                             <th scope="col">{{ __('Quantity') }}</th>
@@ -141,7 +139,8 @@
 
                                                     <select class="select2 product-select" name="product_id[]" readonly>
                                                         @foreach ($product as $value)
-                                                            <option value="{{ $value->id }}" data-price="{{ $value->cost_unit_price }}"
+                                                            <option value="{{ $value->id }}"
+                                                                data-price="{{ $value->cost_unit_price }}"
                                                                 {{ old('product_id', $purdetail->product_id) == $value->id ? 'selected' : '' }}>
                                                                 {{ $value->product_name }}</option>
                                                         @endforeach
@@ -163,12 +162,12 @@
                                                 <td><input class="form-control totax_amount" type="text"
                                                         name="tax_amount[]" value="{{ $purdetail->tax_amount }}"
                                                         style="width: 80px; height:25px;"></td>
-                                                        
-                                                <td><input class="form-control subamount" type="text" name="sub_amount[]"
-                                                        value="{{ $purdetail->sub_amount }}"
+
+                                                <td><input class="form-control subamount" type="text"
+                                                        name="sub_amount[]" value="{{ $purdetail->sub_amount }}"
                                                         style="width: 100px; height:25px;"></td>
                                                 <td><select name="discount_type[]" id=""
-                                                        class="select2 form-control discount_type p-0 text-center"
+                                                        class="form-control discount_type p-0 text-center"
                                                         style="width: 80px; height:25px;">
                                                         <option value="1"
                                                             @if (old('discount_type', $purdetail->discount_type) == 1) selected @endif>%</option>
@@ -245,7 +244,7 @@
         </div>
     </div>
 
-   
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {
@@ -266,11 +265,6 @@
         });
     </script>
     <script>
-        // Set current date to the date input field
-        // document.addEventListener('DOMContentLoaded', function() {
-        //     var currentDate = new Date().toISOString().split('T')[0];
-        //     document.getElementById('current_date').value = currentDate;
-        // });
         $(document).ready(function() {
             function updateStatus() {
                 var amount = parseFloat($('#pay_amount').val());
@@ -449,6 +443,7 @@
 
         // Function to add a new row
         function addRow() {
+
             var row = `<tr>
                          {{-- <td>
                             <select class="select2 company_id" onchange="doData(this);" name="company_id[]">
@@ -464,7 +459,7 @@
                             </select>
                         </td> --}}
                         <td>
-                            <select class="select2 product-select" name="product_id[]">
+                            <select id="#select" class="select2 product-select" name="product_id[]">
                                 <option value="">Select Product</option>
                                 @foreach ($product as $value)
                                     <option value="{{ $value->id }}" data-price="{{ $value->cost_unit_price }}">{{ $value->product_name }}</option>
@@ -477,7 +472,7 @@
                         <td><input class="form-control totax" type="text" name="tax[]"style="width: 80px; height:25px;"></td>
                         <td><input class="form-control totax_amount" type="text" name="tax_amount[]"style="width: 80px; height:25px;"></td>
                         <td><input class="form-control subamount" type="text" name="sub_amount[]"style="width: 100px; height:25px;"></td>
-                        <td><select name="discount_type[]" id="" class="select2 text-center p-0 form-control discount_type" style="width: 80px; height:25px;">
+                        <td><select name="discount_type[]" id="" class=" text-center p-0 form-control discount_type" style="width: 80px; height:25px;">
                                 <option value="">select</option>
                                 <option value="1">%</option>
                                 <option value="0">Fixed</option>
@@ -490,6 +485,11 @@
                         </td>
                     </tr>`;
             $('#purchaseHead').append(row);
+            $('#purchaseHead tr:last').find('.select2').select2({
+                width: '60%',
+                height: '35px',
+                placeholder: "Select Product"
+            });
         };
 
         function RemoveRow(e) {

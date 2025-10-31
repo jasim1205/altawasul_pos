@@ -1,61 +1,75 @@
 @extends('layouts.app')
-@section('title', trans('Sale'))
-@section('page', trans('Create'))
+@section('title', 'Sale')
+@section('page-title', 'Home')
+@section('page-subtitle', 'Create Sale')
 @section('content')
-    <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-        <div class="breadcrumb-title pe-3">Forms</div>
-        <div class="ps-3">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb mb-0 p-0">
-                    <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
-                    </li>
-                    <li class="breadcrumb-item active" aria-current="page">Add New Sale</li>
-                </ol>
-            </nav>
-        </div>
-        <div class="ms-auto">
-            <div class="btn-group">
-                <a class="btn btn-primary" href="{{ route('sale.index') }}"><i class="fa fa-list"></i></a>
-            </div>
+    <style>
+        thead tr th {
+            background-color: #198754 !important;
+            color: white !important;
+        }
+
+        .input-group-text {
+            background-color: #3A58B3;
+            color: white;
+            width: 25%;
+        }
+
+        .star {
+            color: rgb(248, 62, 62);
+        }
+    </style>
+    <div class="ml-auto d-flex">
+        <div class="btn-group ms-auto">
+            <a class="btn btn-primary" href="{{ route('purchase.index') }}"><i class="fa fa-list"></i></a>
         </div>
     </div>
-    <!--end breadcrumb-->
-
     <hr>
     <div id="stepper1" class="bs-stepper">
         <div class="card">
-            <div class="card-header">
-                <h4 class="card-title">Create New sale</h4>
-            </div>
             <div class="card-body">
                 <div class="bs-stepper-content">
                     <form action="{{ route('sale.store') }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
-                            <div class="col-sm-4">
-                                <label for="">Customer Name</label>
-                                <select class="select2 form-select" name="customer_id">
-                                    <option value="">Select Customer</option>
-                                    @foreach ($customer as $value)
-                                        <option value="{{ $value->id }}">{{ $value->customer_name }}</option>
-                                    @endforeach
-                                </select>
-                                
+                            <div class="col-md-4">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon1">Customer<span
+                                            class="star">*</span></span>
+                                    <select class="select2 form-select" name="supplier_id">
+                                        <option value="">Select customer</option>
+                                        @foreach ($customer as $value)
+                                            <option value="{{ $value->id }}">{{ $value->customer_name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('supplier_id')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
                             </div>
-                            <div class="col-sm-4">
-                                <label for="">Tm No</label>
-                                <input type="text" name="tm_no" id="" class="form-control"
-                                    style="height:30px;">
+                            <div class="col-md-4">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon1">Tm No <span
+                                            class="star">*</span></span>
+                                    <input type="text" name="tm_no" id="" class="form-control"
+                                        style="height:30px;">
+                                </div>
                             </div>
-                            <div class="col-sm-4">
-                                <label for="">Rf No</label>
-                                <input type="text" name="rf_no" id="" class="form-control"
-                                    style="height:30px;">
+                            <div class="col-md-4">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon1">RF No <span
+                                            class="star">*</span></span>
+                                    <input type="text" name="rf_no" id="" class="form-control"
+                                        style="height:30px;">
+                                </div>
                             </div>
-                            <div class="col-sm-4">
-                                <label for="">Explanation</label>
-                                <input type="text" name="explanation" id="" class="form-control"
-                                    style="height:30px;">
+                            <div class="col-md-4">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon1">Explanation <span
+                                            class="star">*</span></span>
+                                    <input type="text" name="explanation" id="" class="form-control"
+                                        style="height:30px;">
+                                </div>
                             </div>
                             {{-- <div class="col-sm-3">
                             <label for="">Customer Name</label>
@@ -69,10 +83,13 @@
                             <label for="">Contact</label>
                             <input type="text" name="contact_no" id="" class="form-control" style="height:30px;">
                         </div> --}}
-                            <div class="col-sm-3">
-                                <label for="">Date</label>
-                                <input type="date" name="date" id="current_date" class="form-control"
-                                    style="height:30px;">
+                            <div class="col-md-4">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon1">Date <span
+                                            class="star">*</span></span>
+                                    <input type="date" name="date" id="current_date" class="form-control"
+                                        style="height:30px;">
+                                </div>
                             </div>
                             <div class="table-responsive">
                                 <table class="table table-striped mb-0 mt-3">
@@ -129,8 +146,8 @@
                                                     style="width: 100px; height:25px;"></td>
                                             <td><input class="form-control totax" type="text" name="tax[]"
                                                     style="width: 80px; height:25px;"></td>
-                                            <td><input class="form-control totax_amount" type="text" name="tax_amount[]"
-                                                    style="width: 80px; height:25px;"></td>
+                                            <td><input class="form-control totax_amount" type="text"
+                                                    name="tax_amount[]" style="width: 80px; height:25px;"></td>
                                             <td><input class="form-control subamount" type="text" name="sub_amount[]"
                                                     style="width: 100px; height:25px;"></td>
                                             <td><select name="discount_type[]" id=""
@@ -203,6 +220,21 @@
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Initialize Select2
+            $('.select2').select2({
+                width: '75%',
+                placeholder: "Select Product"
+            });
+
+            // When product changes
+            // $(document).on('change', '.product-select', function () {
+            //     let unitPrice = $(this).find(':selected').data('price');
+            //     $(this).closest('tr').find('.uprice').val(unitPrice ? unitPrice : '');
+            // });
+        });
+    </script>
 
     <script>
         // Set current date to the date input field
@@ -221,7 +253,7 @@
                     $('#status').val('3'); // Change status to "Paid"
                 } else {
                     $('#status').val(
-                    '1'); // Change status to "Unpaid" if no amount is entered or conditions are not met
+                        '1'); // Change status to "Unpaid" if no amount is entered or conditions are not met
                 }
             });
         });
@@ -323,6 +355,7 @@
             $('#total_tax').text(totalTax);
             $('[name="total_tax"]').val(totalTax); // Update hidden input field
         }
+
         function calculateTotalTaxAmount() {
             let totalTaxAmount = 0;
             $('#purchaseHead .totax_amount').each(function() {
@@ -382,7 +415,7 @@
         // Function to add a new row
         function addRow() {
             var row = `<tr>
-                        <td>
+                         {{-- <td>
                             <select class="select2 company_id" onchange="doData(this);" name="company_id[]">
                                 <option value="">Select Company</option>
                                 @foreach ($company as $value)
@@ -390,22 +423,28 @@
                                 @endforeach
                             </select>
                         </td>
-                        {{--<td>
+                       <td>
                             <select class="select2 category_id" onchange="doData(this);" name="category_id[]">
                                 <option value="">Select Category</option>
                             </select>
-                        </td>--}}
+                        </td> --}}
                         <td>
-                            <select class="select2 product_id" onchange="doData(this);" name="product_id[]">
+                            <select class="select2 product_id" name="product_id[]">
                                 <option value="">Select Product</option>
+                                @foreach ($product as $value)
+                                    <option value="{{ $value->id }}">{{ $value->product_name }}
+                                    </option>
+                                @endforeach
                             </select>
                         </td>
                         <td><input class="form-control uprice" type="text" name="unit_price[]" style="width: 80px; height:25px;"></td>
                         <td><input class="form-control toquantity" type="text" name="quantity[]"style="width: 80px; height:25px;"></td>
                         <td><input class="form-control amount" type="text" name="amount[]" style="width: 100px; height:25px;"></td>
                         <td><input class="form-control totax" type="text" name="tax[]"style="width: 80px; height:25px;"></td>
+                        <td><input class="form-control totax_amount" type="text"
+                                                    name="tax_amount[]" style="width: 80px; height:25px;"></td>
                         <td><input class="form-control subamount" type="text" name="sub_amount[]"style="width: 100px; height:25px;"></td>
-                        <td><select name="discount_type[]" id="" class="select2 text-center p-0 form-control discount_type" style="width: 80px; height:25px;">
+                        <td><select name="discount_type[]" id="" class="text-center p-0 form-control discount_type" style="width: 80px; height:25px;">
                                 <option value="">select</option>
                                 <option value="1">%</option>
                                 <option value="0">Fixed</option>
@@ -418,6 +457,11 @@
                         </td>
                     </tr>`;
             $('#purchaseHead').append(row);
+            $('#purchaseHead tr:last').find('.select2').select2({
+                width: '60%',
+                height: '35px',
+                placeholder: "Select Product"
+            });
         };
 
         function RemoveRow(e) {
@@ -619,10 +663,11 @@
                                 var productSelect = row.find('.product_id');
                                 productSelect.empty();
                                 productSelect.append(
-                                '<option value="">Select product</option>');
+                                    '<option value="">Select product</option>');
                                 $.each(res, function(key, value) {
                                     var stockQuantity = value.match(
-                                    /\((\d+)\)/); // Extract stock quantity from parentheses
+                                        /\((\d+)\)/
+                                    ); // Extract stock quantity from parentheses
                                     var stock = stockQuantity ? parseInt(stockQuantity[
                                         1]) : 0;
 
