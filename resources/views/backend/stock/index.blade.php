@@ -1,19 +1,25 @@
 @extends('layouts.app')
-@section('title', trans('Product'))
-@section('page', trans('List'))
+@section('title', 'Stock')
+@section('page-title', 'Home')
+@section('page-subtitle', 'Stock List')
 @section('content')
+<style>
+    thead tr th {
+        background-color: #198754 !important;
+        color: white !important;
+    }
 
+    .input-group-text {
+        background-color: #3A58B3;
+        color: white;
+        width: 150px;
+    }
+
+    .star {
+        color: rgb(248, 62, 62);
+    }
+</style>
     <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-        <div class="breadcrumb-title pe-3">Tables</div>
-        <div class="ps-3">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb mb-0 p-0">
-                    <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
-                    </li>
-                    <li class="breadcrumb-item active" aria-current="page">Stock List</li>
-                </ol>
-            </nav>
-        </div>
         <div class="btn-group">
             <a class="btn btn-outline-primary mx-2" href="{{ route('stock.reportForm') }}">Report</a>
         </div>

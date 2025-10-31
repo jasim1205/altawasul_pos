@@ -1,18 +1,9 @@
 @extends('layouts.app')
-@section('title',trans('Purchase'))
-@section('page',trans('Show'))
+@section('title', 'Purchase')
+@section('page-title', 'Home')
+@section('page-subtitle', 'Purchase Details')
 @section('content')
     <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-        <div class="breadcrumb-title pe-3">Tables</div>
-        <div class="ps-3">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb mb-0 p-0">
-                    <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
-                    </li>
-                    <li class="breadcrumb-item active" aria-current="page">Purchase</li>
-                </ol>
-            </nav>
-        </div>
         <div class="ms-auto">
             <div class="btn-group">
                 <a class="btn btn-primary" href="{{route('purchase.index')}}"><i class="fa fa-list"></i></a>
@@ -65,8 +56,6 @@
                     <table class="table table-striped mb-0 mt-3">
                         <thead>
                             <tr class="text-center">
-                                <th scope="col">{{__('Company')}}</th>
-                                <th scope="col">{{__('Category')}}</th>
                                 <th scope="col">{{__('Product')}}</th>
                                 <th scope="col">{{__('Image')}}</th>
                                 <th scope="col">{{__('Unit Price')}}</th>
@@ -86,12 +75,6 @@
                             @endforeach --}}
                             @foreach($purchaseDetails as $purdetail)
                             <tr>
-                                <td>
-                                    {{ $purdetail->company?->company_name }}
-                                </td?>
-                                <td>
-                                    {{ $purdetail->category?->category_name }}
-                                </td>
                                 <td>
                                     {{ $purdetail->product?->product_name }}
                                 </td>
@@ -129,7 +112,7 @@
                             @endforeach
                         </tbody>
                         <tfoot>
-                            <th colspan="5" class="text-end">Total</th>
+                            <th colspan="3" class="text-end">Total</th>
                             {{-- <th><span class="total_unitprice" id="total_unitprice" >{{ $purchase->total_unitprice }}</span></th> --}}
                             <th><span class="total_quantity" id="total_quantity" >{{ $purchase->total_quantity }}</span></th>
                             <th><span class="total_amount" id="total_amount">{{ $purchase->total_quantity_amount }}</span></th>

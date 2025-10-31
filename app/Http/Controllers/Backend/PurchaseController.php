@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Models\Purchase;
-use App\Models\Stock;
-use App\Models\Supplier;
-use App\Models\PurchaseDetails;
-use App\Models\Product;
-use App\Models\Company;
-use App\Models\Category;
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use DB;
+use App\Models\Stock;
+use App\Models\Company;
+use App\Models\Product;
+use App\Models\Category;
+use App\Models\Purchase;
+use App\Models\Supplier;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Http\Request;
+use App\Models\PurchaseDetails;
+use App\Http\Controllers\Controller;
 
 class PurchaseController extends Controller
 {
@@ -204,213 +205,7 @@ class PurchaseController extends Controller
         return view('backend.purchase.edit',compact('company','category','product','purchase','purchaseDetails','supplier'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-
-    // public function update(Request $request, $id)
-    // {
-    //     try {
-    //         DB::beginTransaction();
-
-    //         // Update purchase information
-    //         $purchase = Purchase::findOrFail(encryptor('decrypt', $id));
-    //         $purchase->date = $request->date;
-    //         $purchase->total_quantity = $request->total_quantity;
-    //         $purchase->total_quantity_amount = $request->total_quantity_amount;
-    //         $purchase->total_discount = $request->total_discount;
-    //         $purchase->total_tax = $request->total_tax;
-    //         $purchase->total_subamount = $request->total_subamount;
-    //         $purchase->grand_total_amount = $request->grand_total_amount;
-    //         $purchase->status = $request->status;
-    //         $purchase->save();
-
-    //         $supplier = Supplier::find($purchase->id);
-    //         $supplier->supplier_name = $request->supplier_name;
-    //         $supplier->email = $request->email;
-    //         $supplier->contact_no = $request->contact_no;
-    //         $supplier->date = $request->date;
-    //         $supplier->save();
-
-    //         // Update purchase details
-    //         if ($request->has('company_id')) {
-    //             foreach ($request->company_id as $key => $companyId) {
-    //                 if($companyId){
-
-    //                     $purchaseDetail = PurchaseDetails::where('purchase_id', encryptor('decrypt', $id))->skip($key)->first();
-    //                     if($purchaseDetail){
-
-    //                         $purchaseDetail->company_id = $companyId;
-    //                         $purchaseDetail->category_id = $request->category_id[$key];
-    //                         $purchaseDetail->product_id = $request->product_id[$key];
-    //                         $purchaseDetail->unit_price = $request->unit_price[$key];
-    //                         $purchaseDetail->quantity = $request->quantity[$key];
-    //                         $purchaseDetail->amount = $request->amount[$key];
-    //                         $purchaseDetail->sub_amount = $request->sub_amount[$key];
-    //                         $purchaseDetail->tax = $request->tax[$key];
-    //                         $purchaseDetail->discount_type = $request->discount_type[$key];
-    //                         $purchaseDetail->discount = $request->discount[$key];
-    //                         $purchaseDetail->total_amount = $request->total_amount[$key];
-    //                         $purchaseDetail->save();
-    //                     } else {
-    //                         // If $purchaseDetail doesn't exist, create a new one
-    //                         $purchaseDetail = new PurchaseDetails;
-    //                         $purchaseDetail->purchase_id = $purchase->id; // Link purchase detail to purchase
-    //                         $purchaseDetail->company_id = $companyId;
-    //                         $purchaseDetail->category_id = $request->category_id[$key];
-    //                         $purchaseDetail->product_id = $request->product_id[$key];
-    //                         $purchaseDetail->unit_price = $request->unit_price[$key];
-    //                         $purchaseDetail->quantity = $request->quantity[$key];
-    //                         $purchaseDetail->amount = $request->amount[$key];
-    //                         $purchaseDetail->sub_amount = $request->sub_amount[$key];
-    //                         $purchaseDetail->tax = $request->tax[$key];
-    //                         $purchaseDetail->discount_type = $request->discount_type[$key];
-    //                         $purchaseDetail->discount = $request->discount[$key];
-    //                         $purchaseDetail->total_amount = $request->total_amount[$key];
-    //                         $purchaseDetail->save();
-
-
-    //                     }
-    //                 }
-    //             }
-    //         }
-    //         // foreach ($request->product_id as $key => $productId) {
-    //         //     $quantity = $request->quantity[$key];
-
-    //         //     $stock = Stock::where('product_id', $productId)->first();
-    //         //     if (!$stock) {
-    //         //         // Create new stock entry
-    //         //         $stock = new Stock;
-    //         //         $stock->product_id = $productId;
-    //         //         $stock->purchase_id = $purchase->id;
-    //         //         $stock->quantity = $quantity;
-    //         //         $stock->save();
-    //         //     } else {
-    //         //         // Update existing stock entry
-    //         //         $stock->quantity = $quantity;
-    //         //         $stock->product_id = $productId;
-    //         //         $stock->save();
-    //         //     }
-    //         // }
-    //         foreach ($request->product_id as $key => $productId) {
-    //             $quantity = $request->quantity[$key];
-
-    //             // Find the corresponding purchase detail
-    //             $purchaseDetail = PurchaseDetails::where('product_id', $productId)->where('purchase_id', $purchase->id)->first();
-
-    //             if ($purchaseDetail) {
-    //                 // Deduct the old quantity from stock
-    //                 $oldQuantity = $purchaseDetail->quantity;
-    //                 $stock = Stock::where('product_id', $productId)->first();
-    //                 $stock->quantity -= $oldQuantity;
-
-    //                 // Add the new quantity to stock
-    //                 if ($stock) {
-    //                     $stock->quantity += $quantity;
-    //                     $stock->save();
-    //                 } else {
-    //                     // If there is no existing stock entry, create a new one
-    //                     $stock = new Stock;
-    //                     $stock->product_id = $productId;
-    //                     $stock->purchase_id = $purchase->id;
-    //                     $stock->quantity = $quantity;
-    //                     $stock->save();
-    //                 }
-    //             }
-    //         }
-
-    //         DB::commit();
-    //         return redirect()->route('purchase.index')->with('success', 'Purchase details successfully updated');
-    //     } catch (Exception $e) {
-    //         DB::rollBack();
-    //         dd($e); // You can remove this line after debugging
-    //         return redirect()->route('purchase.edit', $id)->with('error', 'Something went wrong! Please try again.');
-    //     }
-    // }
-    // public function update(Request $request, $id)
-    // {
-    //     try {
-    //         DB::beginTransaction();
-
-    //         // Update purchase information
-    //         $purchase = Purchase::findOrFail(encryptor('decrypt', $id));
-    //         $purchase->date = $request->date;
-    //         $purchase->total_quantity = $request->total_quantity;
-    //         $purchase->total_quantity_amount = $request->total_quantity_amount;
-    //         $purchase->total_discount = $request->total_discount;
-    //         $purchase->total_tax = $request->total_tax;
-    //         $purchase->total_subamount = $request->total_subamount;
-    //         $purchase->grand_total_amount = $request->grand_total_amount;
-    //         $purchase->status = $request->status;
-    //         $purchase->save();
-
-    //         $supplier = Supplier::find($purchase->supplier_id);
-    //         $supplier->supplier_name = $request->supplier_name;
-    //         $supplier->email = $request->email;
-    //         $supplier->contact_no = $request->contact_no;
-    //         $supplier->date = $request->date;
-    //         $supplier->save();
-
-    //         // Delete existing purchase details
-    //         PurchaseDetails::where('purchase_id', $purchase->id)->delete();
-
-    //         // Reset stock quantities for products
-    //         foreach ($request->product_id as $key => $productId) {
-    //             $stock = Stock::where('product_id', $productId)->first();
-    //             if ($stock) {
-    //                 $purchaseDetail = PurchaseDetails::where('purchase_id', $purchase->id)->where('product_id', $productId)->first();
-    //                 if ($purchaseDetail) {
-    //                     $oldQuantity = $purchaseDetail->quantity;
-    //                     $stock->quantity -= $oldQuantity;
-    //                     $stock->save();
-    //                 }
-    //             }
-    //         }
-
-    //         // Store new purchase details and update stock
-    //         if ($request->has('company_id')) {
-    //             foreach ($request->company_id as $key => $companyId) {
-    //                 if ($companyId) {
-    //                     // Store new purchase detail
-    //                     $purchaseDetail = new PurchaseDetails;
-    //                     $purchaseDetail->purchase_id = $purchase->id; // Link purchase detail to purchase
-    //                     $purchaseDetail->company_id = $companyId;
-    //                     $purchaseDetail->category_id = $request->category_id[$key];
-    //                     $purchaseDetail->product_id = $request->product_id[$key];
-    //                     $purchaseDetail->unit_price = $request->unit_price[$key];
-    //                     $purchaseDetail->quantity = $request->quantity[$key];
-    //                     $purchaseDetail->amount = $request->amount[$key];
-    //                     $purchaseDetail->sub_amount = $request->sub_amount[$key];
-    //                     $purchaseDetail->tax = $request->tax[$key];
-    //                     $purchaseDetail->discount_type = $request->discount_type[$key];
-    //                     $purchaseDetail->discount = $request->discount[$key];
-    //                     $purchaseDetail->total_amount = $request->total_amount[$key];
-    //                     $purchaseDetail->save();
-
-    //                     // Update stock
-    //                     $stock = Stock::where('product_id', $request->product_id[$key])->first();
-    //                     if ($stock) {
-    //                         $stock->quantity += $request->quantity[$key];
-    //                         $stock->save();
-    //                     } else {
-    //                         // Create new stock entry if it doesn't exist
-    //                         $stock = new Stock;
-    //                         $stock->product_id = $request->product_id[$key];
-    //                         $stock->purchase_id = $purchase->id;
-    //                         $stock->quantity = $request->quantity[$key];
-    //                         $stock->save();
-    //                     }
-    //                 }
-    //             }
-    //         }
-
-    //         DB::commit();
-    //         return redirect()->route('purchase.index')->with('success', 'Purchase details successfully updated');
-    //     } catch (Exception $e) {
-    //         DB::rollBack();
-    //         return redirect()->route('purchase.edit', $id)->with('error', 'Something went wrong! Please try again.');
-    //     }
-    // }
+    
 public function update(Request $request, $id)
 {
     try {
@@ -514,8 +309,10 @@ public function update(Request $request, $id)
         $toDate = $request->input('to_date')." 23:59:59";
 
         $purchase = Purchase::whereBetween('date', [$fromDate, $toDate])->get();
+        $pdf = PDF::loadView('backend.purchase.purchasepdf', compact('purchase', 'fromDate', 'toDate'));
+        return $pdf->stream('purchase_report.pdf');
 
-        return view('backend.purchase.purchasepdf', compact('purchase', 'fromDate', 'toDate'));
+        // return view('backend.purchase.purchasepdf', compact('purchase', 'fromDate', 'toDate'));
     }
 
     // Assuming this is your controller method

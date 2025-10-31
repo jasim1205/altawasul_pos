@@ -12,14 +12,17 @@
         .input-group-text {
             background-color: #3A58B3;
             color: white;
-            width: 25%;
+            width: 35%;
         }
 
         .star {
             color: rgb(248, 62, 62);
         }
     </style>
-    <div class="ml-auto d-flex">
+    <div class=" d-flex">
+        <div>
+            <span class="star">*</span>Marked are required.
+        </div>
         <div class="btn-group ms-auto">
             <a class="btn btn-primary" href="{{ route('purchase.index') }}"><i class="fa fa-list"></i></a>
         </div>
@@ -36,7 +39,7 @@
                                 <div class="input-group mb-3">
                                     <span class="input-group-text" id="basic-addon1">Customer<span
                                             class="star">*</span></span>
-                                    <select class="select2 form-select" name="supplier_id">
+                                    <select class="select2 form-select" name="customer_id" style="width:60% !important;" required>
                                         <option value="">Select customer</option>
                                         @foreach ($customer as $value)
                                             <option value="{{ $value->id }}">{{ $value->customer_name }}</option>
@@ -52,23 +55,22 @@
                                     <span class="input-group-text" id="basic-addon1">Tm No <span
                                             class="star">*</span></span>
                                     <input type="text" name="tm_no" id="" class="form-control"
-                                        style="height:30px;">
+                                    class="form-control" aria-label="Username"
+                                    aria-describedby="basic-addon1" required>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="input-group mb-3">
-                                    <span class="input-group-text" id="basic-addon1">RF No <span
-                                            class="star">*</span></span>
+                                    <span class="input-group-text" id="basic-addon1">RF No </span>
                                     <input type="text" name="rf_no" id="" class="form-control"
-                                        style="height:30px;">
+                                        aria-label="Username" aria-describedby="basic-addon1">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="input-group mb-3">
-                                    <span class="input-group-text" id="basic-addon1">Explanation <span
-                                            class="star">*</span></span>
+                                    <span class="input-group-text" id="basic-addon1">Explanation </span>
                                     <input type="text" name="explanation" id="" class="form-control"
-                                        style="height:30px;">
+                                        aria-label="Username" aria-describedby="basic-addon1">
                                 </div>
                             </div>
                             {{-- <div class="col-sm-3">
@@ -88,7 +90,7 @@
                                     <span class="input-group-text" id="basic-addon1">Date <span
                                             class="star">*</span></span>
                                     <input type="date" name="date" id="current_date" class="form-control"
-                                        style="height:30px;">
+                                        required>
                                 </div>
                             </div>
                             <div class="table-responsive">
@@ -224,8 +226,8 @@
         $(document).ready(function() {
             // Initialize Select2
             $('.select2').select2({
-                width: '75%',
-                placeholder: "Select Product"
+                // width: '75%',
+                // placeholder: "Select Product"
             });
 
             // When product changes

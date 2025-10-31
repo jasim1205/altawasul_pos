@@ -10,6 +10,7 @@ use App\Models\Company;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Stock;
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\SaleDetails;
 use Illuminate\Http\Request;
 use DB;
@@ -120,9 +121,10 @@ class SalesController extends Controller
         $company = Company::get();
         $category = Category::get();
         $product = Product::get();
-        $saledetail = SaleDetails::where('sale_id',$id)->get();
         $sale = Sales::findOrFail(encryptor('decrypt',$id));
-        return view('backend.sale.show',compact('company','category','product','sale','saledetail'));
+        $saledetails = SaleDetails::where('sale_id',$sale->id)->get();
+        // dd($saledetails);
+        return view('backend.sale.show',compact('company','category','product','sale','saledetails'));
     }
     public function invoice($id)
     {
@@ -253,8 +255,10 @@ class SalesController extends Controller
         $toDate = $request->input('to_date')." 23:59:59";
 
         $sale = Sales::whereBetween('date', [$fromDate, $toDate])->get();
+        $pdf = Pdf::loadView('backend.sale.salesReportPdf', compact('sale', 'fromDate', 'toDate'));
+        return $pdf->stream('sales_report.pdf');
 
-        return view('backend.sale.index', compact('sale', 'fromDate', 'toDate'));
+        // return view('backend.sale.index', compact('sale', 'fromDate', 'toDate'));
     }
 
     public function salegetStockByProduct(Request $request)

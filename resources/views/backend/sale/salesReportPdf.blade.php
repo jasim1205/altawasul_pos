@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Purchase Report</title>
+    <title>Sales Report</title>
     <style>
         body {
             font-family: sans-serif;
@@ -44,7 +44,7 @@
             Phone: {{ config('app.phone') }}, Email: {{ config('app.email') }}
         </p> --}}
     </header>
-    <h3>Purchase Report :
+    <h3>Sales Report :
         @if($fromDate && $toDate)
         @php
             $fromDate = \Carbon\Carbon::parse($fromDate);
@@ -77,10 +77,10 @@
             </tr>
         </thead>
         <tbody>
-             @forelse ($purchase as $value)
+             @forelse ($sale as $value)
                 <tr>
                     <td class="text-center">{{ __(++$loop->index) }}</td>
-                    <td>{{ __($value->supplier?->supplier_name) }}</td>
+                    <td>{{ __($value->customer?->customer_name) }}</td>
                     <td>{{ __(date('d-M-Y', strtotime($value->date))) }}</td>
                     <td>{{ __($value->total_quantity) }}</td>
                     <td>{{ __($value->total_discount) }}</td>

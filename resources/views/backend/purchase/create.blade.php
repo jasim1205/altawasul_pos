@@ -463,7 +463,7 @@
             // Re-initialize Select2 for the new elements
             $('#purchaseHead').find('.select2').select2({
                 // width: '100%',
-                placeholder: 'Select'
+                placeholder: 'Select Product'
             });
         };
 
