@@ -94,6 +94,11 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
     Route::post('product/generate', [product::class, 'generatePDF'])->name('product.generatePDF');
     Route::get('stock-report', [stock::class, 'stockReportForm'])->name('stock.reportForm');
     Route::post('stock/generate', [stock::class, 'generateStockPDF'])->name('stock.generatePDF');
+
+
+    Route::post('/product-autocomplete', [product::class, 'productAutoComplete'])->name('productAutoComplete');
+    Route::get('getProductInfo/{oemNo}', [product::class, 'getProductInfo'])->name('getProductInfo');
+    Route::get('product-search', [product::class, 'productSearch'])->name('productSearch');
     
 });
 

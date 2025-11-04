@@ -10,6 +10,9 @@
             color: white;
             width: 150px;
         }
+        .form-control{
+            border-color: #3A58B3 !important;
+        }
         .star {
             color: rgb(248, 62, 62);
         }
@@ -76,6 +79,20 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="input-group mb-3">
+                                        <span class="input-group-text" id="basic-addon1">Description</span>
+                                        <input type="text" name="description" value="{{ old('description', $product->description) }}"
+                                            class="form-control" id="name" placeholder="Enter a product origin" />
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text" id="basic-addon1">Size</span>
+                                        <input type="text" name="size" value="{{ old('size', $product->size) }}"
+                                            class="form-control" id="name" placeholder="Enter a product origin" />
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group mb-3">
                                         <span class="input-group-text" id="basic-addon1">Location(rak)</span>
                                         <input type="text" name="location_rak" value="{{ old('location_rak', $product->location_rak) }}" class="form-control" id=""
                                             placeholder="Enter a location" aria-label="Username"
@@ -98,14 +115,34 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="input-group mb-3">
+                                        <span class="input-group-text" id="basic-addon1">Sale Price One</span>
+                                        <input type="text" class="form-control" name="sale_price_one" value="{{old('sale_price_one', $product->sale_price_one)}}"
+                                            placeholder="Enter a sale price" aria-label="Username"
+                                            aria-describedby="basic-addon1">
+                                        @error('sale_price_one')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text" id="basic-addon1">Sale Price two</span>
+                                        <input type="text" class="form-control" name="sale_price_two" value="{{old('sale_price_two', $product->sale_price_two)}}"
+                                            placeholder="Enter a sale price" aria-label="Username"
+                                            aria-describedby="basic-addon1">
+                                        @error('sale_price_two')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group mb-3">
                                         <span class="input-group-text" id="basic-addon1">Cost Code</span>
                                         <input type="text" name="cost_code"
                                             value="{{ old('cost_code', $product->cost_code) }}" class="form-control"
                                             id="name" placeholder="Enter a cost code" />
                                     </div>
                                 </div>
-                                
-
                                 <div class="col-md-4">
                                     <div class="input-group mb-3">
                                         <span class="input-group-text" id="basic-addon1">OEM</span>
@@ -125,6 +162,32 @@
                                     <div class="input-group mb-3">
                                         <span class="input-group-text" id="basic-addon1">Image</span>
                                         <input type="file" name="product_image" class="form-control" id="" />
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text" id="basic-addon1">Image-two(optional)</span>
+                                        <input type="file" name="product_image_two" class="form-control" id="" />
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text" id="basic-addon1">Image-three(optional)</span>
+                                        <input type="file" name="product_image_three" class="form-control"
+                                            aria-describedby="basic-addon1">
+                                        @error('product_image_three')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text" id="basic-addon1">Image-four(optional)</span>
+                                        <input type="file" name="product_image_four" class="form-control"
+                                            aria-describedby="basic-addon1">
+                                        @error('product_image_four')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-12 col-lg-6">

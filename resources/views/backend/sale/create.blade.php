@@ -39,7 +39,8 @@
                                 <div class="input-group mb-3">
                                     <span class="input-group-text" id="basic-addon1">Customer<span
                                             class="star">*</span></span>
-                                    <select class="select2 form-select" name="customer_id" style="width:60% !important;" required>
+                                    <select class="select2 form-select" name="customer_id" style="width:60% !important;"
+                                        required>
                                         <option value="">Select customer</option>
                                         @foreach ($customer as $value)
                                             <option value="{{ $value->id }}">{{ $value->customer_name }}</option>
@@ -55,8 +56,7 @@
                                     <span class="input-group-text" id="basic-addon1">Tm No <span
                                             class="star">*</span></span>
                                     <input type="text" name="tm_no" id="" class="form-control"
-                                    class="form-control" aria-label="Username"
-                                    aria-describedby="basic-addon1" required>
+                                        class="form-control" aria-label="Username" aria-describedby="basic-addon1" required>
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -89,8 +89,7 @@
                                 <div class="input-group mb-3">
                                     <span class="input-group-text" id="basic-addon1">Date <span
                                             class="star">*</span></span>
-                                    <input type="date" name="date" id="current_date" class="form-control"
-                                        required>
+                                    <input type="date" name="date" id="current_date" class="form-control" required>
                                 </div>
                             </div>
                             <div class="table-responsive">
@@ -100,6 +99,7 @@
                                             {{-- <th scope="col">{{ __('Company') }}</th> --}}
                                             {{-- <th scope="col">{{ __('Category') }}</th> --}}
                                             <th scope="col">{{ __('Product') }}</th>
+                                            <th scope="col">{{ __('Sale Price') }}</th>
                                             <th scope="col">{{ __('Unit Price') }}</th>
                                             <th scope="col">{{ __('Quantity') }}</th>
                                             <th scope="col">{{ __('Amount') }}</th>
@@ -135,9 +135,16 @@
                                                     name="product_id[]">
                                                     <option value="">Select Product</option>
                                                     @foreach ($product as $value)
-                                                        <option value="{{ $value->id }}">{{ $value->product_name }}
+                                                        <option data-sale_one="{{ $value->sale_price_one }}"
+                                                            data-sale_two="{{ $value->sale_price_two }}" value="{{ $value->id }}">{{ $value->product_name }}
                                                         </option>
                                                     @endforeach
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select class="form-control sale_price_select" name="sale_price_type[]"
+                                                    onchange="setPrice(this);">
+                                                    <option value="">Select Price</option>
                                                 </select>
                                             </td>
                                             <td><input class="form-control uprice" type="text" name="unit_price[]"
@@ -146,7 +153,7 @@
                                                     style="width: 80px; height:25px;"></td>
                                             <td><input class="form-control amount" type="text" name="amount[]"
                                                     style="width: 100px; height:25px;"></td>
-                                            <td><input class="form-control totax" type="text" name="tax[]"
+                                            <td><input class="form-control totax" type="text" name="tax[]" value="{{'5'}}"
                                                     style="width: 80px; height:25px;"></td>
                                             <td><input class="form-control totax_amount" type="text"
                                                     name="tax_amount[]" style="width: 80px; height:25px;"></td>
@@ -222,7 +229,33 @@
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <script>
+        function doData(selectElement) {
+            let row = $(selectElement).closest('tr');
+            let selected = $(selectElement).find(':selected');
+            let saleOne = selected.data('sale_one');
+            let saleTwo = selected.data('sale_two');
+
+            // Target sale price select in the same row
+            let priceSelect = row.find('.sale_price_select');
+            priceSelect.empty().append('<option value="">Select Price</option>');
+
+            if (saleOne) priceSelect.append('<option value="' + saleOne + '">Sale Price One - ' + saleOne + '</option>');
+            if (saleTwo) priceSelect.append('<option value="' + saleTwo + '">Sale Price Two - ' + saleTwo + '</option>');
+
+            // Clear previous unit price
+            row.find('.uprice').val('');
+        }
+
+        function setPrice(selectElement) {
+            let row = $(selectElement).closest('tr');
+            let selectedPrice = $(selectElement).val();
+
+            // Set selected price into unit price input
+            row.find('.uprice').val(selectedPrice);
+        }
+
         $(document).ready(function() {
             // Initialize Select2
             $('.select2').select2({
@@ -431,12 +464,19 @@
                             </select>
                         </td> --}}
                         <td>
-                            <select class="select2 product_id" name="product_id[]">
+                            <select class="select2 product_id" onchange="doData(this);" name="product_id[]">
                                 <option value="">Select Product</option>
                                 @foreach ($product as $value)
-                                    <option value="{{ $value->id }}">{{ $value->product_name }}
+                                    <option data-sale_one="{{ $value->sale_price_one }}"
+                                                            data-sale_two="{{ $value->sale_price_two }}" value="{{ $value->id }}">{{ $value->product_name }}
                                     </option>
                                 @endforeach
+                            </select>
+                        </td>
+                        <td>
+                            <select class="form-control sale_price_select" name="sale_price_type[]"
+                                onchange="setPrice(this);" >
+                                <option value="">Select Price</option>
                             </select>
                         </td>
                         <td><input class="form-control uprice" type="text" name="unit_price[]" style="width: 80px; height:25px;"></td>
@@ -460,8 +500,8 @@
                     </tr>`;
             $('#purchaseHead').append(row);
             $('#purchaseHead tr:last').find('.select2').select2({
-                width: '60%',
-                height: '35px',
+                // width: '60%',
+                // height: '35px',
                 placeholder: "Select Product"
             });
         };

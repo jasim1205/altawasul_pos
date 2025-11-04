@@ -137,11 +137,29 @@ class ProductController extends Controller
             $product->cross_reference = $request->cross_reference;
             $product->origin = $request->origin;
             $product->cost_unit_price = $request->cost_unit_price;
-            // $product->unit_price = $request->unit_price;
+            $product->sale_price_one = $request->sale_price_one;
+            $product->sale_price_two = $request->sale_price_two;
+            $product->description = $request->description;
+            $product->size = $request->size;
             if($request->hasFile('product_image')){
                 $imageName = rand(111,999).'.'.$request->product_image->extension();
                 $request->product_image->move(public_path('uploads/product'),$imageName);
                 $product->product_image = $imageName;
+            }
+            if($request->hasFile('product_image_two')){
+                $imageName = rand(111,999).'.'.$request->product_image_two->extension();
+                $request->product_image_two->move(public_path('uploads/product'),$imageName);
+                $product->product_image_two = $imageName;
+            }
+            if($request->hasFile('product_image_three')){
+                $imageName = rand(111,999).'.'.$request->product_image_three->extension();
+                $request->product_image_three->move(public_path('uploads/product'),$imageName);
+                $product->product_image_three = $imageName;
+            }
+            if($request->hasFile('product_image_four')){
+                $imageName = rand(111,999).'.'.$request->product_image_four->extension();
+                $request->product_image_four->move(public_path('uploads/product'),$imageName);
+                $product->product_image_four = $imageName;
             }
             //  if ($product->save()) {
             //     // Generate QR Code Data
@@ -208,12 +226,32 @@ class ProductController extends Controller
             $product->cross_reference = $request->cross_reference;
             $product->origin = $request->origin;
             $product->cost_unit_price = $request->cost_unit_price;
+            $product->sale_price_one = $request->sale_price_one;
+            $product->sale_price_two = $request->sale_price_two;
+            $product->description = $request->description;
+            $product->size = $request->size;
             $path = 'uploads/product';
             if($request->hasFile('product_image')){
                 $this->deleteImage($product->product_image, $path);
                 $imageName = rand(111,999).'.'.$request->product_image->extension();
                 $request->product_image->move(public_path('uploads/product'),$imageName);
                 $product->product_image = $imageName;
+            }
+            if($request->hasFile('product_image_two')){
+                $this->deleteImage($product->product_image_two, $path);
+                $imageName = rand(111,999).'.'.$request->product_image_two->extension();
+                $request->product_image_two->move(public_path('uploads/product'),$imageName);
+                $product->product_image_two = $imageName;
+            }
+            if($request->hasFile('product_image_three')){
+                $imageName = rand(111,999).'.'.$request->product_image_three->extension();
+                $request->product_image_three->move(public_path('uploads/product'),$imageName);
+                $product->product_image_three = $imageName;
+            }
+            if($request->hasFile('product_image_four')){
+                $imageName = rand(111,999).'.'.$request->product_image_four->extension();
+                $request->product_image_four->move(public_path('uploads/product'),$imageName);
+                $product->product_image_four = $imageName;
             }
             if($product->save()){
                 $this->notice::success('Product Successfully Saved');
@@ -230,10 +268,101 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-       $product = Product::findOrFail(encryptor('decrypt',$id));
-       if($product->delete()){
-            $this->notice::success('Product Successfully Delete');
+        $product = Product::findOrFail(encryptor('decrypt', $id));
+
+        $path = 'uploads/product';
+    
+        // ✅ Check and delete existing image file
+        if ($product->product_image && file_exists(public_path($path . '/' . $product->product_image))) {
+            unlink(public_path($path . '/' . $product->product_image));
+        }
+    
+        if ($product->delete()) {
+            $this->notice::success('Product Successfully Deleted');
             return redirect()->route('product.index');
-       }
+        } else {
+            $this->notice::error('Failed to delete the product');
+            return redirect()->back();
+        }
+    }
+    // Route::post('/product-autocomplete', [ProductController::class, 'productAutoComplete'])->name('productAutoComplete');
+    // Route::get('getProductInfo/{oemNo}', [ProductController::class, 'getProductInfo'])->name('getProductInfo');
+
+    public function productSearch(){
+        return view('backend.product.productSearch');
+    }
+    public function productAutoComplete(Request $request)
+    {
+        $search = $request->search;
+
+        if ($search == '') {
+            $products = Product::limit(10)->get(['oem']);
+        } else {
+            $products = Product::where('oem', 'like', '%' . $search . '%')->distinct('oem')->limit(10)->get(['oem']);
+        }
+        $response = array();
+        foreach ($products as $product) {
+            $response[] = array("label" => $product->oem, "value" => $product->oem);
+        }
+        return response()->json($response);
+
+        // return response()->json($response);
+    }
+
+    public function getProductInfo(Request $request, $oemNo = null)
+    {
+        try {
+            $search = $request->search;
+
+            // Autocomplete: only if search is present
+            if ($search) {
+                $products = Product::with('stock')
+                    ->where('oem', 'like', '%' . $search . '%')
+                    ->limit(10)
+                    ->get();
+
+                return response()->json([
+                    'status' => true,
+                    'data' => $products
+                ]);
+            }
+
+            if ($oemNo) {
+                $product = Product::with('stock')
+                    ->where('oem', $oemNo)
+                    ->first();
+
+                if (!$product) {
+                    return response()->json(['status' => false, 'message' => 'Product not found'], 404);
+                }
+
+                return response()->json([
+                    'status' => true,
+                    'product_name'=> $product->product_name,
+                    'product_model'=> $product->product_model,
+                    'location_rak'=> $product->location_rak,
+                    'cost_code'=> $product->cost_code,
+                    'oem'=> $product->oem,
+                    'cross_reference'=> $product->cross_reference,
+                    'origin'=> $product->origin,
+                    'cost_unit_price'=> $product->cost_unit_price,
+                    'sale_price_one'=> $product->sale_price_one,
+                    'sale_price_two'=> $product->sale_price_two,
+                    'product_image'=> $product->product_image,
+                    'product_image_two'=> $product->product_image_two,
+                    'product_image_three'=> $product->product_image_three,
+                    'product_image_four'=> $product->product_image_four,
+                ]);
+            }
+
+            return response()->json(['status' => false, 'message' => 'No search or Oem Number provided'], 400);
+        } catch (Throwable $e) {
+            Log::error('Error in getProductInfo: ' . $e->getMessage());
+            return response()->json([
+                'status' => false,
+                'message' => 'Server Error',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
 }
