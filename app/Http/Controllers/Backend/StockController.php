@@ -26,7 +26,8 @@ class StockController extends Controller
                     $q->where('product_name', 'like', "%{$search}%")
                     ->orWhere('product_model', 'like', "%{$search}%")
                     ->orWhere('origin', 'like', "%{$search}%")
-                    ->orWhere('cost_code', 'like', "%{$search}%");
+                    ->orWhere('cost_code', 'like', "%{$search}%")
+                    ->orWhere('oem', 'like', "%{$search}%");
                 });
             })
             ->orderBy('id', 'desc')

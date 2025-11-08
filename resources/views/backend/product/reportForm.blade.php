@@ -1,11 +1,12 @@
 @extends('layouts.app')
-@section('title', trans('Product'))
-@section('page', trans('List'))
+@section('title', 'Product')
+@section('page-title', 'Home')
+@section('page-subtitle', 'Product PDF Report')
 @section('content')
 
     <h2>Generate Product PDF Report</h2>
 
-    <form action="{{ route('product.generatePDF') }}" method="POST">
+    <form action="{{ route('product.generatePDF') }}" method="POST" target="_blank">
         @csrf
 
         <div class="container">
@@ -28,7 +29,6 @@
                     </div>
                     <button type="submit" class="btn btn-primary">Generate PDF</button>
                 </div>
-
             </div>
         </div>
         </div>

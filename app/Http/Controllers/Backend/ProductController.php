@@ -51,7 +51,7 @@ class ProductController extends Controller
               ->orWhere('origin', 'like', "%{$query}%")
               ->orWhere('oem', 'like', "%{$query}%")
               ->orWhere('description', 'like', "%{$query}%");
-        })->paginate(10);
+        })->orderBy('id', 'desc')->paginate(10);
 
         $view = view('backend.product.partials.table', compact('products'))->render();
 

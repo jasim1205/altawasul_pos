@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Http\Controllers\Controller;
-use App\Models\Purchase;
-use App\Models\PurchaseDetails;
 use App\Models\Sales;
+use App\Models\Customer;
+use App\Models\Purchase;
+use App\Models\Supplier;
 use App\Models\SaleDetails;
 use App\Models\DailyExpense;
-use App\Models\Supplier;
-use App\Models\Customer;
 use Illuminate\Http\Request;
+use App\Models\PurchaseDetails;
+use Barryvdh\DomPDF\Facade\Pdf;
+use App\Http\Controllers\Controller;
 
 class ReportController extends Controller
 {
@@ -22,6 +23,18 @@ class ReportController extends Controller
             ->groupBy('year', 'month')
             ->get();
         return view('backend.report.monthlypurchase',compact('selectedYear','years','monthlyPurchase'));
+    }
+    public function yearlyPurchaseReportPdf(Request $request){
+
+        $selectedYear = $request->year;
+        $years = array_reverse(range(2020, date('Y')));
+        $monthlyPurchase = Purchase::selectRaw('YEAR(date) as year, MONTH(date) as month, SUM(grand_total_amount) as amount')
+            ->whereYear('date', $selectedYear)
+            ->groupBy('year', 'month')
+            ->get();
+        $pdf = Pdf::loadView('backend.report.yearlyPurchasePdf', compact('selectedYear', 'years', 'monthlyPurchase'))->setPaper('a4', 'portrait');
+
+        return $pdf->stream('yearlyPurchase_report_'.$selectedYear.'.pdf');
     }
 
     public function purchaseMonthlyDetails($year, $month)

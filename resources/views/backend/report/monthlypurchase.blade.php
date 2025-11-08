@@ -102,8 +102,9 @@
                                 </div>
                             </div>
                             <div class="col-md-3 text-end ms-auto">
-                                <button type="button" class="btn btn-primary" onclick="printDiv('print_area')">Export as
-                                    PDF</button>
+                                <a href="{{route('yearlyPurchase.report.pdf',['year' => request('year')])}}" target="_blank" class="btn btn-primary">Export as PDF</a>
+                                    {{-- <button type="button" class="btn btn-primary" onclick="printDiv('print_area')">Export as
+                                        PDF</button> --}}
                             </div>
                         </div>
                     </form>

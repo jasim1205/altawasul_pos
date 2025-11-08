@@ -155,7 +155,7 @@
                                             </tr>
                                         </tbody>
                                         <tfoot>
-                                            <th colspan="2">Total</th>
+                                            <th colspan="">Total</th>
                                             <th><span class="total_unitprice" id="total_unitprice"></span></th>
                                             <th><span class="total_quantity" id="total_quantity"></span></th>
                                             <th><span class="total_amount" id="total_amount"></span></th>

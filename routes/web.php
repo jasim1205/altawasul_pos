@@ -114,7 +114,8 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
     Route::get('/products-list', [product::class, 'secureProductList'])->name('secure.products.list');
     Route::get('/products/search', [product::class, 'search'])->name('product.search');
 
-    
+    Route::get('/yearly-purchase-report/pdf', [report::class, 'yearlyPurchaseReportPdf'])
+    ->name('yearlyPurchase.report.pdf');
 });
 
 // Route::get('/', function () {
