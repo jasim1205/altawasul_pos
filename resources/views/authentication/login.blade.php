@@ -56,7 +56,7 @@
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                                 <div class="d-flex justify-content-end mt-1">
-                                    <a href="#" class="small text-decoration-none text-primary">Forgot password?</a>
+                                    <a href="{{ route('password.request') }}" class="small text-decoration-none text-primary">Forgot password?</a>
                                 </div>
                             </div>
 

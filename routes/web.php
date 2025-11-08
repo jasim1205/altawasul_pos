@@ -21,6 +21,8 @@ use App\Http\Controllers\Backend\UsedPurchaseController as usedPurchase;
 use App\Http\Controllers\Backend\BngPurchaseController as bngpurchase;
 use App\Http\Controllers\Backend\CreditPurchaseController as creditpurchase;
 use App\Http\Controllers\FrontendController as frontend;
+use App\Http\Controllers\Backend\ForgotPasswordController;
+use App\Http\Controllers\Backend\ResetPasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,6 +43,11 @@ Route::post('/register', [auth::class,'signUpStore'])->name('register.store');
 Route::get('/', [auth::class,'signInForm'])->name('login');
 Route::post('/login', [auth::class,'signInCheck'])->name('login.check');
 Route::get('/logout', [auth::class,'signOut'])->name('logOut');
+Route::get('/forgot-password', [ForgotPasswordController::class, 'showForgotPasswordForm'])->name('password.request');
+Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLink'])->name('password.email');
+
+Route::get('/reset-password/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+Route::post('/reset-password', [ResetPasswordController::class, 'resetPassword'])->name('password.update');
 
 Route::middleware(['checkauth'])->prefix('admin')->group(function () {
     Route::get('dashboard', [dashboard::class, 'index'])->name('dashboard');
