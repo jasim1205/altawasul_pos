@@ -10,6 +10,10 @@
         }
     </style>
     <div class="ml-auto d-flex">
+        <div class="mb-3">
+            <input type="text" id="liveSearch" class="form-control" placeholder="Search products by name, cost code, or origin...">
+        </div>
+
         <div class="btn-group ms-auto">
             <a class="btn btn-primary" href="{{ route('product.index') }}"><i class="fa fa-list"></i></a>
         </div>
@@ -41,83 +45,8 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-body">
-                        <div class="table-responsive">
-                            <table id="example" class="table table-bordered" style="width:100%">
-                                <thead class="">
-                                    <tr class="bg-success text-white">
-                                        <th scope="col">{{ __('#SL') }}</th>
-                                        {{-- <th>Company</th> --}}
-                                        {{-- <th>Category</th> --}}
-                                        <th>Product Name</th>
-                                        <th>Product Image</th>
-                                        <th>Stock</th>
-                                        <th>Product Model</th>
-                                        <th>Cost Code</th>
-                                        <th>OEM</th>
-                                        <th>Origin</th>
-                                        <th>Cross Reference</th>
-                                        {{-- <th>Old Price</th> --}}
-                                        <th>Cost Unit Price</th>
-                                        <th>QR Code</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @forelse ($product as $value)
-                                        <tr>
-                                            <td>{{ __(++$loop->index) }}</td>
-                                            {{-- <td>{{ __($value->company?->company_name) }}</td> --}}
-                                            {{-- <td>{{ __($value->category?->category_name) }}</td> --}}
-                                            <td>{{ __($value->product_name) }}</td>
-                                            <td><img src="{{ asset('public/uploads/product/' . $value->product_image) }}"
-                                                    width="50px">
-                                            </td>
-                                            <td>{{ __($value->stock?->quantity ?? 0) }}</td>
-                                            <td>{{ __($value->product_model) }}</td>
-                                            <td>{{ __($value->cost_code) }}</td>
-                                            <td>{{ __($value->oem) }}</td>
-                                            <td>{{ __($value->origin) }}</td>
-                                            <td>{{ __($value->cross_reference) }}</td>
-                                            {{-- <td>{{ __($value->old_price) }}</td> --}}
-                                            <td>{{ __($value->cost_unit_price) }}</td>
-                                            
-                                            <td>
-                                                {!! QrCode::size(50)->generate(
-                                                    "Product: {$value->product_name}\n" .
-                                                        "Model: {$value->product_model}\n" .
-                                                        "Category: {$value->category?->category_name}\n" .
-                                                        'Mobile: 0555611560',
-                                                ) !!}
-                                            </td>
-
-                                            <td class="white-space-nowrap">
-                                                <div class="d-flex">
-                                                    <a href="{{ route('product.edit', encryptor('encrypt', $value->id)) }}"
-                                                        class="btn btn-warning text-white" title="Edit">
-                                                        <i class="fa fa-edit"></i>
-                                                    </a>
-                                                    <form
-                                                        action="{{ route('product.destroy', encryptor('encrypt', $value->id)) }}"
-                                                        method="post">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" style="border:none"
-                                                            onclick="return confirm('Are you sure to delete?')"
-                                                            title="Delete" class="btn btn-danger ms-2">
-                                                            <span class=""><i class="fa fa-trash"></i></span>
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    @empty
-                                        <tr>
-                                            <td colspan="9" class="text-center fw-bolder">Product No found</td>
-                                        </tr>
-                                    @endforelse
-                                </tbody>
-                            </table>
-
+                        <div class="table-responsive" id="table-data">
+                            @include('backend.product.partials.table', ['products' => $products])
                         </div>
                     </div>
                 </div>
@@ -125,4 +54,71 @@
             </div>
         </div>
     </section>
+
+    <!-- 🧠 Ajax Script -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function () {
+    function fetch_data(query = '', page = 1) {
+        $.ajax({
+            url: "{{ route('product.search') }}",
+            method: "GET",
+            data: { query: query, page: page },
+            success: function (data) {
+                $('#table-data').html(data.table_data);
+            }
+        });
+    }
+
+    // 🔍 When typing in search box
+    $('#liveSearch').on('keyup', function () {
+        let query = $(this).val();
+        fetch_data(query);
+    });
+
+    // 🔄 Handle pagination links
+    $(document).on('click', '.pagination a', function (e) {
+        e.preventDefault();
+        let page = $(this).attr('href').split('page=')[1];
+        let query = $('#liveSearch').val();
+        fetch_data(query, page);
+    });
+});
+</script>
+    <script>
+        // document.addEventListener("DOMContentLoaded", function() {
+        //     const searchInput = document.getElementById("liveSearch");
+        //     const tableRows = document.querySelectorAll("table tbody tr");
+
+        //     searchInput.addEventListener("keyup", function() {
+        //         const searchText = this.value.toLowerCase();
+
+        //         tableRows.forEach(function(row) {
+        //             const rowText = row.textContent.toLowerCase();
+        //             row.style.display = rowText.includes(searchText) ? "" : "none";
+        //         });
+        //     });
+        // });
+        // $(document).ready(function() {
+        //     $('#liveSearch').on('keyup', function() {
+        //         let query = $(this).val();
+        //         fetch_data(query);
+        //     });
+
+        //     function fetch_data(query = '') {
+        //         $.ajax({
+        //             url: "{{ route('product.search') }}",
+        //             method: 'GET',
+        //             data: {
+        //                 query: query
+        //             },
+        //             success: function(data) {
+        //                 $('tbody').html(data.table_data);
+        //                 $('#pagination').html(data.pagination);
+        //             }
+        //         });
+        //     }
+        // });
+    </script>
+
 @endsection

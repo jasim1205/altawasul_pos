@@ -74,7 +74,7 @@
             @forelse($stocks as $key => $stock)
                 <tr>
                     <td>{{ $key + 1 }}</td>
-                    <td>{{ $stock->product?->product_name }}-{{ $stock->product?->product_model }}</td>
+                    <td>{{ $stock->product?->product_name }}-{{ $stock->product?->oem }}-{{ $stock->product?->origin }}</td>
                     <td><img src="{{ public_path('uploads/product/' . $stock->product?->product_image) }}" width="50px">
                     </td>
                     <td style="color: {{ $stock->quantity <= 5 ? 'red' : 'green' }};font-weight:bold">

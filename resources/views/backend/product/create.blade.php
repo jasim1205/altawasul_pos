@@ -9,9 +9,11 @@
             color: white;
             width: 150px;
         }
-        .form-control{
+
+        .form-control {
             border-color: #3A58B3 !important;
         }
+
         .star {
             color: rgb(248, 62, 62);
         }
@@ -60,12 +62,29 @@
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div> --}}
+                                <div class="col-6">
+                                    <label for="file">Upload Excel File (optional):</label>
+                                    <input type="file" name="file" accept=".xls,.xlsx">
+                                    @error('file')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="col-6">
+                                    <a href="{{ asset('public/product_demo.xlsx') }}"
+                                        class="text-danger font-weight-bold"> <i class="fa fa-download"></i> Download Demo Excel Format
+                                    </a>
+                                    @error('file')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <hr>
                                 <div class="col-md-4">
                                     <div class="input-group mb-3">
-                                        <span class="input-group-text" id="basic-addon1">Product Name <span class="star">*</span></span>
+                                        <span class="input-group-text" id="basic-addon1">Product Name <span
+                                                class="star">*</span></span>
                                         <input type="text" class="form-control" name="product_name"
-                                            placeholder="Enter a product name" aria-label="Username"
-                                            aria-describedby="basic-addon1">
+                                            value="{{ old('product_name') }}" placeholder="Enter a product name"
+                                            aria-label="Username" aria-describedby="basic-addon1">
                                         @error('product_name')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
@@ -74,9 +93,9 @@
                                 <div class="col-md-4">
                                     <div class="input-group mb-3">
                                         <span class="input-group-text" id="basic-addon1">Product Model</span>
-                                        <input type="text" name="product_model" class="form-control" id=""
-                                            placeholder="Enter a product model" aria-label="Username"
-                                            aria-describedby="basic-addon1">
+                                        <input type="text" name="product_model" value="{{ old('product_model') }}"
+                                            class="form-control" id="" placeholder="Enter a product model"
+                                            aria-label="Username" aria-describedby="basic-addon1">
                                         @error('product_model')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
@@ -85,9 +104,9 @@
                                 <div class="col-md-4">
                                     <div class="input-group mb-3">
                                         <span class="input-group-text" id="basic-addon1">Origin/Made</span>
-                                        <input type="text" name="origin" class="form-control" id=""
+                                        <input type="text" name="origin" varin class="form-control" id=""
                                             placeholder="Enter a origin" aria-label="Username"
-                                            aria-describedby="basic-addon1">
+                                            aria-describedby="basic-addon1" >
                                         @error('origin')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
@@ -97,8 +116,7 @@
                                     <div class="input-group mb-3">
                                         <span class="input-group-text" id="basic-addon1">Description</span>
                                         <input type="text" name="description" class="form-control" id=""
-                                            placeholder="description" aria-label="Username"
-                                            aria-describedby="basic-addon1">
+                                            placeholder="description" aria-label="Username" aria-describedby="basic-addon1">
                                         @error('description')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
@@ -108,8 +126,7 @@
                                     <div class="input-group mb-3">
                                         <span class="input-group-text" id="basic-addon1">Size</span>
                                         <input type="text" name="size" class="form-control" id=""
-                                            placeholder="size" aria-label="Username"
-                                            aria-describedby="basic-addon1">
+                                            placeholder="size" aria-label="Username" aria-describedby="basic-addon1">
                                         @error('size')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
@@ -165,7 +182,7 @@
                                         <span class="input-group-text" id="basic-addon1">Cost Code</span>
                                         <input type="text" class="form-control" name="cost_code"
                                             placeholder="Enter a cost code" aria-label="Username"
-                                            aria-describedby="basic-addon1">
+                                            aria-describedby="basic-addon1" >
                                         @error('cost_code')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
@@ -175,7 +192,8 @@
                                     <div class="input-group mb-3">
                                         <span class="input-group-text" id="basic-addon1">OEM</span>
                                         <input type="text" name="oem" class="form-control" id=""
-                                            placeholder="Enter OEM" aria-label="Username" aria-describedby="basic-addon1">
+                                            placeholder="Enter OEM" aria-label="Username" aria-describedby="basic-addon1"
+                                            >
                                         @error('oem')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror

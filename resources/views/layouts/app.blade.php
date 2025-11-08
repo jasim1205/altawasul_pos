@@ -49,6 +49,17 @@
         .color-logo {
             color: white !important;
         }
+
+        .nav-content li.active>a {
+            color: #4154F1 !important;
+            font-weight: 600;
+        }
+        .sidebar-nav li .nav-link.active {
+            color: #4154F1 !important;
+            background-color: rgba(65, 84, 241, 0.1) !important;
+            font-weight: 600;
+        }
+        /* Highlight active menu link */
     </style>
 </head>
 
@@ -118,40 +129,38 @@
         <ul class="sidebar-nav" id="sidebar-nav">
 
             <li class="nav-item">
-                <a class="nav-link " href="index.html">
+                <a class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}" href="{{ route('dashboard') }}">
                     <i class="bi bi-grid"></i>
                     <span>Dashboard</span>
                 </a>
             </li><!-- End Dashboard Nav -->
 
             <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+                <a class="nav-link collapsed {{ request()->routeIs(['product.create', 'product.index', 'productSearch', 'secure.products.pin']) ? 'active' : '' }}" data-bs-target="#products-nav" data-bs-toggle="collapse" href="#">
                     <i class="bi bi-menu-button-wide"></i><span>Product</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
-                <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                    {{-- <li>
-                      <a href="{{ route('company.index') }}">
-                        <i class="bi bi-circle"></i><span>Company</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="{{ route('category.index') }}">
-                        <i class="bi bi-circle"></i><span>Category</span>
-                      </a>
-                    </li> --}}
-                    <li>
+                <ul id="products-nav"
+                    class="nav-content collapse {{ request()->routeIs(['product.create', 'product.index', 'productSearch', 'secure.products.pin']) ? 'show' : '' }}"
+                    data-bs-parent="#sidebar-nav">
+                    
+                    <li class="{{ request()->routeIs('product.create') ? 'active' : null }}">
                         <a href="{{ route('product.create') }}">
                             <i class="bi bi-circle"></i><span>Create Product</span>
                         </a>
                     </li>
-                    <li>
+                    <li class="{{ request()->routeIs('product.index') ? 'active' : null }}">
                         <a href="{{ route('product.index') }}">
                             <i class="bi bi-circle"></i><span>Product List</span>
                         </a>
                     </li>
-                    <li>
+                    <li class="{{ request()->routeIs('productSearch') ? 'active' : null }}">
                         <a href="{{ route('productSearch') }}">
                             <i class="bi bi-circle"></i><span>Product Search</span>
+                        </a>
+                    </li>
+                    <li class="{{ request()->routeIs('secure.products.pin') ? 'active' : null }}">
+                        <a href="{{ route('secure.products.pin') }}">
+                            <i class="bi bi-circle"></i><span>Secure Product</span>
                         </a>
                     </li>
 
@@ -159,59 +168,95 @@
             </li><!-- End Components Nav -->
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="{{ route('supplier.index') }}">
+                <a class="nav-link collapsed {{ request()->routeIs('supplier.index') ? 'active' : '' }}" href="{{ route('supplier.index') }}">
                     <i class="bi bi-person"></i><span>Suppliers</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
 
             </li>
             <li class="nav-item">
-                <a class="nav-link collapsed" href="{{ route('customer.index') }}">
+                <a class="nav-link collapsed {{ request()->routeIs('customer.index') ? 'active' : '' }}" href="{{ route('customer.index') }}">
                     <i class="bi bi-person"></i><span>Customers</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
 
             </li>
             <li class="nav-item">
+                <a class="nav-link collapsed {{ request()->routeIs(['purchase.create', 'purchase.index']) ? 'active' : '' }}"  data-bs-target="#purchases-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-menu-button-wide"></i><span>Purchase</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="purchases-nav"
+                    class="nav-content collapse {{ request()->routeIs(['purchase.create', 'purchase.index']) ? 'show' : '' }}"
+                    data-bs-parent="#sidebar-nav">
+
+                    <li class="{{ request()->routeIs('purchase.create') ? 'active' : null }}">
+                        <a href="{{ route('purchase.create') }}">
+                            <i class="bi bi-circle"></i><span>Create Purchase</span>
+                        </a>
+                    </li>
+                    <li class="{{ request()->routeIs('purchase.index') ? 'active' : null }}">
+                        <a href="{{ route('purchase.index') }}">
+                            <i class="bi bi-circle"></i><span>Purchase List</span>
+                        </a>
+                    </li>
+                </ul>
+            </li><!-- End Components Nav -->
+            <li class="nav-item">
+                <a class="nav-link collapsed {{ request()->routeIs(['sale.create', 'sale.index']) ? 'active' : '' }}" data-bs-target="#sales-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-menu-button-wide"></i><span>Sales</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="sales-nav"
+                    class="nav-content collapse {{ request()->routeIs(['sale.create', 'sale.index']) ? 'show' : '' }}"
+                    data-bs-parent="#sidebar-nav">
+
+                    <li class="{{ request()->routeIs('sale.create') ? 'active' : null }}">
+                        <a href="{{ route('sale.create') }}">
+                            <i class="bi bi-circle"></i><span>Create Sale</span>
+                        </a>
+                    </li>
+                    <li class="{{ request()->routeIs('sale.index') ? 'active' : null }}">
+                        <a href="{{ route('sale.index') }}">
+                            <i class="bi bi-circle"></i><span>Sale List</span>
+                        </a>
+                    </li>
+                </ul>
+            </li><!-- End Components Nav -->
+            {{-- <li class="nav-item">
                 <a class="nav-link collapsed" href="{{ route('purchase.index') }}">
                     <i class="bi bi-menu-button-wide"></i><span>Purchases</span><i
                         class="bi bi-chevron-down ms-auto"></i>
                 </a>
 
-            </li>
+            </li> --}}
             <li class="nav-item">
-                <a class="nav-link collapsed" href="{{ route('creditpurchase.index') }}">
+                <a class="nav-link collapsed {{ request()->routeIs('creditpurchase.index') ? 'active' : '' }}" href="{{ route('creditpurchase.index') }}">
                     <i class="bi bi-menu-button-wide"></i><span>Credit Purchases</span><i
                         class="bi bi-chevron-down ms-auto"></i>
                 </a>
 
             </li>
             <li class="nav-item">
-                <a class="nav-link collapsed" href="{{ route('usedpurchase.index') }}">
+                <a class="nav-link collapsed {{ request()->routeIs('usedpurchase.index') ? 'active' : '' }}" href="{{ route('usedpurchase.index') }}">
                     <i class="bi bi-menu-button-wide"></i><span>Used Purchases</span><i
                         class="bi bi-chevron-down ms-auto"></i>
                 </a>
 
             </li>
             <li class="nav-item">
-                <a class="nav-link collapsed" href="{{ route('bngpurchase.index') }}">
+                <a class="nav-link collapsed {{ request()->routeIs('bngpurchase.index') ? 'active' : '' }}" href="{{ route('bngpurchase.index') }}">
                     <i class="bi bi-menu-button-wide"></i><span>BNG Purchases</span><i
                         class="bi bi-chevron-down ms-auto"></i>
                 </a>
 
             </li>
             <li class="nav-item">
-                <a class="nav-link collapsed" href="{{ route('stock.index') }}">
+                <a class="nav-link collapsed {{ request()->routeIs('stock.index') ? 'active' : '' }}" href="{{ route('stock.index') }}">
                     <i class="bi bi-menu-button-wide"></i><span>Stock</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
 
             </li>
+            
+            
             <li class="nav-item">
-                <a class="nav-link collapsed" href="{{ route('sale.index') }}">
-                    <i class="bi bi-menu-button-wide"></i><span>Sales</span><i class="bi bi-chevron-down ms-auto"></i>
-                </a>
-
-            </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="{{ route('dailyexpense.index') }}">
+                <a class="nav-link collapsed {{ request()->routeIs('dailyexpense.index') ? 'active' : '' }}" href="{{ route('dailyexpense.index') }}">
                     <i class="bi bi-menu-button-wide"></i><span>Daily Expenses</span><i
                         class="bi bi-chevron-down ms-auto"></i>
                 </a>
@@ -225,37 +270,37 @@
             </li> --}}
 
             <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
+                <a class="nav-link collapsed {{ request()->routeIs(['yearly_purchase', 'yearly_sale','yearly_expense','yearly_report','supplier_report','customer_report']) ? 'active' : '' }}" data-bs-target="#reports-nav" data-bs-toggle="collapse" href="#">
                     <i class="bi bi-layout-text-window-reverse"></i><span>Report</span><i
                         class="bi bi-chevron-down ms-auto"></i>
                 </a>
-                <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                    <li>
+                <ul id="reports-nav" class="nav-content collapse {{ request()->routeIs(['yearly_purchase', 'yearly_sale','yearly_expense','yearly_report','supplier_report','customer_report']) ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
+                    <li class="{{ request()->routeIs('yearly_purchase') ? 'active' : null }}">
                         <a href="{{ route('yearly_purchase') }}">
                             <i class="bi bi-circle"></i><span>Yearly Purchase Report</span>
                         </a>
                     </li>
-                    <li>
+                    <li class="{{ request()->routeIs('yearly_sale') ? 'active' : null }}">
                         <a href="{{ route('yearly_sale') }}">
                             <i class="bi bi-circle"></i><span>Yearly Sale Report</span>
                         </a>
                     </li>
-                    <li>
+                    <li class="{{ request()->routeIs('yearly_expense') ? 'active' : null }}">
                         <a href="{{ route('yearly_expense') }}">
                             <i class="bi bi-circle"></i><span>Yearly Expense Report</span>
                         </a>
                     </li>
-                    <li>
+                    <li class="{{ request()->routeIs('yearly_report') ? 'active' : null }}">
                         <a href="{{ route('yearly_report') }}">
                             <i class="bi bi-circle"></i><span>Yearly Report</span>
                         </a>
                     </li>
-                    <li>
+                    <li class="{{ request()->routeIs('supplier_report') ? 'active' : null }}">
                         <a href="{{ route('supplier_report') }}">
                             <i class="bi bi-circle"></i><span>Supplier Report</span>
                         </a>
                     </li>
-                    <li>
+                    <li class="{{ request()->routeIs('customer_report') ? 'active' : null }}">
                         <a href="{{ route('customer_report') }}">
                             <i class="bi bi-circle"></i><span>Customer Report</span>
                         </a>

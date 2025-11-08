@@ -119,7 +119,7 @@
                                                         name="product_id[]">
                                                         <option value="">Select Product</option>
                                                         @foreach ($product as $value)
-                                                            <option value="{{ $value->id }}" data-price="{{ $value->cost_unit_price }}">{{ $value->product_name }}
+                                                            <option value="{{ $value->id }}" data-price="{{ $value->cost_unit_price }}">{{ $value->product_name }}-{{ $value->oem }}-{{ $value->origin }}
                                                             </option>
                                                         @endforeach
                                                     </select>
@@ -130,7 +130,7 @@
                                                         style="width: 80px; height:25px;"></td>
                                                 <td><input class="form-control amount" type="text" name="amount[]"
                                                         style="width: 100px; height:25px;"></td>
-                                                <td><input class="form-control totax" type="text" name="tax[]"
+                                                <td><input class="form-control totax" type="text" name="tax[]" value="5"
                                                         style="width: 80px; height:25px;"></td>
                                                 <td><input class="form-control totax_amount" type="text"
                                                         name="tax_amount[]" style="width: 80px; height:25px;"></td>
@@ -213,7 +213,7 @@
         $(document).ready(function () {
             // Initialize Select2
             $('.select2').select2({
-                width: '75%',
+                // width: '75%',
                 placeholder: "Select Product"
             });
 
@@ -437,14 +437,14 @@
                             <select class="select2 product-select" name="product_id[]">
                                 <option value="">Select Product</option>
                                 @foreach ($product as $value)
-                                    <option value="{{ $value->id }}" data-price="{{ $value->cost_unit_price }}">{{ $value->product_name }}</option>
+                                    <option value="{{ $value->id }}" data-price="{{ $value->cost_unit_price }}">{{ $value->product_name }}-{{ $value->oem }}-{{ $value->origin }}</option>
                                 @endforeach
                             </select>
                         </td>
                         <td><input class="form-control uprice" type="text" name="unit_price[]" style="width: 80px; height:25px;"></td>
                         <td><input class="form-control toquantity" type="text" name="quantity[]"style="width: 80px; height:25px;"></td>
                         <td><input class="form-control amount" type="text" name="amount[]" style="width: 100px; height:25px;"></td>
-                        <td><input class="form-control totax" type="text" name="tax[]"style="width: 80px; height:25px;"></td>
+                        <td><input class="form-control totax" type="text" value="5" name="tax[]"style="width: 80px; height:25px;"></td>
                         <td><input class="form-control totax_amount" type="text" name="tax_amount[]"style="width: 80px; height:25px;"></td>
                         <td><input class="form-control subamount" type="text" name="sub_amount[]"style="width: 100px; height:25px;"></td>
                         <td><select name="discount_type[]" id="" class=" text-center p-0 form-control discount_type" style="width: 80px; height:25px;">

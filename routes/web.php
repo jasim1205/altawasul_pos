@@ -99,6 +99,14 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
     Route::post('/product-autocomplete', [product::class, 'productAutoComplete'])->name('productAutoComplete');
     Route::get('getProductInfo/{oemNo}', [product::class, 'getProductInfo'])->name('getProductInfo');
     Route::get('product-search', [product::class, 'productSearch'])->name('productSearch');
+
+
+    // web.php
+    Route::get('/secure-products', [product::class, 'showPinForm'])->name('secure.products.pin');
+    Route::post('/secure-products', [product::class, 'checkPin'])->name('secure.products.check');
+    Route::get('/products-list', [product::class, 'secureProductList'])->name('secure.products.list');
+    Route::get('/products/search', [product::class, 'search'])->name('product.search');
+
     
 });
 

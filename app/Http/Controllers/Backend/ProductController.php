@@ -7,9 +7,11 @@ use App\Models\Company;
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
-use Barryvdh\DomPDF\Facade\Pdf;
+use App\Imports\ProductImport;
 Use File;
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Traits\ImageHandleTraits;
 use Illuminate\Support\Facades\Storage;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
@@ -26,17 +28,85 @@ class ProductController extends Controller
         // return view('backend.product.index',compact('product'));
         $search = $request->input('search');
 
-        $product = Product::when($search, function ($query, $search) {
+        $products = Product::
+        when($search, function ($query, $search) {
             $query->where('product_name', 'like', "%{$search}%")
                 ->orWhere('cost_code', 'like', "%{$search}%")
                 ->orWhere('product_model', 'like', "%{$search}%")
-                ->orWhere('origin', 'like', "%{$search}%");
+                ->orWhere('origin', 'like', "%{$search}%")
+                ->orWhere('oem', 'like', "%{$search}%");
         })
         ->orderBy('id', 'desc')
         ->paginate(10); // optional pagination
 
-        return view('backend.product.index', compact('product', 'search'));
+        return view('backend.product.index', compact('products', 'search'));
     }
+    public function search(Request $request)
+    {
+        $query = $request->get('query');
+
+        $products = Product::when($query, function ($q) use ($query) {
+            $q->where('product_name', 'like', "%{$query}%")
+              ->orWhere('cost_code', 'like', "%{$query}%")
+              ->orWhere('origin', 'like', "%{$query}%")
+              ->orWhere('oem', 'like', "%{$query}%")
+              ->orWhere('description', 'like', "%{$query}%");
+        })->paginate(10);
+
+        $view = view('backend.product.partials.table', compact('products'))->render();
+
+        return response()->json([
+            'table_data' => $view,
+            'pagination' => (string) $products->links()
+        ]);
+    }
+    public function showPinForm()
+    {
+    return view('backend.product.pin');
+    }
+
+    public function checkPin(Request $request)
+    {
+    $request->validate([
+        'pin' => 'required',
+    ]);
+
+    $pin = $request->input('pin');
+
+    // Set your PIN here
+    $correctPin = '1234';
+
+    if ($pin === $correctPin) {
+        // Save PIN in session
+        session(['access_granted' => true]);
+        return redirect()->route('secure.products.list');
+    } else {
+        return redirect()->back()->with('error', 'Incorrect PIN.');
+    }
+    }
+
+    public function secureProductList(Request $request)
+    {
+    // Check session
+    if (!session('access_granted')) {
+        return redirect()->route('secure.products.pin');
+    }
+
+    $search = $request->input('search');
+
+    $product = Product::when($search, function ($query, $search) {
+        $query->where('product_name', 'like', "%{$search}%")
+                ->orWhere('cost_code', 'like', "%{$search}%")
+                ->orWhere('product_model', 'like', "%{$search}%")
+                ->orWhere('origin', 'like', "%{$search}%")
+                ->orWhere('oem', 'like', "%{$search}%");
+    })
+    ->orderBy('id', 'desc')
+    ->paginate(10);
+
+    return view('backend.product.secureProductList', compact('product', 'search'));
+    }
+
 
     public function reportForm()
     {
@@ -114,25 +184,26 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        try{
+        try {
             $request->validate([
-                // 'company_id' => 'required|integer',
-                // 'category_id' => 'required|integer',
-                'product_name' => 'required|string',
-                'product_model' => 'required|string',
-                'location_rak' => 'required|string',
-                // 'unit_price' => 'required|numeric',
-                'file' => 'nullable|mimes:jpeg,jpg,png|max:3072', // Adjust max file size as needed (2048 KB = 3 MB)
+                'product_name' => 'required_without:file',
+                'origin' => 'required_without:file',
+                'oem' => 'required_without:file',
+                'file' => 'nullable|mimes:xlsx,xls|max:5120',
             ]);
 
+            if ($request->hasFile('file') && $request->file('file')->isValid()) {
+                Excel::import(new ProductImport, $request->file('file'));
+            
+                $this->notice::success('Excel file imported successfully!');
+                return redirect()->route('product.index');
+            }
+
             $product = new Product;
-            // $product->company_id = $request->company_id;
-            // $product->category_id = $request->company_id;
             $product->product_name = $request->product_name;
             $product->product_model = $request->product_model;
             $product->location_rak = $request->location_rak;
             $product->cost_code = $request->cost_code;
-            // $product->old_price = $request->old_price;
             $product->oem = $request->oem;
             $product->cross_reference = $request->cross_reference;
             $product->origin = $request->origin;
@@ -141,51 +212,22 @@ class ProductController extends Controller
             $product->sale_price_two = $request->sale_price_two;
             $product->description = $request->description;
             $product->size = $request->size;
-            if($request->hasFile('product_image')){
-                $imageName = rand(111,999).'.'.$request->product_image->extension();
-                $request->product_image->move(public_path('uploads/product'),$imageName);
-                $product->product_image = $imageName;
-            }
-            if($request->hasFile('product_image_two')){
-                $imageName = rand(111,999).'.'.$request->product_image_two->extension();
-                $request->product_image_two->move(public_path('uploads/product'),$imageName);
-                $product->product_image_two = $imageName;
-            }
-            if($request->hasFile('product_image_three')){
-                $imageName = rand(111,999).'.'.$request->product_image_three->extension();
-                $request->product_image_three->move(public_path('uploads/product'),$imageName);
-                $product->product_image_three = $imageName;
-            }
-            if($request->hasFile('product_image_four')){
-                $imageName = rand(111,999).'.'.$request->product_image_four->extension();
-                $request->product_image_four->move(public_path('uploads/product'),$imageName);
-                $product->product_image_four = $imageName;
-            }
-            //  if ($product->save()) {
-            //     // Generate QR Code Data
-            //     $qrData = "Product: {$product->product_name}\n";
-            //     $qrData .= "Company: " . $product->company->name . "\n";
-            //     $qrData .= "Code: {$product->id}\n";
-            //     $qrData .= "Price: {$product->unit_price}";
 
-            //     // Generate and save the QR code
-            //     $qrCodePath = 'uploads/qr_codes/' . $product->id . '.svg';
-            //     QrCode::format('svg')->size(200)->generate($qrData, public_path($qrCodePath));
+            foreach (['product_image', 'product_image_two', 'product_image_three', 'product_image_four'] as $field) {
+                if ($request->hasFile($field)) {
+                    $imageName = rand(111, 999) . '.' . $request->$field->extension();
+                    $request->$field->move(public_path('uploads/product'), $imageName);
+                    $product->$field = $imageName;
+                }
+            }
 
-            //     // Save QR code path in the database
-            //     $product->qr_code = $qrCodePath;
-            //     $product->save();
-
-            //     $this->notice::success('Product Successfully Saved with QR Code');
-            //     return redirect()->route('product.index');
-            // }
-          
-            if($product->save()){
+            if ($product->save()) {
                 $this->notice::success('Product Successfully Saved');
                 return redirect()->route('product.index');
             }
-        }catch(Exception $e){
-            $this->notice::success('Something Wrong! Please try again');
+
+        } catch (\Exception $e) {
+            $this->notice::error('Something Wrong! ' . $e->getMessage());
             return redirect()->route('product.create');
         }
     }

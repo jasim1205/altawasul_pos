@@ -53,7 +53,7 @@
                             {{-- <th>Company</th>
                             <th>Category</th> --}}
                             <th>Product Name</th>
-                            <th>Product Model</th>
+                            <th>Size</th>
                             <th>Stock</th>
                             <th>Status</th>
                         </tr>
@@ -64,8 +64,8 @@
                                 <td>{{ __(++$loop->index) }}</td>
                                 {{-- <td>{{ __($value->product->company?->company_name) }}</td>
                                 <td>{{ __($value->product->category?->category_name) }}</td> --}}
-                                <td>{{ __($value->product?->product_name) }}</td>
-                                <td>{{ __($value->product?->product_model) }}</td>
+                                <td>{{ __($value->product?->product_name) }}-{{ __($value->product?->oem) }}-{{ __($value->product?->origin) }}</td>
+                                <td>{{ __($value->product?->size) }}</td>
                                 <td style="color: {{ $value->quantity <= 5 ? 'red' : 'green' }};font-weight:bold">
                                     {{ __($value->quantity) }}</td>
                                 <td style="color: {{ $value->quantity <= 5 ? 'red' : 'green' }};font-weight:bold">
@@ -79,6 +79,7 @@
                         @endforelse
                     </tbody>
                 </table>
+                {{ $stock->withQueryString()->links() }}
             </div>
         </div>
     </div>

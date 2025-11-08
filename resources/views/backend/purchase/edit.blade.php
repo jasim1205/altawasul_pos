@@ -142,7 +142,7 @@
                                                             <option value="{{ $value->id }}"
                                                                 data-price="{{ $value->cost_unit_price }}"
                                                                 {{ old('product_id', $purdetail->product_id) == $value->id ? 'selected' : '' }}>
-                                                                {{ $value->product_name }}</option>
+                                                                {{ $value->product_name }}-{{ $value->oem }}-{{ $value->origin }}</option>
                                                         @endforeach
                                                     </select>
                                                 </td>
@@ -250,8 +250,8 @@
         $(document).ready(function() {
             // Initialize Select2
             $('.select2').select2({
-                width: '60%',
-                height: '35px',
+                // width: '60%',
+                // height: '35px',
                 placeholder: "Select Product"
             });
 
@@ -486,8 +486,8 @@
                     </tr>`;
             $('#purchaseHead').append(row);
             $('#purchaseHead tr:last').find('.select2').select2({
-                width: '60%',
-                height: '35px',
+                // width: '60%',
+                // height: '35px',
                 placeholder: "Select Product"
             });
         };

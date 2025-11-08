@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('category_id')->nullable()->index();
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->string('product_name');
-            $table->string('product_model');
+            $table->string('product_model')->nullable();
             $table->string('size')->nullable();
             $table->string('description')->nullable();
             $table->string('location_rak')->nullable();

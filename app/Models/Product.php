@@ -9,6 +9,26 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Product extends Model
 {
     use HasFactory,SoftDeletes;
+    protected $fillable = [
+        'product_name',
+        'product_model',
+        'location_rak',
+        'cost_code',
+        'oem',
+        'cross_reference',
+        'origin',
+        'cost_unit_price',
+        'sale_price_one',
+        'sale_price_two',
+        'description',
+        'size',
+        'product_image',
+        'product_image_two',
+        'product_image_three',
+        'product_image_four',
+        'qr_code',
+        // এখানে অন্য যে কলামগুলো একসাথে সাবমিট করবে, সেগুলোও যোগ করো
+    ];
     public function company(){
         return $this->belongsTo(Company::class);
     }
