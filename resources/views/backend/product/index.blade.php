@@ -9,21 +9,22 @@
             color: white !important;
         }
     </style>
-    <div class="ml-auto d-flex">
-        <div class="mb-3">
-            <input type="text" id="liveSearch" class="form-control" placeholder="Search products by name, cost code, or origin...">
-        </div>
+    {{-- <div class="ml-auto d-flex">
+        
 
         <div class="btn-group ms-auto">
             <a class="btn btn-primary" href="{{ route('product.index') }}"><i class="fa fa-list"></i></a>
         </div>
-    </div>
+    </div> --}}
     <hr>
     <section class="section">
         <div class="row">
             <div class="col-sm-12 d-flex">
                 <div class="btn-group">
                     <a class="btn btn-outline-primary" href="{{ route('product.reportForm') }}">Report</a>
+                </div>
+                <div class="mx-2">
+                    <input type="text" id="liveSearch" class="form-control" placeholder="Search products by name, cost code, or origin...">
                 </div>
                 <div class="ms-auto d-flex" style="float: right">
                     <form action="{{ route('product.index') }}" method="GET">
@@ -44,6 +45,9 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
+                    <div class="card-header">
+                        <h4>Total:{{ $products->total() }}</h4>
+                    </div>
                     <div class="card-body">
                         <div class="table-responsive" id="table-data">
                             @include('backend.product.partials.table', ['products' => $products])

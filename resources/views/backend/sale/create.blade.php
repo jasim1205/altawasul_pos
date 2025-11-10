@@ -136,7 +136,7 @@
                                                     <option value="">Select Product</option>
                                                     @foreach ($product as $value)
                                                         <option data-sale_one="{{ $value->sale_price_one }}"
-                                                            data-sale_two="{{ $value->sale_price_two }}" value="{{ $value->id }}">{{ $value->product_name }}
+                                                            data-sale_two="{{ $value->sale_price_two }}" value="{{ $value->id }}">{{ $value->product_name }}-{{ $value->oem}}-{{$value->origin}}
                                                         </option>
                                                     @endforeach
                                                 </select>
@@ -259,8 +259,8 @@
         $(document).ready(function() {
             // Initialize Select2
             $('.select2').select2({
-                // width: '75%',
-                // placeholder: "Select Product"
+                // width: '100%',
+                placeholder: "Select Product"
             });
 
             // When product changes
@@ -468,7 +468,7 @@
                                 <option value="">Select Product</option>
                                 @foreach ($product as $value)
                                     <option data-sale_one="{{ $value->sale_price_one }}"
-                                                            data-sale_two="{{ $value->sale_price_two }}" value="{{ $value->id }}">{{ $value->product_name }}
+                                                            data-sale_two="{{ $value->sale_price_two }}" value="{{ $value->id }}">{{ $value->product_name }}{{ $value->product_name }}-{{ $value->oem}}-{{$value->origin}}
                                     </option>
                                 @endforeach
                             </select>
@@ -500,7 +500,7 @@
                     </tr>`;
             $('#purchaseHead').append(row);
             $('#purchaseHead tr:last').find('.select2').select2({
-                // width: '60%',
+                width: '100%',
                 // height: '35px',
                 placeholder: "Select Product"
             });

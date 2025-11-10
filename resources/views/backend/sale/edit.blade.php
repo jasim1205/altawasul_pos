@@ -150,7 +150,8 @@
                                                         @foreach ($product as $value)
                                                             <option value="{{ $value->id }}"
                                                                 {{ old('product_id', $sdetail->product_id) == $value->id ? 'selected' : '' }}>
-                                                                {{ $value->product_name }}</option>
+                                                                {{ $value->product_name }}-{{ $value->oem}}-{{$value->origin}}
+                                                            </option>
                                                         @endforeach
                                                     </select>
                                                     {{-- <select class="select2 product_id" onchange="doData(this);" name="product_id[]">
@@ -466,7 +467,8 @@
                             <select class="select2 product_id"  name="product_id[]">
                                 <option value="">Select Product</option>
                                 @foreach ($product as $value)
-                                    <option value="{{ $value->id }}" data-price="{{ $value->cost_unit_price }}">{{ $value->product_name }}</option>
+                                    <option value="{{ $value->id }}" data-price="{{ $value->cost_unit_price }}">
+                                        {{ $value->product_name }}-{{ $value->oem}}-{{$value->origin}}</option>
                                 @endforeach
                             </select>
                         </td>
@@ -491,7 +493,7 @@
             $('#purchaseHead').append(row);
             $('#purchaseHead tr:last').find('.select2').select2({
                 width: '100%',
-                height: '35px',
+                // height: '35px',
                 placeholder: "Select Product"
             });
         };

@@ -457,6 +457,8 @@
                         <td><input class="form-control toamount" type="text" name="total_amount[]" style="width: 100px; height:25px;"></td>
                         <td>
                             <span onClick='RemoveRow(this);' class="delete-row text-danger"><i class="fa fa-trash"></i></span>
+                            <span onClick='addRow();' class="add-row text-primary"><i
+                                                            class="fa fa-plus"></i></span>
                         </td>
                     </tr>`;
             $('#purchaseHead').append(row);
