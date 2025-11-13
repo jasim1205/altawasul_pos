@@ -47,6 +47,8 @@
     <h3>Product Report ({{ $start_date }} to {{ $end_date }})</h3>
     <hr>
 
+
+    
     <table>
         <thead>
             <tr style="background: rgb(17, 130, 243); color: white;">
