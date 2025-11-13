@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Order Report</title>
+    <title>Product Report</title>
     <style>
         body {
             font-family: sans-serif;
@@ -21,9 +21,9 @@
             text-align: left;
         }
 
-        th {
+        /* th {
             background: #f2f2f2;
-        }
+        } */
     </style>
 </head>
 
@@ -49,7 +49,7 @@
 
     <table>
         <thead>
-            <tr>
+            <tr style="background: rgb(17, 130, 243); color: white;">
                 <th>SL</th>
                 <th>Product Name/Model</th>
                 <th>Image</th>

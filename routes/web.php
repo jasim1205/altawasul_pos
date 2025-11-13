@@ -49,12 +49,12 @@ Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLink
 Route::get('/reset-password/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
 Route::post('/reset-password', [ResetPasswordController::class, 'resetPassword'])->name('password.update');
 
-Route::middleware(['checkauth'])->prefix('admin')->group(function () {
+Route::middleware(['checkauth','prevent-back-history'])->prefix('admin')->group(function () {
     Route::get('dashboard', [dashboard::class, 'index'])->name('dashboard');
 });
 
 
-Route::middleware(['checkrole'])->prefix('admin')->group(function(){
+Route::middleware(['checkrole','prevent-back-history'])->prefix('admin')->group(function(){
     Route::resource('user', user::class);
     Route::resource('role', role::class);
     Route::get('permission/{role}', [permission::class,'index'])->name('permission.list');
@@ -98,9 +98,9 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
 
 
     Route::get('product-report', [product::class, 'reportForm'])->name('product.reportForm');
-    Route::post('product/generate', [product::class, 'generatePDF'])->name('product.generatePDF');
+    Route::post('product/generate', [product::class, 'generatePDF'])->withoutMiddleware('prevent-back-history')->name('product.generatePDF');
     Route::get('stock-report', [stock::class, 'stockReportForm'])->name('stock.reportForm');
-    Route::post('stock/generate', [stock::class, 'generateStockPDF'])->name('stock.generatePDF');
+    Route::post('stock/generate', [stock::class, 'generateStockPDF'])->withoutMiddleware('prevent-back-history')->name('stock.generatePDF');
 
 
     Route::post('/product-autocomplete', [product::class, 'productAutoComplete'])->name('productAutoComplete');
