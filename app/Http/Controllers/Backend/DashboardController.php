@@ -22,10 +22,15 @@ class DashboardController extends Controller
             $monthName = $currentDate->format('F'); // Full month name (e.g., January)
             $currentYear = $currentDate->year; // Current year
 
+            $totalSupplier = \App\Models\Supplier::count();
+            $totalCustomer = \App\Models\Customer::count();
+            $totalProduct = \App\Models\Product::count();
+            $totalStock = \App\Models\Stock::sum('quantity');
 
             $purchase = Purchase::whereDate('date', $currentDate->toDateString())->sum('total_quantity');
             $sale = Sales::whereDate('date', $currentDate->toDateString())->sum('total_quantity');
             $expense = DailyExpense::whereDate('date', $currentDate->toDateString())->sum('amount');
+
 
             // $purchase = Purchase::where('date',$currentDate)->sum('total_quantity');
             // $sale = Sales::where('date',$currentDate)->sum('total_quantity');
@@ -38,7 +43,7 @@ class DashboardController extends Controller
             $totalpurchase = Purchase::sum('total_quantity');
             $totalsale = Sales::sum('total_quantity');
             $totalexpense = DailyExpense::sum('amount');
-            return view('admindashboard',compact('currentDate','purchase','sale','expense','monthlypurchase','monthlysale','monthlyexpense','totalpurchase','totalsale','totalexpense'));
+            return view('admindashboard',compact('currentDate','purchase','sale','expense','monthlypurchase','monthlysale','monthlyexpense','totalpurchase','totalsale','totalexpense','totalSupplier','totalCustomer','totalStock','dayName','currentDay','monthName','currentYear','totalProduct'));
         }else{
             return view('dashboard');
         }

@@ -48,17 +48,19 @@ class SalesController extends Controller
         try {
             DB::beginTransaction();
 
-            // Save supplier information
-            // $customer = new Customer;
-            // $customer->customer_name = $request->customer_name;
-            // $customer->email = $request->email;
-            // $customer->contact_no = $request->contact_no;
-            // $customer->date = $request->date;
-            // $customer->save();
-
-            // Save purchase information
+            if (is_numeric($request->customer_id)) {
+                // Existing customer
+                $customerId = $request->customer_id;
+            } else {
+                // New customer, create it
+                $customer = new Customer();
+                $customer->customer_name = $request->customer_id; // assuming input is the customer name
+                $customer->contact_no = $request->contact_no;   // if you have contact field
+                $customer->save();
+                $customerId = $customer->id;
+            }
             $sale = new Sales;
-            $sale->customer_id = $request->customer_id; // Link purchase to supplier
+            $sale->customer_id = $customerId; // Link purchase to supplier
             $sale->date = $request->date;
             $sale->tm_no = $request->tm_no;
             $sale->rf_no = $request->rf_no;
