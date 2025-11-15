@@ -9,6 +9,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Supplier extends Model
 {
     use HasFactory,SoftDeletes;
+    protected $fillable = [
+        "*"
+     ];
     public function product(){
         return $this->belongsToMany(Product::class);
     }

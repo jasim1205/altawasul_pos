@@ -56,6 +56,7 @@ class SalesController extends Controller
                 $customer = new Customer();
                 $customer->customer_name = $request->customer_id; // assuming input is the customer name
                 $customer->contact_no = $request->contact_no;   // if you have contact field
+                $customer->trn_no = $request->tm_no;   // if you have contact field
                 $customer->save();
                 $customerId = $customer->id;
             }
@@ -161,7 +162,18 @@ class SalesController extends Controller
     {
         try {
             DB::beginTransaction();
-
+            if (is_numeric($request->customer_id)) {
+                // Existing customer
+                $customerId = $request->customer_id;
+            } else {
+                // New customer, create it
+                $customer = new Customer();
+                $customer->customer_name = $request->customer_id; // assuming input is the customer name
+                $customer->contact_no = $request->contact_no;   // if you have contact field
+                $customer->trn_no = $request->tm_no;   // if you have contact field
+                $customer->save();
+                $customerId = $customer->id;
+            }
             // Retrieve existing sale and customer
             $sale = Sales::findOrFail(encryptor('decrypt',$id));
             $customer = Customer::find($sale->customer_id);
@@ -177,7 +189,7 @@ class SalesController extends Controller
             // $customer->save();
 
             // Update sale information
-            $sale->customer_id = $request->customer_id;
+            $sale->customer_id = $customerId;
             $sale->date = $request->date;
             $sale->tm_no = $request->tm_no;
             $sale->rf_no = $request->rf_no;

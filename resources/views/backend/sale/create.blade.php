@@ -18,6 +18,9 @@
         .star {
             color: rgb(248, 62, 62);
         }
+        .readonly {
+            background-color: #f5f5f5;
+        }
     </style>
     <div class=" d-flex">
         <div>
@@ -277,14 +280,14 @@
                 // If selected is existing customer
                 if (!isNaN(selected.val())) {
                     let phone = selected.data('phone');
-                    $('#contact').val(phone);
+                    $('#contact').val(phone).addClass('readonly').prop('readonly',true);;
                     let trn = selected.data('trn');
-                    $('#Trn').val(trn);
+                    $('#Trn').val(trn).addClass('readonly').prop('readonly',true);
                     console.log(phone);
                 } else {
                     // New customer typing
-                    $('#contact').val('');
-                    $('#Trn').val('');
+                    $('#contact').val('').removeClass('readonly').prop('readonly',false);;
+                    $('#Trn').val('').removeClass('readonly').prop('readonly',false);;
                 }
             });
             $('#customer_id').select2({

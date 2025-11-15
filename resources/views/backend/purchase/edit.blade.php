@@ -18,6 +18,9 @@
         .star {
             color: rgb(248, 62, 62);
         }
+        .readonly {
+            background-color: #f5f5f5;
+        }
     </style>
     <div class="ml-auto d-flex">
         <div class="btn-group ms-auto">
@@ -40,7 +43,7 @@
                                 <div class="input-group mb-3">
                                     <span class="input-group-text" id="basic-addon1">Supplier Name <span
                                             class="star">*</span></span>
-                                    <select class="select2 form-select" name="supplier_id" id="supplier_id" style="width:60% !important" required >
+                                    <select class="form-select" name="supplier_id" id="supplier_id" style="width:60% !important" required >
                                         <option value="">Select supplier</option>
                                         @foreach ($supplier as $value)
                                             <option value="{{ $value->id }}" data-phone="{{ $value->contact_no }}" data-trn="{{ $value->trn_no }}"
@@ -49,16 +52,6 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                {{-- <label for="">Supplier Name</label>
-                                <select class="select2 form-select" name="supplier_id">
-                                    <option value="">Select supplier</option>
-                                    @foreach ($supplier as $value)
-                                        <option value="{{ $value->id }}"
-                                            {{ old('supplier_id', $purchase->supplier_id) == $value->id ? 'selected' : '' }}>
-                                            {{ $value->supplier_name }}</option>
-                                    @endforeach
-                                </select> --}}
-                                {{-- <input type="text" name="supplier_name" id="" class="form-control" style="height:30px;"> --}}
                             </div>
                             <div class="col-sm-4">
                                 <div class="input-group">
@@ -272,17 +265,22 @@
                 // If selected is existing customer
                 if (!isNaN(selected.val())) {
                     let phone = selected.data('phone');
-                    $('#contact').val(phone);
+                    $('#contact').val(phone).addClass('readonly').prop('readonly', true);
                     let trn = selected.data('trn');
-                    $('#Trn').val(trn);
+                    $('#Trn').val(trn).addClass('readonly').prop('readonly', true);
                     console.log(phone);
                     console.log(trn);
                 } else {
                     // New customer typing
-                    $('#contact').val('');
-                    $('#Trn').val('');
+                    $('#contact').val('').removeClass('readonly').prop('readonly', false);
+                    $('#Trn').val('').removeClass('readonly').prop('readonly', false);
                 }
             });
+            $(document).ready(function() {
+                // Auto-run on edit page
+                $('#supplier_id').trigger('change');
+            });
+
             $('#supplier_id').select2({
                 tags: true,
                 placeholder: "Select or type new supplier",
@@ -302,6 +300,7 @@
             // Trigger change once for edit page to fill existing values
             // $('.product-select').trigger('change');
         });
+        
     </script>
     <script>
         $(document).ready(function() {

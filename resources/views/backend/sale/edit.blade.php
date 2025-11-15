@@ -18,6 +18,9 @@
         .star {
             color: rgb(248, 62, 62);
         }
+        .readonly {
+            background-color: #f5f5f5;
+        }
     </style>
     <div class="ml-auto d-flex">
         <div class="btn-group ms-auto">
@@ -157,7 +160,8 @@
                                                         // $company_id = $sdetail->company_id;
                                                         $product = DB::table('products')->get();
                                                     @endphp
-                                                    <select class="select2 product_id" width="100%" name="product_id[]">
+                                                    <select class="select2 product_id" width="100%"
+                                                        name="product_id[]">
                                                         @foreach ($product as $value)
                                                             <option value="{{ $value->id }}"
                                                                 {{ old('product_id', $sdetail->product_id) == $value->id ? 'selected' : '' }}>
@@ -275,14 +279,18 @@
                 if (!isNaN(selected.val())) {
                     // Existing customer selected
                     let phone = selected.data('phone');
-                    $('#contact').val(phone);
+                    $('#contact').val(phone).addClass('readonly').prop('readonly', true);
                     let trn = selected.data('trn');
-                    $('#Trn').val(trn);
+                    $('#Trn').val(trn).addClass('readonly').prop('readonly', true);
                 } else {
                     // New customer typing
-                    $('#contact').val('');
-                    $('#Trn').val('');
+                    $('#contact').val('').removeClass('readonly').prop('readonly', false);
+                    $('#Trn').val('').removeClass('readonly').prop('readonly', false);
                 }
+            });
+            $(document).ready(function() {
+                // Auto-run on edit page
+                $('#customer_id').trigger('change');
             });
 
             $('#customer_id').select2({
@@ -712,7 +720,7 @@
                                 $.each(res, function(key, value) {
                                     var stockQuantity = value.match(
                                         /\((\d+)\)/
-                                        ); // Extract stock quantity from parentheses
+                                    ); // Extract stock quantity from parentheses
                                     var stock = stockQuantity ? parseInt(stockQuantity[
                                         1]) : 0;
 
