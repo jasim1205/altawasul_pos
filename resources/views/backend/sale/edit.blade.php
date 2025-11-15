@@ -38,15 +38,17 @@
                                 <div class="input-group mb-3">
                                     <span class="input-group-text" id="basic-addon1">Customer<span
                                             class="star">*</span></span>
-                                    <select class="select2 form-select" width="60%" name="customer_id" style="width:60% !important;" required>
+                                    <select class="form-select select2" width="60%" name="customer_id" id="customer_id"
+                                        style="width:60% !important;" required>
                                         <option value="">Select customer</option>
                                         @foreach ($customer as $value)
-                                            <option value="{{ $value->id }}"
+                                            <option value="{{ $value->id }}" data-phone="{{ $value->contact_no }}"
+                                                data-trn="{{ $value->trn_no }}"
                                                 {{ old('customer', $sale->customer_id) == $value->id ? 'selected' : '' }}>
                                                 {{ $value->customer_name }}</option>
                                         @endforeach
                                     </select>
-                                    @error('supplier_id')
+                                    @error('customer_id')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -61,23 +63,32 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="input-group mb-3">
-                                    <span class="input-group-text" id="basic-addon1">Tm No<span
+                                    <span class="input-group-text" id="basic-addon1">Contact<span
                                             class="star">*</span></span>
-                                    <input type="text" name="tm_no" id=""
-                                        value="{{ old('tm_no', $sale->tm_no) }}" class="form-control" aria-label="Username"
-                                        aria-describedby="basic-addon1" required>
+                                    <input type="text" name="contact_no" id="contact"
+                                        value="{{ old('contact_no', $sale->customer?->contact_no) }}" class="form-control"
+                                        aria-label="Username" aria-describedby="basic-addon1" required>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon1">Trn No<span
+                                            class="star">*</span></span>
+                                    <input type="text" name="tm_no" id="Trn"
+                                        value="{{ old('tm_no', $sale->customer->trn_no) }}" class="form-control"
+                                        aria-label="Username" aria-describedby="basic-addon1" required>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="input-group mb-3">
                                     <span class="input-group-text" id="basic-addon1">Reference No</span>
                                     <input type="text" name="rf_no" id=""
-                                        value="{{ old('rf_no', $sale->rf_no) }}" class="form-control"
-                                        aria-label="Username" aria-describedby="basic-addon1">
+                                        value="{{ old('rf_no', $sale->rf_no) }}" class="form-control" aria-label="Username"
+                                        aria-describedby="basic-addon1">
                                 </div>
                             </div>
-                            
-                            
+
+
                             <div class="col-md-4">
                                 <div class="input-group mb-3">
                                     <span class="input-group-text" id="basic-addon1">Explanation</span>
@@ -86,14 +97,14 @@
                                         aria-label="Username" aria-describedby="basic-addon1">
                                 </div>
                             </div>
-                            
+
                             <div class="col-md-4">
                                 <div class="input-group mb-3">
                                     <span class="input-group-text" id="basic-addon1">Date<span
                                             class="star">*</span></span>
                                     <input type="date" name="date" id="current_date"
-                                        value="{{ old('date', $sale->date) }}" class="form-control"
-                                        aria-label="Username" aria-describedby="basic-addon1" required>
+                                        value="{{ old('date', $sale->date) }}" class="form-control" aria-label="Username"
+                                        aria-describedby="basic-addon1" required>
                                 </div>
                             </div>
                             <div class="table-responsive">
@@ -146,11 +157,11 @@
                                                         // $company_id = $sdetail->company_id;
                                                         $product = DB::table('products')->get();
                                                     @endphp
-                                                    <select class="select2" width="100%" name="product_id[]">
+                                                    <select class="select2 product_id" width="100%" name="product_id[]">
                                                         @foreach ($product as $value)
                                                             <option value="{{ $value->id }}"
                                                                 {{ old('product_id', $sdetail->product_id) == $value->id ? 'selected' : '' }}>
-                                                                {{ $value->product_name }}-{{ $value->oem}}-{{$value->origin}}
+                                                                {{ $value->product_name }}-{{ $value->oem }}-{{ $value->origin }}
                                                             </option>
                                                         @endforeach
                                                     </select>
@@ -161,7 +172,8 @@
                                                 <td><input class="form-control uprice" type="text" name="unit_price[]"
                                                         value="{{ old('unit_price', $sdetail->unit_price) }}"
                                                         style="width: 80px; height:25px;"></td>
-                                                <td><input class="form-control toquantity" type="text" name="quantity[]"
+                                                <td><input class="form-control toquantity" type="text"
+                                                        name="quantity[]"
                                                         value="{{ old('quantity', $sdetail->quantity) }}"
                                                         style="width: 80px; height:25px;"></td>
                                                 <td><input class="form-control amount" type="text" name="amount[]"
@@ -257,8 +269,30 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {
+            $('#customer_id').on('change', function() {
+                let selected = $(this).find(":selected");
+
+                if (!isNaN(selected.val())) {
+                    // Existing customer selected
+                    let phone = selected.data('phone');
+                    $('#contact').val(phone);
+                    let trn = selected.data('trn');
+                    $('#Trn').val(trn);
+                } else {
+                    // New customer typing
+                    $('#contact').val('');
+                    $('#Trn').val('');
+                }
+            });
+
+            $('#customer_id').select2({
+                tags: true,
+                placeholder: "Select or type new customer",
+                allowClear: true
+            });
+
             // Initialize Select2
-            $('.select2').select2({
+            $('.product_id').select2({
                 // width: '75%',
                 // placeholder: "Select Product"
             });
@@ -468,14 +502,14 @@
                                 <option value="">Select Product</option>
                                 @foreach ($product as $value)
                                     <option value="{{ $value->id }}" data-price="{{ $value->cost_unit_price }}">
-                                        {{ $value->product_name }}-{{ $value->oem}}-{{$value->origin}}</option>
+                                        {{ $value->product_name }}-{{ $value->oem }}-{{ $value->origin }}</option>
                                 @endforeach
                             </select>
                         </td>
                         <td><input class="form-control uprice" type="text" name="unit_price[]" style="width: 80px; height:25px;"></td>
                         <td><input class="form-control toquantity" type="text" name="quantity[]"style="width: 80px; height:25px;"></td>
                         <td><input class="form-control amount" type="text" name="amount[]" style="width: 100px; height:25px;"></td>
-                        <td><input class="form-control totax" type="text" name="tax[]"style="width: 80px; height:25px;"></td>
+                        <td><input class="form-control totax" type="text" value="5" name="tax[]"style="width: 80px; height:25px;"></td>
                         <td><input class="form-control totax_amount" type="text" name="tax_amount[]"style="width: 80px; height:25px;"></td>
                         <td><input class="form-control subamount" type="text" name="sub_amount[]"style="width: 100px; height:25px;"></td>
                         <td><select name="discount_type[]" id="" class="select2 text-center p-0 form-control discount_type" style="width: 80px; height:25px;">
@@ -674,10 +708,11 @@
                                 var productSelect = row.find('.product_id');
                                 productSelect.empty();
                                 productSelect.append(
-                                '<option value="">Select product</option>');
+                                    '<option value="">Select product</option>');
                                 $.each(res, function(key, value) {
                                     var stockQuantity = value.match(
-                                    /\((\d+)\)/); // Extract stock quantity from parentheses
+                                        /\((\d+)\)/
+                                        ); // Extract stock quantity from parentheses
                                     var stock = stockQuantity ? parseInt(stockQuantity[
                                         1]) : 0;
 

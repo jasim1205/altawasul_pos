@@ -35,10 +35,10 @@
                             <div class="col-md-4">
                                 <div class="input-group mb-3">
                                     <span class="input-group-text" id="basic-addon1">Supplier Name <span class="star">*</span></span>
-                                    <select class="select2 form-select" name="supplier_id">
+                                    <select class="select2 form-select" name="supplier_id" id="supplier_id" style="width:60%; height:35px">
                                         <option value="">Select supplier</option>
                                         @foreach ($supplier as $value)
-                                            <option value="{{ $value->id }}">{{ $value->supplier_name }}</option>
+                                            <option value="{{ $value->id }}" data-phone="{{ $value->contact_no }}" data-trn="{{ $value->trn_no }}">{{ $value->supplier_name }}</option>
                                         @endforeach
                                     </select>
                                     @error('supplier_id')
@@ -48,8 +48,15 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="input-group mb-3">
-                                    <span class="input-group-text" id="basic-addon1">Tm No <span class="star">*</span></span>
-                                    <input type="text" name="tm_no" id="" class="form-control" aria-label="Username"
+                                    <span class="input-group-text" id="basic-addon1">Contact <span class="star">*</span></span>
+                                    <input type="text" name="contact_no" id="contact" class="form-control" aria-label="Username"
+                                        aria-describedby="basic-addon1">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon1">Trn No <span class="star">*</span></span>
+                                    <input type="text" name="tm_no" id="Trn" class="form-control" aria-label="Username"
                                         aria-describedby="basic-addon1">
                                 </div>
                             </div>
@@ -115,7 +122,7 @@
                                                 </select>
                                             </td> --}}
                                                 <td>
-                                                    <select class="select2 product-select"
+                                                    <select class="select2 product-select product_id"
                                                         name="product_id[]">
                                                         <option value="">Select Product</option>
                                                         @foreach ($product as $value)
@@ -211,8 +218,30 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function () {
+            $('#supplier_id').on('change', function() {
+                let selected = $(this).find(":selected");
+
+                // If selected is existing customer
+                if (!isNaN(selected.val())) {
+                    let phone = selected.data('phone');
+                    $('#contact').val(phone);
+                    let trn = selected.data('trn');
+                    $('#Trn').val(trn);
+                    console.log(phone);
+                    console.log(trn);
+                } else {
+                    // New customer typing
+                    $('#contact').val('');
+                    $('#Trn').val('');
+                }
+            });
+            $('#supplier_id').select2({
+                tags: true,
+                placeholder: "Select or type new supplier",
+                allowClear: true
+            });
             // Initialize Select2
-            $('.select2').select2({
+            $('.product_id').select2({
                 // width: '75%',
                 placeholder: "Select Product"
             });

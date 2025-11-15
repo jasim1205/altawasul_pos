@@ -102,8 +102,20 @@ class PurchaseController extends Controller
             // $supplier->save();
 
             // Save purchase information
+            if (is_numeric($request->supplier_id)) {
+                // Existing supplier
+                $supplierId = $request->supplier_id;
+            } else {
+                // New supplier, create it
+                $supplier = new Supplier();
+                $supplier->supplier_name = $request->supplier_id; // assuming input is the supplier name
+                $supplier->contact_no = $request->contact_no;   // if you have contact field
+                $supplier->save();
+                $supplierId = $supplier->id;
+            }
+
             $purchase = new Purchase;
-            $purchase->supplier_id = $request->supplier_id; // Link purchase to supplier
+            $purchase->supplier_id = $supplierId; // Link purchase to supplier
             $purchase->date = $request->date;
             $purchase->tm_no = $request->tm_no;
             $purchase->rf_no = $request->rf_no;

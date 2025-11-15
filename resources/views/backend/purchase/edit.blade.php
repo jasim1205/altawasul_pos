@@ -40,10 +40,10 @@
                                 <div class="input-group mb-3">
                                     <span class="input-group-text" id="basic-addon1">Supplier Name <span
                                             class="star">*</span></span>
-                                    <select class="select2 form-select" name="supplier_id">
+                                    <select class="select2 form-select" name="supplier_id" id="supplier_id" style="width:60% !important" required >
                                         <option value="">Select supplier</option>
                                         @foreach ($supplier as $value)
-                                            <option value="{{ $value->id }}"
+                                            <option value="{{ $value->id }}" data-phone="{{ $value->contact_no }}" data-trn="{{ $value->trn_no }}"
                                                 {{ old('supplier_id', $purchase->supplier_id) == $value->id ? 'selected' : '' }}>
                                                 {{ $value->supplier_name }}</option>
                                         @endforeach
@@ -61,25 +61,43 @@
                                 {{-- <input type="text" name="supplier_name" id="" class="form-control" style="height:30px;"> --}}
                             </div>
                             <div class="col-sm-4">
-                                <label for="">Tm No</label>
-                                <input type="text" name="tm_no" id=""
-                                    value="{{ old('tm_no', $purchase->tm_no) }}" class="form-control" style="height:30px;">
+                                <div class="input-group">
+                                    <span class="input-group-text" id="basic-addon1">Contact <span
+                                        class="star">*</span></span>
+                                        <input type="text" name="contact_no" id="contact"
+                                    value="{{ old('contact_no', $purchase->supplier?->contact_no) }}" class="form-control" style="">
+                                </div>
                             </div>
                             <div class="col-sm-4">
-                                <label for="">Rf No</label>
-                                <input type="text" name="rf_no" value="{{ old('rf_no', $purchase->rf_no) }}"
-                                    id="" class="form-control" style="height:30px;">
+                                <div class="input-group">
+                                    <span class="input-group-text" id="basic-addon1">Trn No <span
+                                        class="star">*</span></span>
+                                        <input type="text" name="tm_no" id="Trn"
+                                    value="{{ old('tm_no', $purchase->supplier?->trn_no) }}" class="form-control" style="">
+                                </div>
+                              
                             </div>
                             <div class="col-sm-4">
-                                <label for="">Explanation</label>
-                                <input type="text" name="explanation"
+                                <div class="input-group">
+                                    <span class="input-group-text" id="basic-addon1">Reference No</span>
+                                    <input type="text" name="rf_no" value="{{ old('rf_no', $purchase->rf_no) }}"
+                                    id="" class="form-control" style="">
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="input-group">
+                                    <span class="input-group-text" id="basic-addon1">Explenation</span>
+                                    <input type="text" name="explanation"
                                     value="{{ old('explanation', $purchase->explanation) }}" id=""
-                                    class="form-control" style="height:30px;">
+                                    class="form-control" style="">
+                                </div>
                             </div>
                             <div class="col-sm-3">
-                                <label for="">Date</label>
-                                <input type="date" name="date" value="{{ old('date', $purchase->date) }}"
+                                <div class="input-group">
+                                    <span class="input-group-text" id="basic-addon1">Date</span>
+                                    <input type="date" name="date" value="{{ old('date', $purchase->date) }}"
                                     id="current_date" class="form-control" readonly>
+                                </div>
                             </div>
                             <div class="table-responsive">
                                 <table class="table table-striped mb-0 mt-3" id="table">
@@ -137,7 +155,7 @@
                                                         $product = DB::table('products')->get();
                                                     @endphp
 
-                                                    <select class="select2 product-select" name="product_id[]" readonly>
+                                                    <select class="select2 product-select product_id" name="product_id[]" readonly>
                                                         @foreach ($product as $value)
                                                             <option value="{{ $value->id }}"
                                                                 data-price="{{ $value->cost_unit_price }}"
@@ -248,8 +266,29 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {
-            // Initialize Select2
-            $('.select2').select2({
+            $('#supplier_id').on('change', function() {
+                let selected = $(this).find(":selected");
+
+                // If selected is existing customer
+                if (!isNaN(selected.val())) {
+                    let phone = selected.data('phone');
+                    $('#contact').val(phone);
+                    let trn = selected.data('trn');
+                    $('#Trn').val(trn);
+                    console.log(phone);
+                    console.log(trn);
+                } else {
+                    // New customer typing
+                    $('#contact').val('');
+                    $('#Trn').val('');
+                }
+            });
+            $('#supplier_id').select2({
+                tags: true,
+                placeholder: "Select or type new supplier",
+                allowClear: true
+            });
+            $('.product_id').select2({
                 // width: '60%',
                 // height: '35px',
                 placeholder: "Select Product"
@@ -459,7 +498,7 @@
                             </select>
                         </td> --}}
                         <td>
-                            <select id="#select" class="select2 product-select" name="product_id[]">
+                            <select class="select2 product-select product_id" name="product_id[]">
                                 <option value="">Select Product</option>
                                 @foreach ($product as $value)
                                     <option value="{{ $value->id }}" data-price="{{ $value->cost_unit_price }}">{{ $value->product_name }}-{{ $value->oem }}-{{ $value->origin }}</option>
