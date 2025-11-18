@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('customer_id')->index();
             $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
             $table->date('date');
+            $table->string('invoice_no')->nullable();
             $table->string('tm_no')->nullable();
             $table->string('rf_no')->nullable();
             $table->string('explanation')->nullable();

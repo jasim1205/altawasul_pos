@@ -64,7 +64,7 @@
                                             $toDate = \Carbon\Carbon::parse($toDate);
                                         @endphp
 
-                                        <h6 class="text-center text-primary">Purchase Report from
+                                        <h6 class="text-center text-primary">Sales Report from
                                             :{{ date('d-M-Y', strtotime($fromDate->toDateString())) }} to
                                             {{ date('d-M-Y', strtotime($toDate->toDateString())) }}
                                         </h6>
@@ -111,7 +111,7 @@
                                                     <a href="{{ route('sale.show', encryptor('encrypt', $value->id)) }}">
                                                         <i class="fa fa-eye"></i>
                                                     </a>
-                                                    <a href="{{ route('sale.invoice', encryptor('encrypt', $value->id)) }}">
+                                                    <a href="{{ route('sale.invoice', $value->id) }}">
                                                         {{-- <i class="fa fa-eye"></i> --}}invoice
                                                     </a>
                                                     {{-- <a href="{{route('invoice',encryptor('encrypt',$value->id))}}">

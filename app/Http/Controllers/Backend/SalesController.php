@@ -13,6 +13,7 @@ use App\Models\Stock;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\SaleDetails;
 use Illuminate\Http\Request;
+use Mpdf\Mpdf;
 use DB;
 
 class SalesController extends Controller
@@ -62,6 +63,24 @@ class SalesController extends Controller
             }
             $sale = new Sales;
             $sale->customer_id = $customerId; // Link purchase to supplier
+
+            // Get last sale record
+            $lastSale = Sales::latest()->first();
+            
+            // If invoice_no exists, extract the last numeric part
+            if ($lastSale && $lastSale->invoice_no) {
+                $lastNumber = intval(substr($lastSale->invoice_no, 3));  // remove `ALT`
+                $nextId = $lastNumber + 1;
+            } else {
+                $nextId = 1;
+            }
+            
+            $code = 'ALT'; // prefix
+            $invoiceNumber = $code . str_pad($nextId, 6, '0', STR_PAD_LEFT);
+            
+            $sale->invoice_no = $invoiceNumber;
+            
+
             $sale->date = $request->date;
             $sale->tm_no = $request->tm_no;
             $sale->rf_no = $request->rf_no;
@@ -135,9 +154,34 @@ class SalesController extends Controller
         $category = Category::get();
         $product = Product::get();
         // $saledetail = SaleDetails::where('sale_id',$id)->get();
-        $sale = Sales::findOrFail(encryptor('decrypt',$id));
+        // $sale = Sales::findOrFail(encryptor('decrypt',$id));
+        $sale = Sales::findOrFail($id);
         $saledetail = $sale->saledetails;
-        return view('backend.sale.invoice',compact('company','category','product','sale','saledetail'));
+
+
+        // Load HTML from the Blade view
+        $html = view('backend.sale.invoicePdf', compact('company','category','product','sale','saledetail'))->render();
+
+        // mPDF settings
+        $mpdf = new Mpdf([
+            'mode' => 'utf-8',
+            'format' => 'A4',
+            'orientation' => 'P',  // P = Portrait, L = Landscape
+            // 'margin_left' => 10,
+            // 'margin_right' => 10,
+            // 'margin_top' => 10,
+            // 'margin_bottom' => 10,
+        ]);
+
+        $mpdf->WriteHTML($html);
+
+        // Output inline (like dompdf stream)
+        return $mpdf->Output('invoice_'.$sale->invoice_no.'.pdf', 'I');
+        // dd('ok');
+        // $pdf = Pdf::loadView('backend.sale.invoicePdf', compact('company','category','product','sale','saledetail'));
+        // return $pdf->stream('invoice_'.$sale.'.pdf');
+
+        // return view('backend.sale.invoice',compact('company','category','product','sale','saledetail'));
     }
 
     /**

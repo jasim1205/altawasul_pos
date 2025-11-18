@@ -79,6 +79,13 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon1">Invoice no</span>
+                                    <input type="text" name="invoice_no" id="" class="form-control"
+                                        aria-label="Username" aria-describedby="basic-addon1">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="input-group mb-3">
                                     <span class="input-group-text" id="basic-addon1">Date</span>
                                     <input type="date" name="date" id="current_date" class="form-control"
                                         aria-label="Username" aria-describedby="basic-addon1">

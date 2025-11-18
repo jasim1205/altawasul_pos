@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('supplier_id')->index();
             $table->foreign('supplier_id')->references('id')->on('suppliers')->onDelete('cascade');
             $table->date('date');
+            $table->string('invoice_no')->nullable();
             $table->string('tm_no')->nullable();
             $table->string('rf_no')->nullable();
             $table->string('explanation')->nullable();

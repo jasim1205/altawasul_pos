@@ -118,6 +118,7 @@ class PurchaseController extends Controller
             $purchase = new Purchase;
             $purchase->supplier_id = $supplierId; // Link purchase to supplier
             $purchase->date = $request->date;
+            $purchase->invoice_no = $request->invoice_no;
             $purchase->tm_no = $request->tm_no;
             $purchase->rf_no = $request->rf_no;
             $purchase->explanation = $request->explanation;
@@ -245,6 +246,7 @@ public function update(Request $request, $id)
         $purchase = Purchase::findOrFail(encryptor('decrypt', $id));
         $purchase->supplier_id = $supplierId; // Link purchase to supplier
         $purchase->date = $request->date;
+        $purchase->invoice_no = $request->invoice_no;
         $purchase->tm_no = $request->tm_no;
         $purchase->rf_no = $request->rf_no;
         $purchase->explanation = $request->explanation;
