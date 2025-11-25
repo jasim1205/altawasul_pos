@@ -33,7 +33,7 @@ return new class extends Migration
             'email' => 'monir@gmail.com',
             'contact_no' => '1',
             'role_id' => '1',
-            'password' => Hash::make(1),
+            'password' => Hash::make('kader@123'),
             'status' => 1,
             'full_access' => 1,
         ]);

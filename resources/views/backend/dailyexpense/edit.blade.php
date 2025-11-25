@@ -1,34 +1,13 @@
 @extends('layouts.app')
-@section('title',trans('Expense'))
-@section('page',trans('Edit'))
+@section('title', 'Daily Expense')
+@section('page-title', 'Home')
+@section('page-subtitle', 'Edit Daily Expense')
 @section('content')
 
-<!--breadcrumb-->
-<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-    <div class="breadcrumb-title pe-3">Forms</div>
-    <div class="ps-3">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb mb-0 p-0">
-                <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
-                </li>
-                <li class="breadcrumb-item active" aria-current="page">Edit Expense</li>
-            </ol>
-        </nav>
-    </div>
-    <div class="ms-auto">
-        <div class="btn-group">
-            <a class="btn btn-primary" href="{{route('dailyexpense.index')}}"><i class="fa fa-list"></i></a>
-        </div>
-    </div>
-</div>
-<!--end breadcrumb-->
-<!--start stepper one-->
-<h6 class="text-uppercase">Product</h6>
-<hr>
 <div id="stepper1" class="bs-stepper">
     <div class="card">
         <div class="card-header">
-            <h4 class="card-title">Add New</h4>
+            <h4 class="card-title">Edit</h4>
         </div>
         <div class="card-body">
             <div class="bs-stepper-content">
@@ -38,27 +17,34 @@
                     <div id="test-l-1" role="tabpanel" class="bs-stepper-pane" aria-labelledby="stepper1trigger1">
                         <div class="row g-3">
                             <div class="col-12 col-lg-6">
-                                <label for="FisrtName" class="form-label">Expense Title</label>
-                               <input type="text" name="expense_title" value="{{ old('expense_title',$dailyexpense->expense_title) }}" id="" class="form-control">
+                                <div class="input-group">
+                                    <span class="input-group-text">Expense Title</span>
+                                    <input type="text" name="expense_title" value="{{ old('expense_title',$dailyexpense->expense_title) }}" id="" class="form-control">
                                 @error('expense_title')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
+                                </div>
                             </div>
                             <div class="col-12 col-lg-6">
-                                <label for="name" class="form-label">Amount</label>
-                                <input type="text" name="amount"  value="{{ old('amount',$dailyexpense->amount) }}" id="" class="form-control">
+                                <div class="input-group">
+                                    <span class="input-group-text">Amount</span>
+                                    <input type="text" name="amount"  value="{{ old('amount',$dailyexpense->amount) }}" id="" class="form-control">
                                 @error('amount')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
+                                </div>
                             </div>
                             <div class="col-12 col-lg-6">
-                                <label for="name" class="form-label">Date</label>
-                                <input type="date" name="date" class="form-control" value="{{ old('date',$dailyexpense->date) }}" id="current_date" p/>
-
+                                <div class="input-group">
+                                    <span class="input-group-text">Date</span>
+                                    <input type="date" name="date" class="form-control" value="{{ old('date',$dailyexpense->date) }}" id="current_date" p/>
+                                </div>
                             </div>
                             <div class="col-12 col-lg-6">
-                                <label for="" class="form-label">Remarks</label>
-                                <textarea name="remarks" id="" class="form-control">{{old('remarks',$dailyexpense->remarks)}}</textarea>
+                                <div class="input-group">
+                                    <span class="input-group-text">Remarks</span>
+                                    <textarea name="remarks" id="" class="form-control">{{old('remarks',$dailyexpense->remarks)}}</textarea>
+                                </div>
                             </div>
                             <div class="col-12 col-lg-6">
                                 <button type="submit" class="btn btn-primary px-4">Save</button>

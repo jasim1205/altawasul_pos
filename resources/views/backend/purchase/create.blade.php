@@ -235,8 +235,10 @@
                 if (!isNaN(selected.val())) {
                     let phone = selected.data('phone');
                     $('#contact').val(phone).addClass('readonly').prop('readonly', true);
-                    let trn = selected.data('trn').addClass('readonly').prop('readonly', true);
-                    $('#Trn').val(trn);
+                    $('.table-div').slideDown();
+                    let trn = selected.data('trn');
+                    $('#Trn').val(trn).addClass('readonly').prop('readonly', true);
+                    $('.table-div').slideUp();
                     console.log(phone);
                     console.log(trn);
                 } else {

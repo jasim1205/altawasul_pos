@@ -11,7 +11,7 @@
     <meta content="" name="keywords">
 
     <!-- Favicons -->
-    <link href="assets/img/favicon.png" rel="icon">
+    <link href="{{ asset('public/assets/img/logo.png') }}" rel="icon">
     <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
     <!-- Google Fonts -->
@@ -69,7 +69,7 @@
     <header id="header" class="header fixed-top d-flex align-items-center">
 
         <div class="d-flex align-items-center justify-content-between text-white">
-            <a href="index.html" class="logo d-flex align-items-center text-white">
+            <a href="{{route('dashboard')}}" class="logo d-flex align-items-center text-white">
                 <img src="{{ asset('public/assets/img/logo.png') }}" alt="" class="color-logo">
                 <span class="d-none d-lg-block text-white">Al-TAWASUL</span>
             </a>
@@ -85,12 +85,12 @@
 
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#"
                         data-bs-toggle="dropdown">
-                        <span class="d-none d-md-block dropdown-toggle ps-2 text-white">K. Anderson</span>
+                        <span class="d-none d-md-block dropdown-toggle ps-2 text-white">{{encryptor('decrypt',request()->session()->get('userName'))}}</span>
                     </a><!-- End Profile Iamge Icon -->
 
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                         <li class="dropdown-header">
-                            <h6>Kevin Anderson</h6>
+                            <h6>{{encryptor('decrypt',request()->session()->get('userName'))}}</h6>
                         </li>
                         <li>
                             <hr class="dropdown-divider">
@@ -135,6 +135,26 @@
                 </a>
             </li><!-- End Dashboard Nav -->
 
+            <li class="nav-item">
+                <a class="nav-link collapsed {{ request()->routeIs(['user.create', 'user.index','user.edit']) ? 'active' : '' }}" data-bs-target="#products-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-person"></i><span>Profile</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="products-nav"
+                    class="nav-content collapse {{ request()->routeIs(['user.create', 'user.index', 'user.edit']) ? 'show' : '' }}"
+                    data-bs-parent="#sidebar-nav">
+                    
+                    <li class="{{ request()->routeIs('user.create') ? 'active' : null }}">
+                        <a href="{{ route('user.create') }}">
+                            <i class="bi bi-circle"></i><span>Create User</span>
+                        </a>
+                    </li>
+                    <li class="{{ request()->routeIs('user.index') ? 'active' : null }}">
+                        <a href="{{ route('user.index') }}">
+                            <i class="bi bi-circle"></i><span>Profile</span>
+                        </a>
+                    </li>
+                </ul>
+            </li><!-- End Components Nav -->
             <li class="nav-item">
                 <a class="nav-link collapsed {{ request()->routeIs(['product.create', 'product.index', 'productSearch', 'secure.products.pin']) ? 'active' : '' }}" data-bs-target="#products-nav" data-bs-toggle="collapse" href="#">
                     <i class="bi bi-menu-button-wide"></i><span>Product</span><i class="bi bi-chevron-down ms-auto"></i>

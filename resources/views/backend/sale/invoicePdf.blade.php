@@ -119,10 +119,10 @@
         <th style="width:40%;" class="text-center">DESCRIPTION<br><span dir="rtl">التفاصيل</span></th>
         <th style="width:10%;" class="text-center">Qty<br><span dir="rtl">الكمية</span></th>
         <th style="width:12%;" class="text-center">Rate<br>Dhs.</th>
-        {{-- <th style="width:13%;" class="text-center">Taxable Amount<br>Dhs.</th> --}}
+        <th style="width:13%;" class="text-center">Taxable Amount<br>Dhs.</th>
         <th style="width:12%;" class="text-center">VAT 5%<br>Dhs.</th>
-        <th style="width:12%;" class="text-center">Discount <br>Dhs.</th>
-        <th style="width:13%;" class="text-center">Amount<br>Dhs.</th>
+        {{-- <th style="width:12%;" class="text-center">Discount <br>Dhs.</th> --}}
+        <th style="width:13%;" class="text-center">Total Amount<br>Dhs.</th>
     </tr>
 
     @foreach($saledetail as $item)
@@ -131,10 +131,10 @@
         <td>{{ $item->product->product_name }}-{{ $item->product->oem }}-{{ $item->product->origin }}</td>
         <td class="text-center">{{ $item->quantity }}</td>
         <td class="text-center">{{ $item->unit_price }}</td>
-        {{-- <td class="text-center">{{ $item->tax_amount }}</td> --}}
-        <td class="text-center">{{ $item->tax_amount }}</td>
-        <td class="text-center">{{ $item->discount }}</td>
         <td class="text-center">{{ $item->amount }}</td>
+        <td class="text-center">{{ $item->tax_amount }}</td>
+        {{-- <td class="text-center">{{ $item->discount }}</td> --}}
+        <td class="text-center">{{ $item->sub_amount }}</td>
     </tr>
     @endforeach
 
@@ -164,7 +164,7 @@
 <table class="big-border">
     <tr>
         <td rowspan="4" style="width:70%;">TOTAL Dhs (In Word): {{$grandTotalInWordsAr}}</td>
-        <td style="width:30%;">Total Amount (Dhs): </td>
+        <td style="width:30%;">Total Before Amount (Dhs): </td>
         <td><b>{{$sale->total_quantity_amount}}</b></td>
     </tr>
     <tr>
