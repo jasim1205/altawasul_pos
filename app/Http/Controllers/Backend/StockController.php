@@ -31,7 +31,7 @@ class StockController extends Controller
                 });
             })
             ->orderBy('id', 'desc')
-            ->paginate(10);
+            ->paginate(30);
 
         return view('backend.stock.index', compact('stock', 'search'));
     }

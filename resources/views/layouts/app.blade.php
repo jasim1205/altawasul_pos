@@ -136,10 +136,10 @@
             </li><!-- End Dashboard Nav -->
 
             <li class="nav-item">
-                <a class="nav-link collapsed {{ request()->routeIs(['user.create', 'user.index','user.edit']) ? 'active' : '' }}" data-bs-target="#products-nav" data-bs-toggle="collapse" href="#">
+                <a class="nav-link collapsed {{ request()->routeIs(['user.create', 'user.index','user.edit']) ? 'active' : '' }}" data-bs-target="#user-nav" data-bs-toggle="collapse" href="#">
                     <i class="bi bi-person"></i><span>Profile</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
-                <ul id="products-nav"
+                <ul id="user-nav"
                     class="nav-content collapse {{ request()->routeIs(['user.create', 'user.index', 'user.edit']) ? 'show' : '' }}"
                     data-bs-parent="#sidebar-nav">
                     

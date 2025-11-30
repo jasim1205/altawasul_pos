@@ -37,7 +37,7 @@ class ProductController extends Controller
                 ->orWhere('oem', 'like', "%{$search}%");
         })
         ->orderBy('id', 'desc')
-        ->paginate(10); // optional pagination
+        ->paginate(30); // optional pagination
 
         return view('backend.product.index', compact('products', 'search'));
     }
