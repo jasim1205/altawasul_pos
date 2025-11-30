@@ -53,9 +53,10 @@
                                         <th>Stock</th>
                                         <th>Cost Code</th>
                                         <th>Cost Price</th>
-                                        <th>Sale Price One</th>
-                                        <th>Sale Price Two</th>
-                                        <th>QR Code</th>
+                                        {{-- <th>Sale Price One</th>
+                                        <th>Sale Price Two</th> --}}
+                                        {{-- <th>QR Code</th> --}}
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -81,15 +82,34 @@
                                             {{-- <td>{{ __($value->product_model) }}</td> --}}
                                             <td>{{ __($value->cost_code) }}</td>
                                             <td>{{ __($value->cost_unit_price) }}</td>
-                                            <td>{{ __($value->sale_price_one) }}</td>
-                                            <td>{{ __($value->sale_price_two) }}</td>
-                                            <td>
+                                            {{-- <td>{{ __($value->sale_price_one) }}</td>
+                                            <td>{{ __($value->sale_price_two) }}</td> --}}
+                                            {{-- <td>
                                                 {!! QrCode::size(50)->generate(
                                                     "Product: {$value->product_name}\n" .
                                                         "Model: {$value->product_model}\n" .
                                                         "Category: {$value->category?->category_name}\n" .
                                                         'Mobile: 0555611560',
                                                 ) !!}
+                                            </td> --}}
+                                            <td class="white-space-nowrap">
+                                                <div class="d-flex">
+                                                    <a href="{{ route('product.edit', encryptor('encrypt', $value->id)) }}"
+                                                        class="btn btn-warning text-white" title="Edit">
+                                                        <i class="fa fa-edit"></i>
+                                                    </a>
+                                                    <form
+                                                        action="{{ route('product.destroy', encryptor('encrypt', $value->id)) }}"
+                                                        method="post">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" style="border:none"
+                                                            onclick="return confirm('Are you sure to delete?')"
+                                                            title="Delete" class="btn btn-danger ms-2">
+                                                            <span class=""><i class="fa fa-trash"></i></span>
+                                                        </button>
+                                                    </form>
+                                                </div>
                                             </td>
                                         </tr>
                                     @empty
