@@ -50,6 +50,8 @@
                                         {{-- <th>Category</th> --}}
                                         <th>Product Name/Origin/Oem</th>
                                         <th>Product Image</th>
+                                        <th>Oem</th>
+                                        <th>Origin</th>
                                         <th>Stock</th>
                                         <th>Cost Code</th>
                                         <th>Cost Price</th>
@@ -75,8 +77,17 @@
                                                 <br>
                                                 Oem: {{ $value->oem }}
                                             </td>
-                                            <td><img src="{{ asset('public/uploads/product/' . $value->product_image) }}"
+                                            <td>
+                                                <a href="{{ asset(asset('public/uploads/product/'.$value->product_image) }}" target="_blank">
+                                                    <img src="{{ asset('public/uploads/product/' . $value->product_image) }}"
                                                     width="50px">
+                                                </a>
+                                            </td>
+                                            <td>
+                                                {{$value->oem}}
+                                            </td>
+                                            <td>
+                                                {{$value->origin}}
                                             </td>
                                             <td>{{ __($value->stock?->quantity ?? 0) }}</td>
                                             {{-- <td>{{ __($value->product_model) }}</td> --}}
