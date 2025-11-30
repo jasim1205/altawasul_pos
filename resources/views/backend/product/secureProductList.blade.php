@@ -78,7 +78,7 @@
                                                 Oem: {{ $value->oem }}
                                             </td>
                                             <td>
-                                                <a href="{{ asset(asset('public/uploads/product/'.$value->product_image) }}" target="_blank">
+                                                <a href="{{ asset('public/uploads/product/' . $value->product_image) }}" target="_blank">
                                                     <img src="{{ asset('public/uploads/product/' . $value->product_image) }}"
                                                     width="50px">
                                                 </a>
