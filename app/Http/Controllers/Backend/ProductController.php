@@ -37,7 +37,7 @@ class ProductController extends Controller
                 ->orWhere('oem', 'like', "%{$search}%");
         })
         ->orderBy('id', 'desc')
-        ->paginate(30); // optional pagination
+        ->paginate(20); // optional pagination
 
         return view('backend.product.index', compact('products', 'search'));
     }
@@ -50,8 +50,9 @@ class ProductController extends Controller
               ->orWhere('cost_code', 'like', "%{$query}%")
               ->orWhere('origin', 'like', "%{$query}%")
               ->orWhere('oem', 'like', "%{$query}%")
-              ->orWhere('description', 'like', "%{$query}%");
-        })->orderBy('id', 'desc')->paginate(10);
+              ->orWhere('description', 'like', "%{$query}%")
+              ->orWhere('size', 'like', "%{$query}%");
+        })->orderBy('id', 'desc')->paginate(20);
 
         $view = view('backend.product.partials.table', compact('products'))->render();
 
