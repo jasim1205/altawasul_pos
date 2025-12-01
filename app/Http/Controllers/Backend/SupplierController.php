@@ -33,7 +33,7 @@ class SupplierController extends Controller
          try{
             $request->validate([
                 'supplier_name' => 'required|unique:suppliers,supplier_name',
-                'email' => 'required|email|unique:suppliers,email',
+                // 'email' => 'nullable|email|unique:suppliers,email',
                 'contact_no' => 'required|string|unique:suppliers,contact_no',
             ]);
             $data = new Supplier;
@@ -76,7 +76,7 @@ class SupplierController extends Controller
         try{
             $request->validate([
                 'supplier_name' => 'required|unique:suppliers,supplier_name,'.encryptor('decrypt',$id),
-                'email' => 'required|email|unique:suppliers,email,'.encryptor('decrypt',$id),
+                // 'email' => 'required|email|unique:suppliers,email,'.encryptor('decrypt',$id),
                 'contact_no' => 'required|integer|unique:suppliers,contact_no,'.encryptor('decrypt',$id),
             ]);
             $data = Supplier::findOrFail(encryptor('decrypt',$id));
