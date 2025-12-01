@@ -319,17 +319,9 @@
 
     <script>
         // Set current date to the date input field
-        document.addEventListener('DOMContentLoaded', function () {
-            const d = new Date();
-            const formatted =
-                d.getDate().toString().padStart(2, '0') + '/' +
-                (d.getMonth() + 1).toString().padStart(2, '0') + '/' +
-                d.getFullYear();
-
-            // Only set if there is no old() value
-            if (!document.getElementById('current_date').value) {
-                document.getElementById('current_date').value = formatted;
-            }
+        document.addEventListener('DOMContentLoaded', function() {
+            var currentDate = new Date().toISOString().split('T')[0]; // Get current date in "YYYY-MM-DD" format
+            document.getElementById('current_date').value = currentDate;
         });
         $(document).ready(function() {
             $('#paid').on('input', function() {
