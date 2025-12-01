@@ -88,7 +88,7 @@
                             <div class="col-sm-3">
                                 <div class="input-group">
                                     <span class="input-group-text" id="basic-addon1">Date</span>
-                                    <input type="date" name="date" value="{{ old('date', date('d/m/Y', strtotime($purchase->date))) }}"
+                                    <input type="text" name="date" id="old_date" value="{{ old('date', date('d/m/Y', strtotime($purchase->date))) }}"
                                     id="current_date" class="form-control" readonly>
                                 </div>
                             </div>
@@ -279,6 +279,11 @@
             $(document).ready(function() {
                 // Auto-run on edit page
                 $('#supplier_id').trigger('change');
+            });
+            $('#old_date').datepicker({
+                format: "dd/mm/yyyy",
+                autoclose: true,
+                todayHighlight: true
             });
 
             $('#supplier_id').select2({
