@@ -101,7 +101,10 @@
                                 <div class="input-group mb-3">
                                     <span class="input-group-text" id="basic-addon1">Date <span
                                             class="star">*</span></span>
-                                    <input type="date" name="date" id="current_date" class="form-control" required>
+                                            <input type="text" name="date" id="current_date"
+                                            value="{{ old('date') }}"
+                                            class="form-control"
+                                            placeholder="dd/mm/yyyy">
                                 </div>
                             </div>
                             <div class="table-responsive">
@@ -295,6 +298,11 @@
                 placeholder: "Select or type new customer",
                 allowClear: true
             });
+            $('#current_date').datepicker({
+                format: "dd/mm/yyyy",
+                autoclose: true,
+                todayHighlight: true
+            });
             // Initialize Select2
             $('.product_id').select2({
                 // width: '100%',
@@ -311,9 +319,17 @@
 
     <script>
         // Set current date to the date input field
-        document.addEventListener('DOMContentLoaded', function() {
-            var currentDate = new Date().toISOString().split('T')[0]; // Get current date in "YYYY-MM-DD" format
-            document.getElementById('current_date').value = currentDate;
+        document.addEventListener('DOMContentLoaded', function () {
+            const d = new Date();
+            const formatted =
+                d.getDate().toString().padStart(2, '0') + '/' +
+                (d.getMonth() + 1).toString().padStart(2, '0') + '/' +
+                d.getFullYear();
+
+            // Only set if there is no old() value
+            if (!document.getElementById('current_date').value) {
+                document.getElementById('current_date').value = formatted;
+            }
         });
         $(document).ready(function() {
             $('#paid').on('input', function() {
