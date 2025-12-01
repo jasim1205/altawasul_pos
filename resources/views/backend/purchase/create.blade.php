@@ -101,7 +101,7 @@
                                 <div class="input-group mb-3">
                                     <span class="input-group-text" id="basic-addon1">Date</span>
                                     <input type="date" name="date" id="" value="{{ old('date') }}"
-                                        class="form-control" placeholder="dd/mm/yyyy">
+                                        class="form-control" placeholder="dd/mm/yyyy" required>
                                 </div>
                             </div>
                             <div class="table-div">
