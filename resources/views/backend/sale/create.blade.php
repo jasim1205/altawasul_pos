@@ -18,6 +18,7 @@
         .star {
             color: rgb(248, 62, 62);
         }
+
         .readonly {
             background-color: #f5f5f5;
         }
@@ -46,7 +47,8 @@
                                         style="width:60% !important; height:35px" required>
                                         <option value="">Select customer</option>
                                         @foreach ($customer as $value)
-                                            <option value="{{ $value->id }}" data-phone="{{ $value->contact_no }}" data-trn="{{ $value->trn_no }}">
+                                            <option value="{{ $value->id }}" data-phone="{{ $value->contact_no }}"
+                                                data-trn="{{ $value->trn_no }}">
                                                 {{ $value->customer_name }}</option>
                                         @endforeach
                                     </select>
@@ -101,10 +103,9 @@
                                 <div class="input-group mb-3">
                                     <span class="input-group-text" id="basic-addon1">Date <span
                                             class="star">*</span></span>
-                                            <input type="text" name="date" id="current_date"
-                                            value="{{ old('date') ? old('date') : date('d-m-Y') }}"
-                                            class="form-control"
-                                            placeholder="dd/mm/yyyy">
+                                    <input type="text" name="date" id="current_date"
+                                        value="{{ old('date') ? old('date') : date('d-m-Y') }}" class="form-control"
+                                        placeholder="dd/mm/yyyy">
                                 </div>
                             </div>
                             <div class="table-responsive">
@@ -153,7 +154,7 @@
                                                         <option data-sale_one="{{ $value->sale_price_one }}"
                                                             data-sale_two="{{ $value->sale_price_two }}"
                                                             value="{{ $value->id }}">
-                                                            {{$value->product_name }}-{{ $value->oem }}-{{ $value->origin }}-{{$value->size}}
+                                                            {{ $value->product_name }}-{{ $value->oem }}-{{ $value->origin }}-{{ $value->size }}
                                                         </option>
                                                     @endforeach
                                                 </select>
@@ -265,7 +266,7 @@
             row.find('.uprice').val('');
         }
 
-        
+
 
         function setPrice(selectElement) {
             let row = $(selectElement).closest('tr');
@@ -283,14 +284,14 @@
                 // If selected is existing customer
                 if (!isNaN(selected.val())) {
                     let phone = selected.data('phone');
-                    $('#contact').val(phone).addClass('readonly').prop('readonly',true);;
+                    $('#contact').val(phone).addClass('readonly').prop('readonly', true);;
                     let trn = selected.data('trn');
-                    $('#Trn').val(trn).addClass('readonly').prop('readonly',true);
+                    $('#Trn').val(trn).addClass('readonly').prop('readonly', true);
                     console.log(phone);
                 } else {
                     // New customer typing
-                    $('#contact').val('').removeClass('readonly').prop('readonly',false);;
-                    $('#Trn').val('').removeClass('readonly').prop('readonly',false);;
+                    $('#contact').val('').removeClass('readonly').prop('readonly', false);;
+                    $('#Trn').val('').removeClass('readonly').prop('readonly', false);;
                 }
             });
             $('#customer_id').select2({
@@ -301,7 +302,8 @@
             $('#current_date').datepicker({
                 format: "dd-mm-yyyy",
                 autoclose: true,
-                todayHighlight: true
+                todayHighlight: true,
+                language: "en-GB"
             });
             // Initialize Select2
             $('.product_id').select2({
@@ -514,7 +516,7 @@
                                 <option value="">Select Product</option>
                                 @foreach ($product as $value)
                                     <option data-sale_one="{{ $value->sale_price_one }}"
-                                                            data-sale_two="{{ $value->sale_price_two }}" value="{{ $value->id }}">{{ $value->product_name }}{{ $value->product_name }}-{{ $value->oem }}-{{ $value->origin }}-{{$value->size}}
+                                                            data-sale_two="{{ $value->sale_price_two }}" value="{{ $value->id }}">{{ $value->product_name }}{{ $value->product_name }}-{{ $value->oem }}-{{ $value->origin }}-{{ $value->size }}
                                     </option>
                                 @endforeach
                             </select>
