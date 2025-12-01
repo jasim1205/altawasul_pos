@@ -244,10 +244,10 @@
                 if (!isNaN(selected.val())) {
                     let phone = selected.data('phone');
                     // $('#contact').val(phone).addClass('readonly').prop('readonly', true);
-                    $('.table-div').slideDown();
+                    // $('.table-div').slideDown();
                     let trn = selected.data('trn');
                     // $('#Trn').val(trn).addClass('readonly').prop('readonly', true);
-                    $('.table-div').slideUp();
+                    // $('.table-div').slideUp();
                     console.log(phone);
                     console.log(trn);
                 } else {
@@ -296,19 +296,19 @@
             }
         });
 
-        $(document).ready(function() {
-            // Initially hide the table-div
-            $('.table-div').hide();
+        // $(document).ready(function() {
+        //     // Initially hide the table-div
+        //     $('.table-div').hide();
 
-            // On supplier change
-            $('select[name="supplier_id"]').on('change', function() {
-                if ($(this).val()) {
-                    $('.table-div').slideDown(); // Show with animation
-                } else {
-                    $('.table-div').slideUp(); // Hide with animation
-                }
-            });
-        });
+        //     // On supplier change
+        //     $('select[name="supplier_id"]').on('change', function() {
+        //         if ($(this).val()) {
+        //             $('.table-div').slideDown(); // Show with animation
+        //         } else {
+        //             $('.table-div').slideUp(); // Hide with animation
+        //         }
+        //     });
+        // });
 
 
         $(document).ready(function() {
