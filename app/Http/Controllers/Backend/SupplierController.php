@@ -34,7 +34,7 @@ class SupplierController extends Controller
             $request->validate([
                 'supplier_name' => 'required|unique:suppliers,supplier_name',
                 'email' => 'required|email|unique:suppliers,email',
-                'contact_no' => 'required|integer|unique:suppliers,contact_no',
+                'contact_no' => 'required|string|unique:suppliers,contact_no',
             ]);
             $data = new Supplier;
             $data->supplier_name = $request->supplier_name;
