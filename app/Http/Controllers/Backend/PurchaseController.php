@@ -23,7 +23,7 @@ class PurchaseController extends Controller
     {
         $fromDate = $request->input('from_date')." 00:00:00";
         $toDate = $request->input('to_date')." 23:59:59";
-        $purchase = Purchase::get();
+        $purchase = Purchase::latest()->paginate(20);
         return view('backend.purchase.index',compact('purchase','fromDate','toDate'));
     }
 
