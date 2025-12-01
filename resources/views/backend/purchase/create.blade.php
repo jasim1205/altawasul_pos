@@ -94,7 +94,7 @@
                             <div class="col-md-4">
                                 <div class="input-group mb-3">
                                     <span class="input-group-text" id="basic-addon1">Date</span>
-                                    <input type="text" name="date" id="current_date"
+                                    <input type="date" name="date" id=""
        value="{{ old('date') }}"
        class="form-control"
        placeholder="dd/mm/yyyy">
