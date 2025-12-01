@@ -243,8 +243,8 @@
                     console.log(trn);
                 } else {
                     // New customer typing
-                    $('#contact').val('').removeClass('readonly').prop('readonly', true);
-                    $('#Trn').val('').removeClass('readonly').prop('readonly', true);
+                    // $('#contact').val('').removeClass('readonly').prop('readonly', true);
+                    // $('#Trn').val('').removeClass('readonly').prop('readonly', true);
                 }
             });
             $('#supplier_id').select2({
@@ -269,9 +269,10 @@
 
     <script>
         // Set current date to the date input field
-        document.addEventListener('DOMContentLoaded', function() {
-            var currentDate = new Date().toISOString().split('T')[0]; // Get current date in "YYYY-MM-DD" format
-            document.getElementById('current_date').value = currentDate;
+        document.addEventListener('DOMContentLoaded', () => {
+            const d = new Date();
+            document.getElementById('current_date').value =
+                `${d.getDate().toString().padStart(2,'0')}/${(d.getMonth()+1).toString().padStart(2,'0')}/${d.getFullYear()}`;
         });
         $(document).ready(function() {
             // Initially hide the table-div

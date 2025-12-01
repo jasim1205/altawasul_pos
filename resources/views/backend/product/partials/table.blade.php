@@ -33,8 +33,11 @@
                     <br>
                     Size: {{ $value->size }}
                 </td>
-                <td><img src="{{ asset('public/uploads/product/' . $value->product_image) }}"
+                <td>
+                    <a href="{{ asset('public/uploads/product/' . $value->product_image) }}" target="_blank">
+                        <img src="{{ asset('public/uploads/product/' . $value->product_image) }}"
                         width="50px">
+                    </a>
                 </td>
                 <td>{{ __($value->stock?->quantity ?? 0) }}</td>
                 {{-- <td>{{ __($value->product_model) }}</td> --}}
