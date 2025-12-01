@@ -290,7 +290,7 @@
             </li> --}}
 
             <li class="nav-item">
-                <a class="nav-link collapsed {{ request()->routeIs(['yearly_purchase', 'yearly_sale','yearly_expense','yearly_report','supplier_report','customer_report']) ? 'active' : '' }}" data-bs-target="#reports-nav" data-bs-toggle="collapse" href="#">
+                <a class="nav-link collapsed {{ request()->routeIs(['yearly_purchase', 'yearly_sale','yearly_expense','yearly_report','supplier_report','customer_report']) ? 'active' : '' }}" id="reportMenuToggle" data-bs-target="#reports-nav" data-bs-toggle="collapse" href="#">
                     <i class="bi bi-layout-text-window-reverse"></i><span>Report</span><i
                         class="bi bi-chevron-down ms-auto"></i>
                 </a>
@@ -366,7 +366,27 @@
         Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
       </div> --}}
     </footer><!-- End Footer -->
-
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const pin = "1234"; // Set your PIN here
+            const toggle = document.getElementById('reportMenuToggle');
+            const menu = document.getElementById('reports-nav');
+        
+            toggle.addEventListener('click', function(e) {
+                e.preventDefault(); // Prevent default link behavior
+        
+                const userPin = prompt("Enter PIN to open Reports:");
+                if(userPin === pin) {
+                    // Toggle menu if PIN is correct
+                    menu.classList.toggle('show');
+                } else {
+                    alert("Incorrect PIN!");
+                }
+            });
+        });
+    </script>
+        
+    
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
             class="bi bi-arrow-up-short"></i></a>
 
