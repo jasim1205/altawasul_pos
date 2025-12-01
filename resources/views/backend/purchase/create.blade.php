@@ -4,10 +4,11 @@
 @section('page-subtitle', 'Create Purchase')
 @section('content')
     <style>
-         thead tr th {
+        thead tr th {
             background-color: #198754 !important;
             color: white !important;
         }
+
         .input-group-text {
             background-color: #3A58B3;
             color: white;
@@ -17,10 +18,10 @@
         .star {
             color: rgb(248, 62, 62);
         }
+
         .readonly {
             background-color: #f5f5f5;
         }
-
     </style>
     <div class="ml-auto d-flex">
         <div class="btn-group ms-auto">
@@ -37,11 +38,14 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="input-group mb-3">
-                                    <span class="input-group-text" id="basic-addon1">Supplier Name <span class="star">*</span></span>
-                                    <select class="select2 form-select" name="supplier_id" id="supplier_id" style="width:60%; height:35px">
+                                    <span class="input-group-text" id="basic-addon1">Supplier Name <span
+                                            class="star">*</span></span>
+                                    <select class="select2 form-select" name="supplier_id" id="supplier_id"
+                                        style="width:60%; height:35px">
                                         <option value="">Select supplier</option>
                                         @foreach ($supplier as $value)
-                                            <option value="{{ $value->id }}" data-phone="{{ $value->contact_no }}" data-trn="{{ $value->trn_no }}">{{ $value->supplier_name }}</option>
+                                            <option value="{{ $value->id }}" data-phone="{{ $value->contact_no }}"
+                                                data-trn="{{ $value->trn_no }}">{{ $value->supplier_name }}</option>
                                         @endforeach
                                     </select>
                                     @error('supplier_id')
@@ -51,16 +55,18 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="input-group mb-3">
-                                    <span class="input-group-text" id="basic-addon1">Contact <span class="star">*</span></span>
-                                    <input type="text" name="contact_no" id="contact" class="form-control" aria-label="Username"
-                                        aria-describedby="basic-addon1">
+                                    <span class="input-group-text" id="basic-addon1">Contact <span
+                                            class="star">*</span></span>
+                                    <input type="text" name="contact_no" id="contact" class="form-control"
+                                        aria-label="Username" aria-describedby="basic-addon1">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="input-group mb-3">
-                                    <span class="input-group-text" id="basic-addon1">Trn No <span class="star">*</span></span>
-                                    <input type="text" name="tm_no" id="Trn" class="form-control" aria-label="Username"
-                                        aria-describedby="basic-addon1">
+                                    <span class="input-group-text" id="basic-addon1">Trn No <span
+                                            class="star">*</span></span>
+                                    <input type="text" name="tm_no" id="Trn" class="form-control"
+                                        aria-label="Username" aria-describedby="basic-addon1">
                                 </div>
                             </div>
                             {{-- <div class="col-md-4">
@@ -94,10 +100,8 @@
                             <div class="col-md-4">
                                 <div class="input-group mb-3">
                                     <span class="input-group-text" id="basic-addon1">Date</span>
-                                    <input type="date" name="date" id=""
-       value="{{ old('date') }}"
-       class="form-control"
-       placeholder="dd/mm/yyyy">
+                                    <input type="date" name="date" id="" value="{{ old('date') }}"
+                                        class="form-control" placeholder="dd/mm/yyyy">
                                 </div>
                             </div>
                             <div class="table-div">
@@ -110,7 +114,7 @@
                                                     {{ __('Company') }}</th> --}}
                                                 {{-- <th scope="col">{{__('Category')}}</th> --}}
                                                 <th scope="col"><span onClick='addRow();' class="add-row text-primary"><i
-                                                    class="fa fa-plus"></i></span>{{ __('Product') }}</th>
+                                                            class="fa fa-plus"></i></span>{{ __('Product') }}</th>
                                                 <th scope="col">{{ __('Unit Price') }}</th>
                                                 <th scope="col">{{ __('Quantity') }}</th>
                                                 <th scope="col">{{ __('Amount') }}</th>
@@ -141,23 +145,24 @@
                                                 </select>
                                             </td> --}}
                                                 <td>
-                                                    <select class="select2 product-select product_id"
-                                                        name="product_id[]">
+                                                    <select class="select2 product-select product_id" name="product_id[]">
                                                         <option value="">Select Product</option>
                                                         @foreach ($product as $value)
-                                                            <option value="{{ $value->id }}" data-price="{{ $value->cost_unit_price }}">{{ $value->product_name }}-{{ $value->oem }}-{{ $value->origin }}
+                                                            <option value="{{ $value->id }}"
+                                                                data-price="{{ $value->cost_unit_price }}">
+                                                                {{ $value->product_name }}-{{ $value->oem }}-{{ $value->origin }}
                                                             </option>
                                                         @endforeach
                                                     </select>
                                                 </td>
-                                                <td><input class="form-control uprice reaonly" type="text" name="unit_price[]"
-                                                        style="width: 80px; height:25px;"></td>
-                                                <td><input class="form-control toquantity" type="text" name="quantity[]"
-                                                        style="width: 80px; height:25px;"></td>
+                                                <td><input class="form-control uprice reaonly" type="text"
+                                                        name="unit_price[]" style="width: 80px; height:25px;"></td>
+                                                <td><input class="form-control toquantity" type="text"
+                                                        name="quantity[]" style="width: 80px; height:25px;"></td>
                                                 <td><input class="form-control amount" type="text" name="amount[]"
                                                         style="width: 100px; height:25px;"></td>
-                                                <td><input class="form-control totax" type="text" name="tax[]" value="5"
-                                                        style="width: 80px; height:25px;"></td>
+                                                <td><input class="form-control totax" type="text" name="tax[]"
+                                                        value="5" style="width: 80px; height:25px;"></td>
                                                 <td><input class="form-control totax_amount" type="text"
                                                         name="tax_amount[]" style="width: 80px; height:25px;"></td>
                                                 <td><input class="form-control subamount" type="text"
@@ -208,7 +213,7 @@
                                         </tfoot>
                                     </table>
                                 </div>
-                                
+
                                 <div class="row">
                                     <div class="col-sm-4 mt-3">
                                         <input type="text" name="pay_amount" id="pay_amount" class="form-control"
@@ -236,24 +241,24 @@
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             $('#supplier_id').on('change', function() {
                 let selected = $(this).find(":selected");
 
                 // If selected is existing customer
                 if (!isNaN(selected.val())) {
                     let phone = selected.data('phone');
-                    // $('#contact').val(phone).addClass('readonly').prop('readonly', true);
+                    $('#contact').val(phone).addClass('readonly').prop('readonly', true);
                     // $('.table-div').slideDown();
                     let trn = selected.data('trn');
-                    // $('#Trn').val(trn).addClass('readonly').prop('readonly', true);
+                    $('#Trn').val(trn).addClass('readonly').prop('readonly', true);
                     // $('.table-div').slideUp();
                     console.log(phone);
                     console.log(trn);
                 } else {
                     // New customer typing
-                    // $('#contact').val('').removeClass('readonly').prop('readonly', true);
-                    // $('#Trn').val('').removeClass('readonly').prop('readonly', true);
+                    $('#contact').val('').removeClass('readonly').prop('readonly', false);
+                    $('#Trn').val('').removeClass('readonly').prop('readonly', false);
                 }
             });
             $('#current_date').datepicker({
@@ -273,17 +278,17 @@
             });
 
             // When product changes
-            $(document).on('change', '.product-select', function () {
+            $(document).on('change', '.product-select', function() {
                 let unitPrice = $(this).find(':selected').data('price');
                 $(this).closest('tr').find('.uprice').val(unitPrice ? unitPrice : '');
             });
         });
     </script>
-        
+
 
     <script>
         // Set current date to the date input field
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             const d = new Date();
             const formatted =
                 d.getDate().toString().padStart(2, '0') + '/' +
@@ -322,7 +327,7 @@
                     $('#status').val('3'); // Change status to "Paid"
                 } else {
                     $('#status').val(
-                    '1'); // Change status to "Unpaid" if no amount is entered or conditions are not met
+                        '1'); // Change status to "Unpaid" if no amount is entered or conditions are not met
                 }
             });
         });
@@ -616,27 +621,38 @@
                 var row = $(this).closest('tr');
                 // var company_id = row.find('.company_id').val();
 
-                if(company_id) {
+                if (company_id) {
                     $.ajax({
                         type: "GET",
                         url: "{{ route('getProductsByCategoryAndCompany') }}",
-                        data: {'company_id': company_id},
+                        data: {
+                            'company_id': company_id
+                        },
                         dataType: "json",
                         success: function(res) {
-                            if(res) {
+                            if (res) {
                                 var productSelect = row.find('.product_id');
                                 productSelect.empty();
-                                productSelect.append('<option value="">Select product</option>');
+                                productSelect.append(
+                                '<option value="">Select product</option>');
                                 $.each(res, function(key, value) {
-                                     productSelect.append('<option value="'+ key +'">'+ value +'</option>');
+                                    productSelect.append('<option value="' + key +
+                                        '">' + value + '</option>');
                                     $.ajax({
                                         type: "GET",
                                         url: "{{ route('getStockByProduct') }}",
-                                        data: {'product_id': key},
+                                        data: {
+                                            'product_id': key
+                                        },
                                         dataType: "json",
                                         success: function(stock) {
-                                            var stockText = stock ? ' (Stock: ' + stock.quantity + ')' : '';
-                                            productSelect.append('<option value="'+ key +'">'+ value + stockText +'</option>');
+                                            var stockText = stock ?
+                                                ' (Stock: ' + stock
+                                                .quantity + ')' : '';
+                                            productSelect.append(
+                                                '<option value="' +
+                                                key + '">' + value +
+                                                stockText + '</option>');
                                         }
                                     });
                                 });
@@ -647,7 +663,7 @@
                     row.find('.product_id').empty();
                 }
             });
-            
+
         });
     </script>
 
