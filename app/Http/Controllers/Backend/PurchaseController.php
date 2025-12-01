@@ -36,7 +36,8 @@ class PurchaseController extends Controller
         $category = Category::get();
         $product = Product::get();
         $supplier = Supplier::get();
-        return view('backend.purchase.create',compact('company','category','product','supplier'));
+        $currentDate = date('d/m/Y');
+        return view('backend.purchase.create',compact('company','category','product','supplier','currentDate'));
     }
 
     public function getCategoriesByCompany(Request $request)
