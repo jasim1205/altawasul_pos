@@ -22,7 +22,7 @@
                     <a class="btn btn-outline-primary" href="{{ route('product.reportForm') }}">Report</a>
                 </div>
                 <div class="ms-auto d-flex" style="float: right">
-                    <form action="{{ route('product.index') }}" method="GET">
+                    <form action="{{ route('secure.products.list') }}" method="GET">
                         <div class="input-group">
                             <input type="text" name="search" class="form-control"
                                 placeholder="Search by name, code, or origin" value="{{ request('search') }}">
