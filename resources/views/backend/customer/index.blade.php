@@ -61,13 +61,13 @@
                                                 <a href="{{route('customer.edit',encryptor('encrypt',$value->id))}}" class="btn btn-warning text-white">
                                                     <i class="fa fa-edit"></i>
                                                 </a>
-                                                <form action="{{route('customer.destroy',encryptor('encrypt',$value->id))}}" method="post">
+                                                {{-- <form action="{{route('customer.destroy',encryptor('encrypt',$value->id))}}" method="post">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit" style="border:none" onclick="return confirm('Are you sure to delete this customer?')" class="btn btn-danger ms-2">
                                                             <span class=""><i class="fa fa-trash"></i></span>
                                                         </button>
-                                                    </form>
+                                                    </form> --}}
                                             </div>
                                         </td>
                                     </tr>

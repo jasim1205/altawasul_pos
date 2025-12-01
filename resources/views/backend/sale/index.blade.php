@@ -117,7 +117,7 @@
                                                     {{-- <a href="{{route('invoice',encryptor('encrypt',$value->id))}}">
                                                     <i class="fa fa-list"></i>
                                                 </a> --}}
-                                                    <form
+                                                    {{-- <form
                                                         action="{{ route('sale.destroy', encryptor('encrypt', $value->id)) }}"
                                                         method="post">
                                                         @csrf
@@ -126,7 +126,7 @@
                                                             <span class=""><i
                                                                     class="fa fa-trash text-danger"></i></span>
                                                         </button>
-                                                    </form>
+                                                    </form> --}}
                                                 </div>
 
                                             </td>

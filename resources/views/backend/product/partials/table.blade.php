@@ -68,7 +68,7 @@
                             class="btn btn-warning text-white" title="Edit">
                             <i class="fa fa-edit"></i>
                         </a>
-                        <form
+                        {{-- <form
                             action="{{ route('product.destroy', encryptor('encrypt', $value->id)) }}"
                             method="post">
                             @csrf
@@ -78,7 +78,7 @@
                                 title="Delete" class="btn btn-danger ms-2">
                                 <span class=""><i class="fa fa-trash"></i></span>
                             </button>
-                        </form>
+                        </form> --}}
                     </div>
                 </td>
             </tr>

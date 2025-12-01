@@ -52,13 +52,13 @@
                                                 <a href="{{route('dailyexpense.edit',encryptor('encrypt',$value->id))}}">
                                                     <i class="fa fa-edit"></i>
                                                 </a>
-                                                <form action="{{route('dailyexpense.destroy',encryptor('encrypt',$value->id))}}" method="post">
+                                                {{-- <form action="{{route('dailyexpense.destroy',encryptor('encrypt',$value->id))}}" method="post">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit" style="border:none">
                                                             <span class=""><i class="fa fa-trash text-danger"></i></span>
                                                         </button>
-                                                    </form>
+                                                    </form> --}}
                                             </div>
                                         </td>
                                     </tr>
