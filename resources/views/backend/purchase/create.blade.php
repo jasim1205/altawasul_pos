@@ -87,8 +87,9 @@
                             <div class="col-md-4">
                                 <div class="input-group mb-3">
                                     <span class="input-group-text" id="basic-addon1">Date</span>
-                                    <input type="date" name="date" id="" value="{{ old('date', date('d-M-Y')) }}" class="form-control"
-                                        aria-label="Username" aria-describedby="basic-addon1">
+                                    <input type="date" name="date"
+       value="{{ old('date', date('d-M-Y')) }}"
+       class="form-control">
                                 </div>
                             </div>
                             <div class="table-div">
