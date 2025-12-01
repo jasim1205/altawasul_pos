@@ -102,7 +102,7 @@
                                     <span class="input-group-text" id="basic-addon1">Date <span
                                             class="star">*</span></span>
                                             <input type="text" name="date" id="current_date"
-                                            value="{{ old('date') ? old('date') : date('d/m/Y', strtotime(now()))) }}"
+                                            value="{{ old('date') ? old('date') : date('d/m/Y', strtotime(now())) }}"
                                             class="form-control"
                                             placeholder="dd/mm/yyyy">
                                 </div>
