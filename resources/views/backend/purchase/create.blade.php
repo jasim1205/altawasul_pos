@@ -87,7 +87,7 @@
                             <div class="col-md-4">
                                 <div class="input-group mb-3">
                                     <span class="input-group-text" id="basic-addon1">Date</span>
-                                    <input type="date" name="date" id="current_date"
+                                    <input type="text" name="date" id="current_date"
        value="{{ old('date') }}"
        class="form-control"
        placeholder="dd/mm/yyyy">
@@ -248,6 +248,11 @@
                     // $('#contact').val('').removeClass('readonly').prop('readonly', true);
                     // $('#Trn').val('').removeClass('readonly').prop('readonly', true);
                 }
+            });
+            $('#current_date').datepicker({
+                format: "dd/mm/yyyy",
+                autoclose: true,
+                todayHighlight: true
             });
             $('#supplier_id').select2({
                 tags: true,
