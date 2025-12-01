@@ -87,7 +87,7 @@
                             <div class="col-md-4">
                                 <div class="input-group mb-3">
                                     <span class="input-group-text" id="basic-addon1">Date</span>
-                                    <input type="date" name="date" id="" value="{{ old('issue_date') ? old('issue_date') : date('d/m/Y', strtotime(now())) }}" class="form-control"
+                                    <input type="date" name="date" id="" value="{{ old('date') ? old('date') : date('d/m/Y', strtotime(now())) }}" class="form-control"
                                         aria-label="Username" aria-describedby="basic-addon1">
                                 </div>
                             </div>
