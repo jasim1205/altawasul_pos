@@ -269,11 +269,16 @@
 
     <script>
         // Set current date to the date input field
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', function() {
             const d = new Date();
-            document.getElementById('current_date').value =
-                `${d.getDate().toString().padStart(2,'0')}/${(d.getMonth()+1).toString().padStart(2,'0')}/${d.getFullYear()}`;
+            const currentDate =
+                d.getDate().toString().padStart(2, '0') + '/' +
+                (d.getMonth() + 1).toString().padStart(2, '0') + '/' +
+                d.getFullYear();
+
+            document.getElementById('current_date').value = currentDate;
         });
+
         $(document).ready(function() {
             // Initially hide the table-div
             $('.table-div').hide();
