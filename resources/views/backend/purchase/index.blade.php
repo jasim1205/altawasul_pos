@@ -66,6 +66,8 @@
                                         <th>{{ __('Total Discount') }}</th>
                                         <th>{{ __('Total Tax') }}</th>
                                         <th>{{ __('Grand Total Amount') }}</th>
+                                        <th>{{ __('Invoice No') }}</th>
+                                        <th>{{ __('Voucher File') }}</th>
                                         <th>{{ __('Status') }}</th>
                                         <th>{{ __('Action') }}</th>
                                     </tr>
@@ -80,6 +82,14 @@
                                             <td>{{ __($value->total_discount) }}</td>
                                             <td>{{ __($value->total_tax) }}</td>
                                             <td>{{ __($value->grand_total_amount) }}</td>
+                                            <td>{{ __($value->invoice_no) }}</td>
+                                            <td>
+                                                @if($value->voucher_file)
+                                                    <a href="{{ asset('storage/voucher_files/' . $value->voucher_file) }}" target="_blank">{{ __('View File') }}</a>
+                                                @else
+                                                    {{ __('No File') }}
+                                                @endif
+                                            </td>
                                             <td
                                                 style="color: @if ($value->status == 1) red @elseif($value->status == 2) yellow @else green @endif; font-weight:bold;">
                                                 <i

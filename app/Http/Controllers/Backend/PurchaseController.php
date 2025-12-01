@@ -238,6 +238,9 @@ class PurchaseController extends Controller
 public function update(Request $request, $id)
 {
     try {
+        $request->validate([
+            'voucher_file' => 'nullable|file|max:1024', // max 1MB
+        ]);
         DB::beginTransaction();
 
         if (is_numeric($request->supplier_id)) {
@@ -274,6 +277,18 @@ public function update(Request $request, $id)
         $purchase->grand_total_amount = $request->grand_total_amount;
         $purchase->pay_amount = $request->pay_amount;
         $purchase->status = $request->status;
+        if ($request->hasFile('voucher_file')) {
+            $file = $request->file('voucher_file');
+    
+            // Generate a unique file name
+            $fileName = time() . '_' . rand(1000, 9999) . '.' . $file->getClientOriginalExtension();
+    
+            // Move the file to public/uploads/purchase
+            $file->move(public_path('uploads/purchase'), $fileName);
+    
+            // Save the file name in the database
+            $purchase->voucher_file = $fileName;
+        }
         $purchase->save();
 
         // $supplier = Supplier::find($purchase->supplier_id);
