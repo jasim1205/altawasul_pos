@@ -63,16 +63,16 @@
                                         aria-describedby="basic-addon1">
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            {{-- <div class="col-md-4">
                                 <div class="input-group mb-3">
                                     <span class="input-group-text" id="basic-addon1">Rf No <span class="star">*</span></span>
                                     <input type="text" name="rf_no" id="" class="form-control" aria-label="Username"
                                         aria-describedby="basic-addon1">
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="col-md-4">
                                 <div class="input-group mb-3">
-                                    <span class="input-group-text" id="basic-addon1">Explanation</span>
+                                    <span class="input-group-text" id="basic-addon1">Remarks</span>
                                     <input type="text" name="explanation" id="" class="form-control"
                                         aria-label="Username" aria-describedby="basic-addon1">
                                 </div>
@@ -81,6 +81,13 @@
                                 <div class="input-group mb-3">
                                     <span class="input-group-text" id="basic-addon1">Invoice no</span>
                                     <input type="text" name="invoice_no" id="" class="form-control"
+                                        aria-label="Username" aria-describedby="basic-addon1">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon1">Voucher File</span>
+                                    <input type="file" name="voucher_file" id="" class="form-control"
                                         aria-label="Username" aria-describedby="basic-addon1">
                                 </div>
                             </div>

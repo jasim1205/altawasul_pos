@@ -92,8 +92,10 @@ class PurchaseController extends Controller
     public function store(Request $request)
     {
         try {
+            $request->validate([
+                'voucher_file' => 'nullable|file|max:1024', // max 1MB
+            ]);
             DB::beginTransaction();
-
             // // Save supplier information
             // $supplier = new Supplier;
             // $supplier->supplier_name = $request->supplier_name;
@@ -132,6 +134,18 @@ class PurchaseController extends Controller
             $purchase->grand_total_amount = $request->grand_total_amount;
             $purchase->pay_amount = $request->pay_amount;
             $purchase->status = $request->status;
+            if ($request->hasFile('voucher_file')) {
+                $file = $request->file('voucher_file');
+        
+                // Generate a unique file name
+                $fileName = time() . '_' . rand(1000, 9999) . '.' . $file->getClientOriginalExtension();
+        
+                // Move the file to public/uploads/purchase
+                $file->move(public_path('uploads/purchase'), $fileName);
+        
+                // Save the file name in the database
+                $purchase->voucher_file = $fileName;
+            }
             $purchase->save();
 
             // Save purchase details

@@ -82,19 +82,19 @@
                                         aria-label="Username" aria-describedby="basic-addon1" required>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            {{-- <div class="col-md-4">
                                 <div class="input-group mb-3">
                                     <span class="input-group-text" id="basic-addon1">Reference No</span>
                                     <input type="text" name="rf_no" id=""
                                         value="{{ old('rf_no', $sale->rf_no) }}" class="form-control" aria-label="Username"
                                         aria-describedby="basic-addon1">
                                 </div>
-                            </div>
+                            </div> --}}
 
 
                             <div class="col-md-4">
                                 <div class="input-group mb-3">
-                                    <span class="input-group-text" id="basic-addon1">Explanation</span>
+                                    <span class="input-group-text" id="basic-addon1">Remarks</span>
                                     <input type="text" name="explanation" id=""
                                         value="{{ old('explanation', $sale->explanation) }}" class="form-control"
                                         aria-label="Username" aria-describedby="basic-addon1">

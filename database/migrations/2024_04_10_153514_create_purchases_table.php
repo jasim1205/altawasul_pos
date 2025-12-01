@@ -31,6 +31,7 @@ return new class extends Migration
             $table->decimal('grand_total_amount',10,2);
             $table->decimal('pay_amount',10,2)->nullable();
             $table->integer('status')->default(1)->comment('1=>Unpaid, 2=>Due, 3=>Paid');
+            $table->string('voucher_file')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

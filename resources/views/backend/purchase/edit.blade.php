@@ -70,16 +70,16 @@
                                 </div>
                               
                             </div>
-                            <div class="col-sm-4">
+                            {{-- <div class="col-sm-4">
                                 <div class="input-group">
                                     <span class="input-group-text" id="basic-addon1">Reference No</span>
                                     <input type="text" name="rf_no" value="{{ old('rf_no', $purchase->rf_no) }}"
                                     id="" class="form-control" style="">
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="col-sm-4">
                                 <div class="input-group">
-                                    <span class="input-group-text" id="basic-addon1">Explenation</span>
+                                    <span class="input-group-text" id="basic-addon1">Remarks</span>
                                     <input type="text" name="explanation"
                                     value="{{ old('explanation', $purchase->explanation) }}" id=""
                                     class="form-control" style="">
