@@ -102,7 +102,7 @@
                                     <span class="input-group-text" id="basic-addon1">Date <span
                                             class="star">*</span></span>
                                             <input type="text" name="date" id="current_date"
-                                            value="{{ old('date') }}"
+                                            value="{{ old('date') ? old('date') : date('d/m/Y', strtotime(now()))) }}"
                                             class="form-control"
                                             placeholder="dd/mm/yyyy">
                                 </div>
@@ -319,10 +319,10 @@
 
     <script>
         // Set current date to the date input field
-        document.addEventListener('DOMContentLoaded', function() {
-            var currentDate = new Date().toISOString().split('T')[0]; // Get current date in "YYYY-MM-DD" format
-            document.getElementById('current_date').value = currentDate;
-        });
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     var currentDate = new Date().toISOString().split('T')[0]; // Get current date in "YYYY-MM-DD" format
+        //     document.getElementById('current_date').value = currentDate;
+        // });
         $(document).ready(function() {
             $('#paid').on('input', function() {
                 var amount = $(this).val();
