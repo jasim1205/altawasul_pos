@@ -100,8 +100,8 @@
                             <div class="col-md-4">
                                 <div class="input-group mb-3">
                                     <span class="input-group-text" id="basic-addon1">Date</span>
-                                    <input type="text" placeholder="dd/mm/yyyy" id="issue_date"
-       class="form-control" name="issue_date"
+                                    <input type="text" placeholder="dd/mm/yyyy" id="current_date"
+       class="form-control" name="date"
        value="{{ date('d/m/Y') }}"
        autocomplete="off" required>
                                 </div>
