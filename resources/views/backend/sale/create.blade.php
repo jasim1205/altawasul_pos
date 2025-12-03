@@ -103,8 +103,8 @@
                                 <div class="input-group mb-3">
                                     <span class="input-group-text" id="basic-addon1">Date <span
                                             class="star">*</span></span>
-                                    <input type="text" name="date" id="current_date"
-                                        value="{{ old('date') ? old('date') : date('d-m-Y') }}" class="form-control"
+                                    <input type="text" name="date" id=""
+                                        value="{{ old('date') }}" class="form-control"
                                         placeholder="dd/mm/yyyy">
                                 </div>
                             </div>
