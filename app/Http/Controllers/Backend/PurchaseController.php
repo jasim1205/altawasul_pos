@@ -120,8 +120,8 @@ class PurchaseController extends Controller
 
             $purchase = new Purchase;
             $purchase->supplier_id = $supplierId; // Link purchase to supplier
-            $purchase->date = \Carbon\Carbon::createFromFormat('d/m/Y', $request->issue_date)->format('Y-m-d');
-            // $purchase->date = $request->date;
+            // $purchase->date = \Carbon\Carbon::createFromFormat('d/m/Y', $request->issue_date)->format('Y-m-d');
+            $purchase->date = $request->date;
             $purchase->invoice_no = $request->invoice_no;
             $purchase->tm_no = $request->tm_no;
             $purchase->rf_no = $request->rf_no;
