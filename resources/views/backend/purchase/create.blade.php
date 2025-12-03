@@ -100,7 +100,7 @@
                             <div class="col-md-4">
                                 <div class="input-group mb-3">
                                     <span class="input-group-text" id="basic-addon1">Date</span>
-                                    <input type="text" placeholder="dd/mm/yyyy" id=""
+                                    <input type="date" placeholder="dd/mm/yyyy" id=""
        class="form-control" name="date"
        value=""
        autocomplete="off" required>
