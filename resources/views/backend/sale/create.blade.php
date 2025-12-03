@@ -154,7 +154,7 @@
                                                         <option data-sale_one="{{ $value->sale_price_one }}"
                                                             data-sale_two="{{ $value->sale_price_two }}"
                                                             value="{{ $value->id }}">
-                                                            {{ $value->product_name }}-{{ $value->oem }}-{{ $value->origin }}-{{ $value->size }}-{{ (Stock: {{ $value->stock->quantity ?? 0 }}) }}
+                                                            {{ $value->product_name }}-{{ $value->oem }}-{{ $value->origin }}-{{ $value->size }}- (Stock: {{ $value->stock->quantity ?? 0 }})
                                                         </option>
                                                     @endforeach
                                                 </select>
