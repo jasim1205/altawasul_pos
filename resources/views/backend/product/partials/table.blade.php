@@ -35,8 +35,7 @@
                 </td>
                 <td>
                     <a href="{{ asset('public/uploads/product/' . $value->product_image) }}" target="_blank">
-                        <img src="{{ asset('public/uploads/product/' . $value->product_image) }}"
-                        width="50px">
+                        <img src="{{ asset('public/uploads/product/' . $value->product_image) }}" width="50px">
                     </a>
                 </td>
                 <td>{{ __($value->stock?->quantity ?? 0) }}</td>
@@ -68,17 +67,18 @@
                             class="btn btn-warning text-white" title="Edit">
                             <i class="fa fa-edit"></i>
                         </a>
-                        {{-- <form
-                            action="{{ route('product.destroy', encryptor('encrypt', $value->id)) }}"
-                            method="post">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" style="border:none"
-                                onclick="return confirm('Are you sure to delete?')"
-                                title="Delete" class="btn btn-danger ms-2">
-                                <span class=""><i class="fa fa-trash"></i></span>
-                            </button>
-                        </form> --}}
+                        @if ($value->stock?->quantity == 0)
+                            <form action="{{ route('product.destroy', encryptor('encrypt', $value->id)) }}"
+                                method="post">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" style="border:none"
+                                    onclick="return confirm('Are you sure to delete?')" title="Delete"
+                                    class="btn btn-danger ms-2">
+                                    <span class=""><i class="fa fa-trash"></i></span>
+                                </button>
+                            </form>
+                        @endif
                     </div>
                 </td>
             </tr>
