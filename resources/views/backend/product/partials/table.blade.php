@@ -37,6 +37,15 @@
                     <a href="{{ asset('public/uploads/product/' . $value->product_image) }}" target="_blank">
                         <img src="{{ asset('public/uploads/product/' . $value->product_image) }}" width="50px">
                     </a>
+                    <a href="{{ asset('public/uploads/product/' . $value->product_image_two) }}" target="_blank">
+                        <img src="{{ asset('public/uploads/product/' . $value->product_image_two) }}" width="50px">
+                    </a>
+                    <a href="{{ asset('public/uploads/product/' . $value->product_image_three) }}" target="_blank">
+                        <img src="{{ asset('public/uploads/product/' . $value->product_image_three) }}" width="50px">
+                    </a>
+                    <a href="{{ asset('public/uploads/product/' . $value->product_image_four) }}" target="_blank">
+                        <img src="{{ asset('public/uploads/product/' . $value->product_image_four) }}" width="50px">
+                    </a>
                 </td>
                 <td>{{ __($value->stock?->quantity ?? 0) }}</td>
                 {{-- <td>{{ __($value->product_model) }}</td> --}}
