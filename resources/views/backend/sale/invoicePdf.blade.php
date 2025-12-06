@@ -128,7 +128,7 @@
     @foreach($saledetail as $item)
     <tr>
         <td>{{$loop->iteration}}</td>
-        <td>{{ $item->product->product_name }}-{{ $item->product->oem }}-{{ $item->product->origin }}</td>
+        <td>{{ $item->product->product_name }}</td>
         <td class="text-center">{{ $item->quantity }}</td>
         <td class="text-center">{{ $item->unit_price }}</td>
         <td class="text-center">{{ $item->amount }}</td>
