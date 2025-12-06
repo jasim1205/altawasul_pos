@@ -68,6 +68,7 @@
                                         <th>{{ __('Grand Total Amount') }}</th>
                                         <th>{{ __('Invoice No') }}</th>
                                         <th>{{ __('Voucher File') }}</th>
+                                        <th>{{ __('Description') }}</th>
                                         <th>{{ __('Status') }}</th>
                                         <th>{{ __('Action') }}</th>
                                     </tr>
@@ -100,6 +101,11 @@
                                                     {{ __('Due') }}
                                                     @else{{ __('Paid') }}
                                                 @endif
+                                            </td>
+                                            <td>
+                                                @foreach($value->purchaseDetails as $item)
+                                                    {{ __($item->oem) }}<br>
+                                                @endforeach
                                             </td>
                                             <td class="white-space-nowrap">
                                                 <div class="d-flex">
