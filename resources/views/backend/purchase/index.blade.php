@@ -142,7 +142,7 @@
                                     @endforelse
                                 </tbody>
                             </table>
-
+                            {{ $purchase->links() }}
                         </div>
                     </div>
                 </div>
