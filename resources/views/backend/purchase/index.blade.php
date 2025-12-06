@@ -93,7 +93,7 @@
                                             </td>
                                             <td>
                                                 @foreach($value->purchaseDetails as $item)
-                                                    {{ __($item->oem) }}<br>
+                                                    {{ __($item->product->product_name) }}<br>
                                                 @endforeach
                                             </td>
                                             <td
