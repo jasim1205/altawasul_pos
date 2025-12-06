@@ -102,8 +102,8 @@
                             <div class="col-sm-3">
                                 <div class="input-group">
                                     <span class="input-group-text" id="basic-addon1">Date</span>
-                                    <input type="text" name="date" id="old_date" value="{{ old('date', date('d/m/Y', strtotime($purchase->date))) }}"
-                                    id="current_date" class="form-control" readonly>
+                                    <input type="text" name="date"  value="{{ old('date', $purchase->date) }}"
+                                    id="" class="form-control" readonly>
                                 </div>
                             </div>
                             <div class="table-responsive">

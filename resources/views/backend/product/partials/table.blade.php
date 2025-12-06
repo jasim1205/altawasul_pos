@@ -25,6 +25,7 @@
         @forelse ($products as $value)
             <tr>
                 <td>{{ __(++$loop->index) }}</td>
+                
                 {{-- <td>{{ __($value->company?->company_name) }}</td> --}}
                 {{-- <td>{{ __($value->category?->category_name) }}</td> --}}
                 <td><Strong>{{ __($value->product_name) }}</Strong>
