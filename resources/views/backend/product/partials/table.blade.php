@@ -34,7 +34,7 @@
                     Size: {{ $value->size }}
                 </td>
                 <td>
-                    <a href="{{ asset('public/uploads/product/' . $value->product_image) }}" target="_blank">
+                    {{-- <a href="{{ asset('public/uploads/product/' . $value->product_image) }}" target="_blank">
                         <img src="{{ asset('public/uploads/product/' . $value->product_image) }}" width="50px">
                     </a>
                     <a href="{{ asset('public/uploads/product/' . $value->product_image_two) }}" target="_blank">
@@ -45,7 +45,25 @@
                     </a>
                     <a href="{{ asset('public/uploads/product/' . $value->product_image_four) }}" target="_blank">
                         <img src="{{ asset('public/uploads/product/' . $value->product_image_four) }}" width="50px">
-                    </a>
+                    </a> --}}
+                    <a href="#" onclick="openAllImages(
+    '{{ asset('public/uploads/product/' . $value->product_image) }}',
+    '{{ asset('public/uploads/product/' . $value->product_image_two) }}',
+    '{{ asset('public/uploads/product/' . $value->product_image_three) }}',
+    '{{ asset('public/uploads/product/' . $value->product_image_four) }}'
+)">
+    <img src="{{ asset('public/uploads/product/' . $value->product_image) }}" width="50px">
+</a>
+
+<script>
+function openAllImages(img1, img2, img3, img4) {
+    if(img1) window.open(img1, '_blank');
+    if(img2) window.open(img2, '_blank');
+    if(img3) window.open(img3, '_blank');
+    if(img4) window.open(img4, '_blank');
+}
+</script>
+
                 </td>
                 <td>{{ __($value->stock?->quantity ?? 0) }}</td>
                 {{-- <td>{{ __($value->product_model) }}</td> --}}
