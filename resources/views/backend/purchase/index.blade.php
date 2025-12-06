@@ -91,6 +91,11 @@
                                                     {{ __('No File') }}
                                                 @endif
                                             </td>
+                                            <td>
+                                                @foreach($value->purchaseDetails as $item)
+                                                    {{ __($item->oem) }}<br>
+                                                @endforeach
+                                            </td>
                                             <td
                                                 style="color: @if ($value->status == 1) red @elseif($value->status == 2) yellow @else green @endif; font-weight:bold;">
                                                 <i
@@ -102,11 +107,7 @@
                                                     @else{{ __('Paid') }}
                                                 @endif
                                             </td>
-                                            <td>
-                                                @foreach($value->purchaseDetails as $item)
-                                                    {{ __($item->oem) }}<br>
-                                                @endforeach
-                                            </td>
+                                            
                                             <td class="white-space-nowrap">
                                                 <div class="d-flex">
                                                     <a
