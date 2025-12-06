@@ -59,12 +59,12 @@
 </a>
 
 <script>
-// function openAllImages(img1, img2, img3, img4) {
-//     if(img1) window.open(img1, '_blank');
-//     if(img2) window.open(img2, '_blank');
-//     if(img3) window.open(img3, '_blank');
-//     if(img4) window.open(img4, '_blank');
-// }
+function openAllImages(img1, img2, img3, img4) {
+    if(img1) window.open(img1, '_blank');
+    if(img2) window.open(img2, '_blank');
+    if(img3) window.open(img3, '_blank');
+    if(img4) window.open(img4, '_blank');
+}
 </script>
 
                 </td>
