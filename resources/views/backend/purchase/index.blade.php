@@ -56,7 +56,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table id="example" class="table table-bordered" style="width:100%">
+                            <table id="example" class="table datatable table-bordered" style="width:100%">
                                 <thead class="">
                                     <tr>
                                         <th scope="col">{{ __('#SL') }}</th>
