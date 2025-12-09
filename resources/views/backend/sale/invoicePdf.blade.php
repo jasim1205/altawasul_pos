@@ -118,7 +118,7 @@
         <th style="" class="text-center">#SL<br></th>
         <th style="width:40%;" class="text-center">DESCRIPTION<br><span dir="rtl">التفاصيل</span></th>
         <th style="width:10%;" class="text-center">Qty<br><span dir="rtl">الكمية</span></th>
-        <th style="width:12%;" class="text-center">Rate<br>Dhs.</th>
+        <th style="width:12%;" class="text-center">Unit Price<br>Dhs.</th>
         <th style="width:13%;" class="text-center">Taxable Amount<br>Dhs.</th>
         <th style="width:12%;" class="text-center">VAT 5%<br>Dhs.</th>
         {{-- <th style="width:12%;" class="text-center">Discount <br>Dhs.</th> --}}
