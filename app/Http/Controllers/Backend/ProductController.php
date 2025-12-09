@@ -34,7 +34,8 @@ class ProductController extends Controller
                 ->orWhere('cost_code', 'like', "%{$search}%")
                 ->orWhere('product_model', 'like', "%{$search}%")
                 ->orWhere('origin', 'like', "%{$search}%")
-                ->orWhere('oem', 'like', "%{$search}%");
+                ->orWhere('oem', 'like', "%{$search}%")
+                ->orWhere('description', 'like', "%{$search}%");
         })
         ->orderBy('id', 'desc')
         ->paginate(20); // optional pagination
