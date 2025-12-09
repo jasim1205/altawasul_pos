@@ -85,14 +85,14 @@
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
-                            <div class="col-sm-6 mt-2">
+                            {{-- <div class="col-sm-6 mt-2">
                                 <label for="">Explanation</label>
                                 <input type="text" name="explanation" id="" class="form-control"
                                     style="height:30px;">
                                 @error('explanation')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
-                            </div>
+                            </div> --}}
                             <div class="col-sm-6 mt-2">
                                 <label for="">Date</label>
                                 <input type="date" name="date" id="current_date" class="form-control"
@@ -101,11 +101,11 @@
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
-                            <div class="col-sm-6 mt-2">
+                            {{-- <div class="col-sm-6 mt-2">
                                 <label for="">Total Quantity</label>
                                 <input type="text" name="total_quantity" id="" class="form-control"
                                     style="height:30px;">
-                            </div>
+                            </div> --}}
                             <div class="col-sm-6 mt-2">
                                 <label for="">Total Before Vat</label>
                                 <input type="text" name="total_before_vat" id="" class="form-control"
