@@ -55,6 +55,16 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon1">Trn No</span>
+                                    <input type="text" name="trn_no" value="{{old('trn_no', $supplier->trn_no)}}" class="form-control" id=""
+                                        placeholder="Enter Trn No" />
+                                    @error('trn_no')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-group mb-3">
                                     <span class="input-group-text" id="basic-addon1">Supplier Phone</span>
                                     <input type="text" name="contact_no" value="{{old('contact_no',$supplier->contact_no)}}" class="form-control" id="name" placeholder="Enter a Supplier contact"/>
                                     @error('contact_no')

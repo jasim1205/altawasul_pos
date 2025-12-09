@@ -40,6 +40,7 @@ class SupplierController extends Controller
             $data->supplier_name = $request->supplier_name;
             $data->email = $request->email;
             $data->contact_no = $request->contact_no;
+            $data->trn_no = $request->trn_no;
             $data->address = $request->address;
             if($data->save()){
                 $this->notice::success('Data successfully saved');
@@ -83,6 +84,7 @@ class SupplierController extends Controller
             $data->supplier_name = $request->supplier_name;
             $data->email = $request->email;
             $data->contact_no = $request->contact_no;
+            $data->trn_no = $request->trn_no;
             $data->address = $request->address;
             if($data->save()){
                 $this->notice::success('Data successfully Updated');
