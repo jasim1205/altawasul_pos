@@ -74,7 +74,7 @@
                                 </td>
                                 <td class="white-space-nowrap">
                                     <div class="d-flex">
-                                        <a href="{{ route('stock.edit', $value->id) }}">
+                                        <a href="{{ route('stock.edit', $value->id) }}" class="btn btn-primary" >
                                             <i class="fa fa-edit"></i>
                                         </a>
                                     </div>
@@ -92,6 +92,24 @@
         </div>
     </div>
 
+    <div class="modal fade" id="editPasswordModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Enter Password</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="password" id="edit_password" class="form-control" maxlength="4" placeholder="Enter 4-digit password">
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" onclick="checkEditPassword()">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
     {{-- <div class="page-heading">
     <div class="page-title">
         <div class="row">
@@ -169,4 +187,22 @@
 
     </section>
 </div> --}}
+<script>
+    function checkEditPassword() {
+        var password = document.getElementById('edit_password').value;
+        // Replace '1234' with your actual password
+        if (password === '1234') {
+            // Close the modal
+            var editModal = new bootstrap.Modal(document.getElementById('editPasswordModal'));
+            editModal.hide();
+            // Redirect to the edit page
+            var editLink = document.querySelector('a.btn.btn-primary[data-bs-target="#editPasswordModal"]');
+            if (editLink) {
+                window.location.href = editLink.href;
+            }
+        } else {
+            alert('Incorrect password. Please try again.');
+        }
+    }
+</script>
 @endsection
