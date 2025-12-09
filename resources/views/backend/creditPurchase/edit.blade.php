@@ -1,6 +1,7 @@
 @extends('layouts.app')
-@section('title', trans('Credit Purchase'))
-@section('page', trans('Edit'))
+@section('title', 'Credit Purchase')
+@section('page-title', 'Home')
+@section('page-subtitle', 'Credit Purchase Edit')
 @section('content')
     <style>
         .form-control {

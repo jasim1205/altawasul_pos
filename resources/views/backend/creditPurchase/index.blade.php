@@ -1,12 +1,27 @@
 @extends('layouts.app')
-@section('title', trans('Credit Purchase'))
-@section('page', trans('List'))
+@section('title', 'Credit Purchase')
+@section('page-title', 'Home')
+@section('page-subtitle', 'Credit Purchase List')
 @section('content')
     <style>
         th {
             white-space: normal;
             word-wrap: break-word;
             overflow-wrap: break-word;
+        }
+        thead tr th {
+            background-color: #198754 !important;
+            color: white !important;
+        }
+
+        .input-group-text {
+            background-color: #3A58B3;
+            color: white;
+            width: 150px;
+        }
+
+        .star {
+            color: rgb(248, 62, 62);
         }
     </style>
     {{-- <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
@@ -28,10 +43,10 @@
     </div> --}}
     <!--end breadcrumb-->
     {{-- <h6 class="mb-0 text-uppercase">Purchase</h6> --}}
-    <hr />
+    {{-- <hr /> --}}
     <div class="card">
         <div class="card-header">
-            <h6 class="mb-0 text-uppercase">Credit Purchase</h6>
+            {{-- <h6 class="mb-0 text-uppercase">Credit Purchase</h6> --}}
             <div class="row">
                 <div class="col-sm-3">
                     <h5 class="card-title">

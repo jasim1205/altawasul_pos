@@ -103,9 +103,8 @@
                                 <div class="input-group mb-3">
                                     <span class="input-group-text" id="basic-addon1">Date <span
                                             class="star">*</span></span>
-                                    <input type="date" name="date" id=""
-                                        value="{{ old('date') }}" class="form-control"
-                                        placeholder="dd/mm/yyyy">
+                                    <input type="date" name="date" id="" value="{{ old('date') }}"
+                                        class="form-control" placeholder="dd/mm/yyyy">
                                 </div>
                             </div>
                             <div class="table-responsive">
@@ -154,7 +153,8 @@
                                                         <option data-sale_one="{{ $value->sale_price_one }}"
                                                             data-sale_two="{{ $value->sale_price_two }}"
                                                             value="{{ $value->id }}">
-                                                            {{ $value->product_name }}-{{ $value->oem }}-{{ $value->origin }}-{{ $value->size }}- (Stock: {{ $value->stock->quantity ?? 0 }})
+                                                            {{ $value->product_name }}-{{ $value->oem }}-{{ $value->origin }}-{{ $value->size }}-
+                                                            (Stock: {{ $value->stock->quantity ?? 0 }})
                                                         </option>
                                                     @endforeach
                                                 </select>
@@ -171,8 +171,18 @@
                                                     style="width: 80px; height:25px;"></td>
                                             <td><input class="form-control amount" type="text" name="amount[]"
                                                     style="width: 100px; height:25px;"></td>
-                                            <td><input class="form-control totax" type="text" name="tax[]"
-                                                    value="{{ '5' }}" style="width: 80px; height:25px;"></td>
+                                            {{-- <td><input class="form-control totax" type="text" name="tax[]"
+                                                    value="{{ '5' }}" style="width: 80px; height:25px;"></td> --}}
+                                            <td>
+                                                <input class="form-control totax" type="hidden" name="tax[]"
+                                                    value="{{ '5' }}" style="width: 80px; height:25px;">
+                                                <select class="form-control taxType" name="tax_type[]">
+                                                    {{-- <option value="">Select</option> --}}
+                                                    <option value="plus">+5%</option>
+                                                    <option value="minus">-5%</option>
+                                                </select>
+                                            </td>
+
                                             <td><input class="form-control totax_amount" type="text"
                                                     name="tax_amount[]" style="width: 80px; height:25px;"></td>
                                             <td><input class="form-control subamount" type="text" name="sub_amount[]"
@@ -353,10 +363,19 @@
                     var tax_amount = parseFloat(row.find('.totax_amount').val()) || 0;
                     var discountType = row.find('.discount_type').val();
                     var discount = parseFloat(row.find('.todiscount').val()) || 0;
+                    let type = row.find('.taxType').val(); // minus or plus
+
 
                     var amount = unitPrice * quantity;
-                    var tax_amount = amount * tax / 100;
-                    var subAmount = amount + (amount * tax / 100);
+                    var tax_amount = amount * 0.05;
+                    var subAmount = amount;
+                    if (type === 'plus') {
+                        subAmount = amount + tax_amount;
+                    } else if (type === 'minus') {
+                        amount = amount - tax_amount;
+                        subAmount = amount + tax_amount;
+                    }
+                    // var subAmount = amount + (amount * tax / 100);
                     var totalAmount;
 
                     if (discountType == 1) { // Percentage discount
@@ -385,7 +404,7 @@
 
             // Add event listeners for input changes
             $(document).on('input',
-                '#purchaseHead .uprice, #purchaseHead .toquantity, #purchaseHead .totax, #purchaseHead .totax_amount, #purchaseHead .todiscount, #purchaseHead .discount_type',
+                '#purchaseHead .uprice, #purchaseHead .toquantity, #purchaseHead, .taxType .totax, #purchaseHead .totax_amount, #purchaseHead .todiscount, #purchaseHead .discount_type',
                 function() {
                     calculateAmounts();
                 });
@@ -516,7 +535,7 @@
                                 <option value="">Select Product</option>
                                 @foreach ($product as $value)
                                     <option data-sale_one="{{ $value->sale_price_one }}"
-                                                            data-sale_two="{{ $value->sale_price_two }}" value="{{ $value->id }}">{{ $value->product_name }}{{ $value->product_name }}-{{ $value->oem }}-{{ $value->origin }}-{{ $value->size }}
+                                                            data-sale_two="{{ $value->sale_price_two }}" value="{{ $value->id }}">{{ $value->product_name }}{{ $value->product_name }}-{{ $value->oem }}-{{ $value->origin }}-{{ $value->size }}-(Stock: {{$value->stock->quantity ?? 0}})
                                     </option>
                                 @endforeach
                             </select>
@@ -530,7 +549,15 @@
                         <td><input class="form-control uprice" type="text" name="unit_price[]" style="width: 80px; height:25px;"></td>
                         <td><input class="form-control toquantity" type="text" name="quantity[]"style="width: 80px; height:25px;"></td>
                         <td><input class="form-control amount" type="text" name="amount[]" style="width: 100px; height:25px;"></td>
-                        <td><input class="form-control totax" type="text" name="tax[]"style="width: 80px; height:25px;"></td>
+                        {{-- <td><input class="form-control totax" type="text" name="tax[]"style="width: 80px; height:25px;"></td>--}}
+                        <td>
+                            <input class="form-control totax" type="hidden" name="tax[]" value="{{ '5' }}" style="width: 80px; height:25px;">
+                            <select class="form-control taxType" name="tax_type[]">
+                                {{-- <option value="">Select</option> --}}
+                                <option value="plus">+5%</option>
+                                <option value="minus">-5%</option>
+                            </select>
+                        </td>
                         <td><input class="form-control totax_amount" type="text"
                                                     name="tax_amount[]" style="width: 80px; height:25px;"></td>
                         <td><input class="form-control subamount" type="text" name="sub_amount[]"style="width: 100px; height:25px;"></td>

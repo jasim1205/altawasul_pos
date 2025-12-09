@@ -131,7 +131,8 @@ class StockController extends Controller
      */
     public function edit(Stock $stock)
     {
-        //
+        $stock->load('product');
+        return view('backend.stock.edit', compact('stock'));
     }
 
     /**
@@ -139,7 +140,20 @@ class StockController extends Controller
      */
     public function update(Request $request, Stock $stock)
     {
-        //
+        try {
+            $stock->quantity = $request->quantity;
+            $stock->save();
+    
+            $this->notice::success('Data successfully Updated');
+            return redirect()->route('stock.index');
+    
+        } catch (Exception $e) {
+            $this->notice::error('Something went wrong! Please try again');
+    
+            return redirect()
+                ->route('stock.edit', $stock->id)
+                ->withInput();
+        }
     }
 
     /**

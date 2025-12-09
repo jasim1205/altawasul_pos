@@ -183,9 +183,15 @@
                                                 <td><input class="form-control amount" type="text" name="amount[]"
                                                         value="{{ old('amount', $sdetail->amount) }}"
                                                         style="width: 100px; height:25px;"></td>
-                                                <td><input class="form-control totax" type="text" name="tax[]"
+                                                <td>
+                                                    <input class="form-control totax" type="hidden" name="tax[]"
                                                         value="{{ old('tax', $sdetail->tax) }}"
-                                                        style="width: 80px; height:25px;"></td>
+                                                        style="width: 80px;">
+                                                    <select name="tax_type[]" class="form-control taxType" style="width:80px;">
+                                                        <option value="plus"  @if(old('tax_type', $sdetail->tax_type)=='plus') selected @endif>+5%</option>
+                                                        <option value="minus" @if(old('tax_type', $sdetail->tax_type)=='minus') selected @endif>-5%</option>
+                                                    </select>
+                                                </td>
                                                 <td><input class="form-control totax_amount" type="text"
                                                         name="tax_amount[]"
                                                         value="{{ old('tax_amount', $sdetail->tax_amount) }}"
@@ -221,7 +227,7 @@
                                         @endforeach
                                     </tbody>
                                     <tfoot>
-                                        <th colspan="2">Total</th>
+                                        <th colspan="1">Total</th>
                                         <th><span class="total_unitprice" id="total_unitprice"></span></th>
                                         <th><span class="total_quantity" id="total_quantity"></span></th>
                                         <th><span class="total_amount" id="total_amount"></span></th>
@@ -347,10 +353,19 @@
                     var tax_amount = parseFloat(row.find('.totax_amount').val()) || 0;
                     var discountType = row.find('.discount_type').val();
                     var discount = parseFloat(row.find('.todiscount').val()) || 0;
+                    let type = row.find('.taxType').val(); // minus or plus
 
                     var amount = unitPrice * quantity;
-                    var tax_amount = amount * tax / 100;
-                    var subAmount = amount + (amount * tax / 100);
+                    var tax_amount = amount * 0.05;
+                    var subAmount = amount;
+                    if (type === 'plus') {
+                        subAmount = amount + tax_amount;
+                    } else if (type === 'minus') {
+                        amount = amount - tax_amount;
+                        subAmount = amount + tax_amount;
+                    };
+                    // var tax_amount = amount * tax / 100;
+                    // var subAmount = amount + (amount * tax / 100);
                     var totalAmount;
 
                     if (discountType == 1) { // Percentage discount
@@ -379,7 +394,7 @@
 
             // Add event listeners for input changes
             $(document).on('input',
-                '#purchaseHead .uprice, #purchaseHead .toquantity, #purchaseHead .totax, #purchaseHead .totax_amount, #purchaseHead .todiscount, #purchaseHead .discount_type',
+                '#purchaseHead .uprice, #purchaseHead .toquantity, #purchaseHead .totax, #purchaseHead .taxType, #purchaseHead .totax_amount, #purchaseHead .todiscount, #purchaseHead .discount_type',
                 function() {
                     calculateAmounts();
                 });
@@ -517,7 +532,13 @@
                         <td><input class="form-control uprice" type="text" name="unit_price[]" style="width: 80px; height:25px;"></td>
                         <td><input class="form-control toquantity" type="text" name="quantity[]"style="width: 80px; height:25px;"></td>
                         <td><input class="form-control amount" type="text" name="amount[]" style="width: 100px; height:25px;"></td>
-                        <td><input class="form-control totax" type="text" value="5" name="tax[]"style="width: 80px; height:25px;"></td>
+                        <td>
+                            <input class="form-control totax" type="hidden" value="5" name="tax[]"style="width: 80px; height:25px;">
+                            <select class="form-control taxType" name="tax_type[]">
+                                <option value="plus">+5%</option>
+                                <option value="minus">-5%</option>
+                            </select>
+                        </td>
                         <td><input class="form-control totax_amount" type="text" name="tax_amount[]"style="width: 80px; height:25px;"></td>
                         <td><input class="form-control subamount" type="text" name="sub_amount[]"style="width: 100px; height:25px;"></td>
                         <td><select name="discount_type[]" id="" class="select2 text-center p-0 form-control discount_type" style="width: 80px; height:25px;">

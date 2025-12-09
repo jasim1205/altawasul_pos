@@ -56,6 +56,7 @@
                             <th>Size</th>
                             <th>Stock</th>
                             <th>Status</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -70,6 +71,13 @@
                                     {{ __($value->quantity) }}</td>
                                 <td style="color: {{ $value->quantity <= 5 ? 'red' : 'green' }};font-weight:bold">
                                     {{ $value->quantity <= 5 ? 'Low Stock' : 'Available' }}
+                                </td>
+                                <td class="white-space-nowrap">
+                                    <div class="d-flex">
+                                        <a href="{{ route('stock.edit', $value->id) }}">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                    </div>
                                 </td>
                             </tr>
                         @empty

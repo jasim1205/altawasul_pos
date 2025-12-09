@@ -1,6 +1,7 @@
 @extends('layouts.app')
-@section('title', trans('Credit Purchase'))
-@section('page', trans('Create'))
+@section('title', 'Credit Purchase')
+@section('page-title', 'Home')
+@section('page-subtitle', 'Credit Purchase Create')
 @section('content')
     <style>
         .form-control {
@@ -17,7 +18,7 @@
             font-weight: bold
         }
     </style>
-    <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+    {{-- <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
         <div class="breadcrumb-title pe-3">Forms</div>
         <div class="ps-3">
             <nav aria-label="breadcrumb">
@@ -36,12 +37,12 @@
     </div>
     <!--end breadcrumb-->
 
-    <hr>
+    <hr> --}}
     <div id="stepper1" class="bs-stepper">
         <div class="card">
-            <div class="card-header">
+            {{-- <div class="card-header">
                 <h4 class="card-title">Create New Credit Purchase</h4>
-            </div>
+            </div> --}}
             <div class="card-body">
                 <div class="bs-stepper-content">
                     <form action="{{ route('creditpurchase.store') }}" method="post" enctype="multipart/form-data">
@@ -174,7 +175,7 @@
     </script>
 
     <script>
-        $(document).ready(function() {
+        // $(document).ready(function() {
             // Function to calculate tax and total after VAT
             $(document).ready(function() {
                 function calculateTax() {
@@ -206,9 +207,15 @@
                 $("input[name='total_before_vat'], input[name='pay_amount']").on("input", function() {
                     calculateTax();
                 });
+                $('.select2').select2({
+                // width: '75%',
+                placeholder: "Select supplier",
+                allowClear: true
             });
 
-        });
+            });
+
+        // });
     </script>
 
 
