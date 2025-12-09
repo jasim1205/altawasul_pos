@@ -62,7 +62,7 @@
                                 {{-- <input type="text" name="supplier_name" id="" class="form-control" style="height:30px;"> --}}
                             </div>
                             <div class="col-sm-6 mt-2">
-                                <label for="">Tm No</label>
+                                <label for="">TRN No</label>
                                 <input type="text" name="tm_no" id="" class="form-control"
                                     style="height:30px;">
                                 @error('tm_no')
