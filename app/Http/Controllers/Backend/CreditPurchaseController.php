@@ -37,8 +37,8 @@ class CreditPurchaseController extends Controller
         $request->validate([
             'supplier_id'      => 'required|exists:suppliers,id',
             'date'             => 'required|date',
-            'tm_no'            => 'required|string|max:50',
-            'rf_no'            => 'required|string|max:50',
+            // 'tm_no'            => 'required|string|max:50',
+            // 'rf_no'            => 'required|string|max:50',
             'invoice_no'       => 'required|string|max:50',
             // 'explanation'      => 'nullable|string|max:255',
             'file'             => 'nullable|file|mimes:jpg,png,pdf|max:2048', // Max 2MB file
@@ -102,8 +102,8 @@ class CreditPurchaseController extends Controller
         $request->validate([
             'supplier_id'      => 'required|exists:suppliers,id',
             'date'             => 'required|date',
-            'tm_no'            => 'required|string|max:50',
-            'rf_no'            => 'required|string|max:50',
+            // 'tm_no'            => 'required|string|max:50',
+            // 'rf_no'            => 'required|string|max:50',
             'invoice_no'       => 'required|string|max:50',
             // 'explanation'      => 'nullable|string|max:255',
             'file'             => 'nullable|file|mimes:jpg,png,pdf|max:2048', // Max 2MB file
