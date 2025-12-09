@@ -190,8 +190,8 @@ class ProductController extends Controller
         try {
             $request->validate([
                 'product_name' => 'required_without:file',
-                'origin' => 'required_without:file',
-                'oem' => 'required_without:file',
+                'description' => 'required_without:file',
+                // 'oem' => 'required_without:file',
                 'file' => 'nullable|mimes:xlsx,xls|max:5120',
             ]);
 

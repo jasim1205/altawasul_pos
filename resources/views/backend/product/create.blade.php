@@ -114,7 +114,8 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="input-group mb-3">
-                                        <span class="input-group-text" id="basic-addon1">Description</span>
+                                        <span class="input-group-text" id="basic-addon1">Description <span
+                                            class="star">*</span></span>
                                         <input type="text" name="description" class="form-control" id=""
                                             placeholder="description" aria-label="Username" aria-describedby="basic-addon1">
                                         @error('description')
