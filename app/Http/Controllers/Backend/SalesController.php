@@ -109,6 +109,7 @@ class SalesController extends Controller
                     $saledetails->amount = $request->amount[$key];
                     $saledetails->sub_amount = $request->sub_amount[$key];
                     $saledetails->tax = $request->tax[$key];
+                    $saledetails->tax_type = $request->tax_type[$key];
                     $saledetails->tax_amount = $request->tax_amount[$key];
                     $saledetails->discount_type = $request->discount_type[$key];
                     $saledetails->discount = $request->discount[$key];
@@ -274,6 +275,7 @@ class SalesController extends Controller
                     $saledetails->amount = $request->amount[$key];
                     $saledetails->sub_amount = $request->sub_amount[$key];
                     $saledetails->tax = $request->tax[$key];
+                    $saledetails->tax_type = $request->tax_type[$key];
                     $saledetails->tax_amount = $request->tax_amount[$key];
                     $saledetails->discount_type = $request->discount_type[$key];
                     $saledetails->discount = $request->discount[$key];
