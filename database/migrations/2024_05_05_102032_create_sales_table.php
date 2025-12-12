@@ -28,7 +28,7 @@ return new class extends Migration
             $table->integer('total_discount')->nullable();
             $table->decimal('grand_total_amount',10,2);
             $table->decimal('paid',10,2)->nullable();
-            $table->integer('status')->default(1)->comment('1=>Unpaid,2=>Due, 3=>Paid');
+            $table->integer('status')->default(1)->comment('1=>Unpaid,2=>Paid,3=>Due, ');
             $table->timestamps();
             $table->softDeletes();
         });

@@ -165,8 +165,12 @@
                                                     <option value="">Select Price</option>
                                                 </select>
                                             </td>
-                                            <td><input class="form-control uprice" type="text" name="unit_price[]"
-                                                    style="width: 80px; height:25px;"></td>
+                                            <td>
+                                                <input class="form-control uprice" type="text" name="unit_uprice[]"
+                                                    style="width: 80px; height:25px;">
+                                                    <input type="text" name="original_uprice[]" class="original_uprice" value="">
+
+                                            </td>
                                             <td><input class="form-control toquantity" type="text" name="quantity[]"
                                                     style="width: 80px; height:25px;"></td>
                                             <td><input class="form-control amount" type="text" name="amount[]"
@@ -241,8 +245,8 @@
                                 <select name="status" id="status" class="form-control"
                                     style="width:100%; height:35px">
                                     <option value="1">Unpaid</option>
-                                    <option value="2">Due</option>
-                                    <option value="3">Paid</option>
+                                    <option value="2">Paid</option>
+                                    <option value="3">Due</option>
                                 </select>
                             </div>
 
@@ -352,12 +356,189 @@
         });
     </script>
     <script>
+        // $(document).ready(function () {
+
+        //     function calculateAmounts() {
+        //         $('#purchaseHead tr').each(function () {
+
+        //             var row = $(this);
+
+        //             let unitPrice = parseFloat(row.find('.uprice').val()) || 0;
+        //             let originalPrice = parseFloat(row.find('.original_uprice').val()) || 0;
+        //             let quantity = parseFloat(row.find('.toquantity').val()) || 0;
+        //             let discountType = row.find('.discount_type').val();
+        //             let discount = parseFloat(row.find('.todiscount').val()) || 0;
+        //             let type = row.find('.taxType').val();
+
+        //             // ----------------------------------------
+        //             // ✔ Fix 1: Only save original price when user types
+        //             // ----------------------------------------
+        //             if (row.find('.uprice').data("typed") === true) {
+        //                 row.find('.original_uprice').val(unitPrice);
+        //                 originalPrice = unitPrice;
+        //             }
+
+        //             // Always start from original price
+        //             unitPrice = originalPrice;
+
+        //             // ----------------------------------------
+        //             // VAT calculations
+        //             // ----------------------------------------
+        //             let amount = unitPrice * quantity;
+        //             let tax_amount = amount * 0.05;
+        //             let subAmount = amount + tax_amount;
+
+        //             // ----------------------------------------
+        //             // ✔ Fix 2: When minus selected, deduct price
+        //             // ----------------------------------------
+        //             if (type === "minus") {
+        //                 let deducted = originalPrice / 1.05;
+
+        //                 tax_amount = (originalPrice - deducted) * quantity;
+        //                 amount = deducted * quantity;
+        //                 subAmount = amount + tax_amount;
+
+        //                 // Update UI
+        //                 row.find('.uprice').val(deducted.toFixed(2));
+        //             }
+
+        //             // ----------------------------------------
+        //             // Discount
+        //             // ----------------------------------------
+        //             let totalAmount = subAmount;
+
+        //             if (discountType == 1) {
+        //                 totalAmount -= (subAmount * discount / 100);
+        //             } else if (discountType == 0) {
+        //                 totalAmount -= discount;
+        //             }
+
+        //             row.find('.amount').val(amount.toFixed(2));
+        //             row.find('.totax_amount').val(tax_amount.toFixed(2));
+        //             row.find('.subamount').val(subAmount.toFixed(2));
+        //             row.find('.toamount').val(totalAmount.toFixed(2));
+        //         });
+
+        //         calculateTotalUnitPrice();
+        //         calculateTotalQuantity();
+        //         calculateTotalAmount();
+        //         calculateTotalTax();
+        //         calculateTotalSubAmount();
+        //         calculateTotalDiscount();
+        //         calculateGrandTotalAmount();
+        //         calculateTotalTaxAmount();
+        //     }
+
+        //     // ----------------------------------------
+        //     // ✔ Detect manual typing in uprice
+        //     // ----------------------------------------
+        //     $(document).on("input", "#purchaseHead .uprice", function () {
+        //         $(this).data("typed", true);
+        //         calculateAmounts();
+        //     });
+
+        //     // Other triggers
+        //     $(document).on('change input',
+        //         '#purchaseHead .toquantity, #purchaseHead .taxType, #purchaseHead .todiscount, #purchaseHead .discount_type',
+        //         function () {
+        //             calculateAmounts();
+        //         });
+
+        //     calculateAmounts();
+        // });
+
+
+
+// $(document).ready(function () {
+
+//     function calculateAmounts() {
+//         $('#purchaseHead tr').each(function () {
+
+//             var row = $(this);
+
+//             var unitPrice = parseFloat(row.find('.uprice').val()) || 0;
+//             var originalunitPrice = parseFloat(row.find('.original_uprice').val()) || 0;
+//             var quantity = parseFloat(row.find('.toquantity').val()) || 0;
+//             var discountType = row.find('.discount_type').val();
+//             var discount = parseFloat(row.find('.todiscount').val()) || 0;
+//             let type = row.find('.taxType').val(); // minus or plus
+
+//             // store original first time
+//             if (originalunitPrice === 0 && unitPrice > 0) {
+//                 row.find('.original_uprice').val(unitPrice);
+//                 originalunitPrice = unitPrice;
+//             }
+
+//             // reset unit price from original
+//             unitPrice = originalunitPrice;
+
+//             // default VAT calculation
+//             var amount = unitPrice * quantity;
+//             var tax_amount = amount * 0.05;
+//             var subAmount = amount + tax_amount;
+
+//             // -----------------------------
+//             // ✔ FIX: Unit Price Deduction
+//             // -----------------------------
+//             if (type === 'minus') {
+//                 let deductedPrice = (originalunitPrice * 100) / 105; // price without VAT
+
+//                 tax_amount = (originalunitPrice - deductedPrice) * quantity;
+//                 amount = deductedPrice * quantity;
+//                 subAmount = amount + tax_amount;
+
+//                 // ❗ VERY IMPORTANT: Update the unit price input
+//                 row.find('.uprice').val(deductedPrice.toFixed(2));
+//             } else {
+//                 // restore original price if +5%
+//                 row.find('.uprice').val();
+//             }
+
+//             var totalAmount;
+
+//             if (discountType == 1) {
+//                 totalAmount = subAmount - (subAmount * discount / 100);
+//             } else if (discountType == 0) {
+//                 totalAmount = subAmount - discount;
+//             } else {
+//                 totalAmount = subAmount;
+//             }
+
+//             // set values
+//             row.find('.amount').val(amount.toFixed(2));
+//             row.find('.totax_amount').val(tax_amount.toFixed(2));
+//             row.find('.subamount').val(subAmount.toFixed(2));
+//             row.find('.toamount').val(totalAmount.toFixed(2));
+
+//         });
+
+//         calculateTotalUnitPrice();
+//         calculateTotalQuantity();
+//         calculateTotalAmount();
+//         calculateTotalTax();
+//         calculateTotalSubAmount();
+//         calculateTotalDiscount();
+//         calculateGrandTotalAmount();
+//         calculateTotalTaxAmount();
+//     }
+
+//     $(document).on('input change',
+//         '#purchaseHead .uprice, #purchaseHead .toquantity, #purchaseHead .taxType, #purchaseHead .todiscount, #purchaseHead .discount_type',
+//         function () {
+//             calculateAmounts();
+//         });
+
+//     calculateAmounts();
+// });
+
+        
         $(document).ready(function() {
             // Function to calculate amount, subamount, total amount, and other values
             function calculateAmounts() {
                 $('#purchaseHead tr').each(function() {
                     var row = $(this);
                     var unitPrice = parseFloat(row.find('.uprice').val()) || 0;
+                    var originalunitPrice = parseFloat(row.find('.original_uprice').val()) || 0;
                     var quantity = parseFloat(row.find('.toquantity').val()) || 0;
                     var tax = parseFloat(row.find('.totax').val()) || 0;
                     var tax_amount = parseFloat(row.find('.totax_amount').val()) || 0;
@@ -368,14 +549,19 @@
 
                     var amount = unitPrice * quantity;
                     var tax_amount = amount * 0.05;
-                    var subAmount = amount;
-                    if (type === 'plus') {
-                        subAmount = amount + tax_amount;
-                    } else if (type === 'minus') {
-                        amount = amount - tax_amount;
+                    var subAmount = amount+tax_amount;
+                    var unitPricetwo = unitPrice ;
+                    var originalunitPrice = row.find('.original_uprice').val(unitPrice);
+                    if(type === 'minus'){
+                        originalunitPrice = (unitPricetwo * 100) / 105;
+                        tax_amount = ( unitPrice - originalunitPrice ) * quantity;
+                        // unitPrice = unitPricetwo;
+
+                        row.find('.original_uprice').val(originalunitPrice.toFixed(2));
+                        amount = originalunitPrice * quantity;
                         subAmount = amount + tax_amount;
                     }
-                    // var subAmount = amount + (amount * tax / 100);
+                    
                     var totalAmount;
 
                     if (discountType == 1) { // Percentage discount
@@ -418,7 +604,7 @@
         // Function to calculate total unit price
         function calculateTotalUnitPrice() {
             let totalUnitPrice = 0;
-            $('#purchaseHead .uprice').each(function() {
+            $('#purchaseHead .original_uprice').each(function() {
                 const unitPrice = parseFloat($(this).val()) || 0;
                 totalUnitPrice += unitPrice;
             });
@@ -546,7 +732,11 @@
                                 <option value="">Select Price</option>
                             </select>
                         </td>
-                        <td><input class="form-control uprice" type="text" name="unit_price[]" style="width: 80px; height:25px;"></td>
+                        <td>
+                            <input class="form-control uprice" type="text" name="unit_uprice[]" style="width: 80px; height:25px;">
+                            <input type="text" name="original_uprice[]" class="original_uprice" value="">
+
+                        </td>
                         <td><input class="form-control toquantity" type="text" name="quantity[]"style="width: 80px; height:25px;"></td>
                         <td><input class="form-control amount" type="text" name="amount[]" style="width: 100px; height:25px;"></td>
                         {{-- <td><input class="form-control totax" type="text" name="tax[]"style="width: 80px; height:25px;"></td>--}}

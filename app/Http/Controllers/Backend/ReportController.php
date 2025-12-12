@@ -9,6 +9,7 @@ use App\Models\Supplier;
 use App\Models\SaleDetails;
 use App\Models\DailyExpense;
 use Illuminate\Http\Request;
+use App\Models\CreditPurchase;
 use App\Models\PurchaseDetails;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\Controller;
@@ -162,7 +163,7 @@ class ReportController extends Controller
         $selectedSupplier = null;
         // // Apply supplier filter if a supplier is selected
         if($request->start_date && $request->end_date){
-            $report = Purchase::whereBetween('date', [$startDate, $endDate]);
+            $report = CreditPurchase::whereBetween('date', [$startDate, $endDate]);
             if($request->supplier_id){
                 $report->where('supplier_id', $request->supplier_id);
                 $selectedSupplier = Supplier::find($request->supplier_id); // Get the selected supplier
@@ -173,6 +174,24 @@ class ReportController extends Controller
         // Execute the query to get the data
         // dd($request->all());
         return view('backend.report.supplier_report',compact('startDate','endDate','supplier','reportData','selectedSupplier'));
+    }
+
+    public function supplier_report_pdf(Request $request){
+        $startDate = $request->start_date;
+        $endDate = $request->end_date;
+        $selectedSupplier = null;
+        $reportData = [];
+        if($request->start_date && $request->end_date){
+            $report = CreditPurchase::whereBetween('date', [$startDate, $endDate]);
+            if($request->supplier_id){
+                $report->where('supplier_id', $request->supplier_id);
+                $selectedSupplier = Supplier::find($request->supplier_id); // Get the selected supplier
+            } 
+            $reportData = $report->get();
+        }
+        $pdf = Pdf::loadView('backend.report.supplier_report_pdf', compact('startDate','endDate','reportData','selectedSupplier'))->setPaper('a4', 'portrait');
+
+        return $pdf->stream('supplier_report_'.$startDate.'_to_'.$endDate.'.pdf');
     }
 
     public function customer_report(Request $request){

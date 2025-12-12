@@ -91,6 +91,7 @@ Route::middleware(['checkrole','prevent-back-history'])->prefix('admin')->group(
     // routes/web.php
     Route::get('monthly-details/{year}/{month}', [report::class, 'monthlyDetailsReport'])->name('Monthly_Details');
     Route::get('supplier-report', [report::class, 'supplier'])->name('supplier_report');
+    Route::get('/supplier-report/pdf', [report::class, 'supplier_report_pdf'])->name('supplier.report.pdf');
     Route::get('customer-report', [report::class, 'customer_report'])->name('customer_report');
     Route::resource('usedpurchase', usedPurchase::class);
     Route::resource('bngpurchase', bngpurchase::class);
@@ -116,6 +117,8 @@ Route::middleware(['checkrole','prevent-back-history'])->prefix('admin')->group(
 
     Route::get('/yearly-purchase-report/pdf', [report::class, 'yearlyPurchaseReportPdf'])
     ->name('yearlyPurchase.report.pdf');
+
+    
 });
 
 // Route::get('/', function () {

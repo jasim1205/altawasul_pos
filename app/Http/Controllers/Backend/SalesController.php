@@ -104,12 +104,17 @@ class SalesController extends Controller
                     // $saledetails->company_id = $companyId;
                     // $saledetails->category_id = $request->category_id[$key];
                     $saledetails->product_id = $request->product_id[$key];
-                    $saledetails->unit_price = $request->unit_price[$key];
+                    $saledetails->tax_type = $request->tax_type[$key];
+                    if($saledetails->tax_type == 'plus') {
+                        $saledetails->unit_price = $request->unit_uprice[$key];
+                    } else {
+                        $saledetails->unit_price = $request->original_uprice[$key];
+                    }
+                    // $saledetails->unit_price = $request->unit_price[$key];
                     $saledetails->quantity = $request->quantity[$key];
                     $saledetails->amount = $request->amount[$key];
                     $saledetails->sub_amount = $request->sub_amount[$key];
                     $saledetails->tax = $request->tax[$key];
-                    $saledetails->tax_type = $request->tax_type[$key];
                     $saledetails->tax_amount = $request->tax_amount[$key];
                     $saledetails->discount_type = $request->discount_type[$key];
                     $saledetails->discount = $request->discount[$key];
@@ -270,7 +275,13 @@ class SalesController extends Controller
                     // $saledetails->company_id = $companyId;
                     // $saledetails->category_id = $request->category_id[$key];
                     $saledetails->product_id = $request->product_id[$key];
-                    $saledetails->unit_price = $request->unit_price[$key];
+                    // $saledetails->unit_price = $request->unit_price[$key];
+                    $saledetails->tax_type = $request->tax_type[$key];
+                    if($saledetails->tax_type == 'plus') {
+                        $saledetails->unit_price = $request->unit_uprice[$key];
+                    } else {
+                        $saledetails->unit_price = $request->original_uprice[$key];
+                    }
                     $saledetails->quantity = $request->quantity[$key];
                     $saledetails->amount = $request->amount[$key];
                     $saledetails->sub_amount = $request->sub_amount[$key];
