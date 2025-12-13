@@ -126,10 +126,15 @@
                                 <input type="text" name="pay_amount" id="pay_amount" class="form-control"
                                     placeholder="Enter amount">
                             </div>
-                            <div class="col-sm-6 mt-2">
+                            {{-- <div class="col-sm-6 mt-2">
                                 <label for="">Due</label>
                                 <input type="text" name="due_amount" id="pay_amount" class="form-control"
                                     placeholder="Enter amount">
+                            </div> --}}
+                            <div class="col-sm-6 mt-2">
+                                <label for="">Image</label>
+                                <input type="file" name="file" id="file" class="form-control"
+                                    >
                             </div>
                             <div class="col-sm-6 mt-2 d-flex">
                                 <label for="">Credit/Cash</label>
@@ -139,20 +144,16 @@
                                     <option value="2">Cash</option>
                                 </select>
                             </div>
-                            <div class="col-sm-6 mt-2 d-flex">
+                            {{-- <div class="col-sm-6 mt-2 d-flex">
                                 <label for="">Payment Status</label>
                                 <select name="status" id="status" class="form-control"
                                     style="width:100%; height:35px">
+                                    <option value="3">Paid</option>
                                     <option value="1">Unpaid</option>
                                     <option value="2">Due</option>
-                                    <option value="3">Paid</option>
                                 </select>
-                            </div>
-                            <div class="col-sm-6 mt-2">
-                                <label for="">Image</label>
-                                <input type="file" name="file" id="file" class="form-control"
-                                    >
-                            </div>
+                            </div> --}}
+                            
                             <div class="col-sm-6 mt-3 d-flex">
                                 <button type="submit" class="btn btn-primary  px-5">Save</button>
                             </div>
@@ -182,12 +183,14 @@
                     let totalBeforeVat = parseFloat($("input[name='total_before_vat']").val()) || 0;
                     let tax = totalBeforeVat * 0.05; // 5% tax
                     let totalAfterVat = totalBeforeVat + tax;
-                    let payAmount = parseFloat($("input[name='pay_amount']").val()) || 0;
-                    let dueAmount = totalAfterVat - payAmount;
+                    // let payAmount = parseFloat($("input[name='pay_amount']").val()) || 0;
+                    // let dueAmount = totalAfterVat - payAmount;
+                    let dueAmount = totalAfterVat;
 
                     $("input[name='total_tax']").val(tax.toFixed(2)); // Set tax
                     $("input[name='total_after_vat']").val(totalAfterVat.toFixed(2)); // Set total after VAT
                     $("input[name='due_amount']").val(dueAmount.toFixed(2)); // Set due amount
+                    $("input[name='pay_amount']").val(dueAmount.toFixed(2)); // Set due amount
 
                     // Update status dropdown
                     updateStatus(payAmount, totalAfterVat);

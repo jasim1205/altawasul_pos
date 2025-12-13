@@ -168,7 +168,7 @@
                                             <td>
                                                 <input class="form-control uprice" type="text" name="unit_uprice[]"
                                                     style="width: 80px; height:25px;">
-                                                    <input type="text" name="original_uprice[]" class="original_uprice" value="">
+                                                <input type="text" name="form-control original_uprice[]" class="original_uprice" value="" style="width: 80px; height:25px;">
 
                                             </td>
                                             <td><input class="form-control toquantity" type="text" name="quantity[]"
@@ -734,7 +734,7 @@
                         </td>
                         <td>
                             <input class="form-control uprice" type="text" name="unit_uprice[]" style="width: 80px; height:25px;">
-                            <input type="text" name="original_uprice[]" class="original_uprice" value="">
+                            <input type="text" name="form-control original_uprice[]" class="original_uprice" value="" style="width: 80px; height:25px;">
 
                         </td>
                         <td><input class="form-control toquantity" type="text" name="quantity[]"style="width: 80px; height:25px;"></td>

@@ -18,7 +18,7 @@
             font-weight: bold
         }
     </style>
-    <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+    {{-- <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
         <div class="breadcrumb-title pe-3">Forms</div>
         <div class="ps-3">
             <nav aria-label="breadcrumb">
@@ -34,15 +34,12 @@
                 <a class="btn btn-primary" href="{{ route('creditpurchase.index') }}"><i class="fa fa-list"></i></a>
             </div>
         </div>
-    </div>
+    </div> --}}
     <!--end breadcrumb-->
 
     <hr>
     <div id="stepper1" class="bs-stepper">
         <div class="card">
-            <div class="card-header">
-                <h4 class="card-title">Edit Credit Purchase</h4>
-            </div>
             <div class="card-body">
                 <div class="bs-stepper-content">
                     <form action="{{ route('creditpurchase.update',encryptor('encrypt',$creditPurchase->id)) }}" method="post" enctype="multipart/form-data">
@@ -127,10 +124,15 @@
                                 <input type="text" name="pay_amount" value="{{old('pay_amount',$creditPurchase->pay_amount)}}"  id="pay_amount" class="form-control"
                                     placeholder="Enter amount">
                             </div>
-                            <div class="col-sm-6 mt-2">
+                            {{-- <div class="col-sm-6 mt-2">
                                 <label for="">Due</label>
                                 <input type="text" name="due_amount" value="{{old('due_amount',$creditPurchase->due_amount)}}" id="pay_amount" class="form-control"
                                     placeholder="Enter amount">
+                            </div> --}}
+                            <div class="col-sm-6 mt-2">
+                                <label for="">Image</label>
+                                <input type="file" name="file" id="file" class="form-control"
+                                    >
                             </div>
                             <div class="col-sm-6 mt-2 d-flex">
                                 <label for="">Credit/Cash</label>
@@ -140,7 +142,7 @@
                                     <option value="2" @if(old('credit_cash',$creditPurchase->credit_cash)==2) selected @endif>Cash</option>
                                 </select>
                             </div>
-                            <div class="col-sm-6 mt-2 d-flex">
+                            {{-- <div class="col-sm-6 mt-2 d-flex">
                                 <label for="">Payment Status</label>
                                 <select name="status" id="status" class="form-control"
                                     style="width:100%; height:35px">
@@ -148,12 +150,8 @@
                                     <option value="2" @if(old('status',$creditPurchase->status)==2) selected @endif>Due</option>
                                     <option value="3" @if(old('status',$creditPurchase->status)==3) selected @endif>Paid</option>
                                 </select>
-                            </div>
-                            <div class="col-sm-6 mt-2">
-                                <label for="">Image</label>
-                                <input type="file" name="file" id="file" class="form-control"
-                                    >
-                            </div>
+                            </div> --}}
+                            
                             <div class="col-sm-6 mt-3 d-flex">
                                 <button type="submit" class="btn btn-primary  px-5">Save</button>
                             </div>
@@ -184,11 +182,12 @@
                     let tax = totalBeforeVat * 0.05; // 5% tax
                     let totalAfterVat = totalBeforeVat + tax;
                     let payAmount = parseFloat($("input[name='pay_amount']").val()) || 0;
-                    let dueAmount = totalAfterVat - payAmount;
-
+                    // let dueAmount = totalAfterVat - payAmount;
+                    let dueAmount = totalAfterVat;
                     $("input[name='total_tax']").val(tax.toFixed(2)); // Set tax
                     $("input[name='total_after_vat']").val(totalAfterVat.toFixed(2)); // Set total after VAT
                     $("input[name='due_amount']").val(dueAmount.toFixed(2)); // Set due amount
+                    $("input[name='pay_amount']").val(dueAmount.toFixed(2)); // Set due amount
 
                     // Update status dropdown
                     updateStatus(payAmount, totalAfterVat);

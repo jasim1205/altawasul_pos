@@ -2,19 +2,20 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Http\Controllers\Controller;
+use DB;
 
+use Mpdf\Mpdf;
 use App\Models\Sales;
-use App\Models\Customer;
-use App\Models\Company;
-use App\Models\Category;
-use App\Models\Product;
 use App\Models\Stock;
-use Barryvdh\DomPDF\Facade\Pdf;
+use App\Models\Company;
+use App\Models\Product;
+use App\Models\Category;
+use App\Models\Customer;
+use App\Models\CreditSale;
 use App\Models\SaleDetails;
 use Illuminate\Http\Request;
-use Mpdf\Mpdf;
-use DB;
+use Barryvdh\DomPDF\Facade\Pdf;
+use App\Http\Controllers\Controller;
 
 class SalesController extends Controller
 {
@@ -95,6 +96,27 @@ class SalesController extends Controller
             $sale->paid = $request->paid;
             $sale->status = $request->status;
             $sale->save();
+            if($sale->save()){
+                $credit = new CreditSale();
+                // $credit->sale_id = $sale->id;
+                $credit->customer_id = $customerId;
+                $credit->date = $request->date;
+                $credit->trn_no = $request->tm_no;
+                $credit->rf_no = $request->rf_no;
+                $credit->explanation = $request->explanation;
+                $credit->total_quantity = $request->total_quantity;
+                $credit->total_before_vat = $request->total_quantity_amount;
+                $credit->total_discount = $request->total_discount;
+                $credit->total_tax = $request->total_tax_amount;
+                $credit->total_after_vat = $request->total_subamount;
+                $credit->pay_amount = $request->total_subamount;
+                $credit->due_amount = $request->total_subamount;
+                // $credit->grand_total_amount = 0;
+                $credit->credit_cash = $request->status;
+                // Assuming credit sale has no grand total
+                // Save the credit sale record    
+                $credit->save();
+            } 
 
             // Save purchase details
             if ($request->has('product_id')) {

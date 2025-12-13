@@ -99,7 +99,7 @@
                             <th>{{ __('Total Tax(5%)') }}</th>
                             <th>{{ __('Total Inc Tax') }}</th>
                             <th>{{ __('Pay Amount') }}</th>
-                            <th>{{ __('Due Amount') }}</th>
+                            {{-- <th>{{ __('Due Amount') }}</th> --}}
                             <th>{{ __('Credit/Cash') }}</th>
                             <th>{{ __('Status') }}</th>
                             <th>{{ __('Action') }}</th>
@@ -117,7 +117,7 @@
                                 <td>{{ __($value->total_tax) }}</td>
                                 <td>{{ __($value->total_after_vat) }}</td>
                                 <td>{{ __($value->pay_amount) }}</td>
-                                <td>{{ __($value->due_amount) }}</td>
+                                {{-- <td>{{ __($value->due_amount) }}</td> --}}
                                 <td>
                                     @if ($value->credit_cash == 1)
                                         {{ __('Credit') }}

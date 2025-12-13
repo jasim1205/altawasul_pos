@@ -60,7 +60,7 @@ class CreditPurchaseController extends Controller
             $creditPurchase->pay_amount = $request->pay_amount;
             $creditPurchase->due_amount = $request->due_amount;
             $creditPurchase->credit_cash = $request->credit_cash;
-            $creditPurchase->status = $request->status;
+            $creditPurchase->status = 3;
             if($request->hasFile('file')){
                 $imageName = rand(111,999).'.'.$request->file->extension();
                 $request->file->move(public_path('uploads/CreditPurchase'),$imageName);
@@ -125,7 +125,7 @@ class CreditPurchaseController extends Controller
             $creditPurchase->pay_amount = $request->pay_amount;
             $creditPurchase->due_amount = $request->due_amount;
             $creditPurchase->credit_cash = $request->credit_cash;
-            $creditPurchase->status = $request->status;
+            $creditPurchase->status = 3;
             if($request->hasFile('file')){
                 $imageName = rand(111,999).'.'.$request->file->extension();
                 $request->file->move(public_path('uploads/CreditPurchase'),$imageName);
