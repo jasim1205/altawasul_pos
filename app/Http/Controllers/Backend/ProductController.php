@@ -96,7 +96,7 @@ class ProductController extends Controller
 
     $search = $request->input('search');
 
-    $product = Product::when($search, function ($query, $search) {
+    $product = Product::with('stock')->when($search, function ($query, $search) {
         $query->where('product_name', 'like', "%{$search}%")
                 ->orWhere('cost_code', 'like', "%{$search}%")
                 ->orWhere('product_model', 'like', "%{$search}%")
@@ -104,8 +104,9 @@ class ProductController extends Controller
                 ->orWhere('oem', 'like', "%{$search}%")
                 ->orWhere('size', 'like', "%{$search}%");
     })
+    ->withSum('stock', 'quantity')
     ->orderBy('id', 'desc')
-    ->paginate(20);
+    ->get();
 
     return view('backend.product.secureProductList', compact('product', 'search'));
     }

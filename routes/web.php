@@ -20,6 +20,7 @@ use App\Http\Controllers\Backend\CustomerController as customer;
 use App\Http\Controllers\Backend\UsedPurchaseController as usedPurchase;
 use App\Http\Controllers\Backend\BngPurchaseController as bngpurchase;
 use App\Http\Controllers\Backend\CreditPurchaseController as creditpurchase;
+use App\Http\Controllers\Backend\CreditSaleController as creditsale;
 use App\Http\Controllers\FrontendController as frontend;
 use App\Http\Controllers\Backend\ForgotPasswordController;
 use App\Http\Controllers\Backend\ResetPasswordController;
@@ -96,6 +97,7 @@ Route::middleware(['checkrole','prevent-back-history'])->prefix('admin')->group(
     Route::resource('usedpurchase', usedPurchase::class);
     Route::resource('bngpurchase', bngpurchase::class);
     Route::resource('creditpurchase', creditpurchase::class);
+    Route::resource('creditsale', creditsale::class);
 
 
     Route::get('product-report', [product::class, 'reportForm'])->name('product.reportForm');

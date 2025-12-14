@@ -257,6 +257,13 @@
 
             </li>
             <li class="nav-item">
+                <a class="nav-link collapsed {{ request()->routeIs('creditsale.index') ? 'active' : '' }}" href="{{ route('creditsale.index') }}">
+                    <i class="bi bi-menu-button-wide"></i><span>Credit Sales</span><i
+                        class="bi bi-chevron-down ms-auto"></i>
+                </a>
+
+            </li>
+            <li class="nav-item">
                 <a class="nav-link collapsed {{ request()->routeIs('usedpurchase.index') ? 'active' : '' }}" href="{{ route('usedpurchase.index') }}">
                     <i class="bi bi-menu-button-wide"></i><span>Used Purchases</span><i
                         class="bi bi-chevron-down ms-auto"></i>

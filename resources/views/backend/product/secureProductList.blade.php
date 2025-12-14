@@ -40,9 +40,13 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
+                    <div class="card-header">
+                        <h4>Total:{{ $product->count() }}</h4>
+                        Total Stock: {{ $product->sum('stock_sum_quantity') }}
+                    </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table id="example" class="table datatable table-bordered" style="width:100%">
+                            <table id="example" class="table table-bordered" style="width:100%">
                                 <thead class="">
                                     <tr class="bg-success text-white">
                                         <th scope="col">{{ __('#SL') }}</th>
@@ -130,8 +134,7 @@
                                     @endforelse
                                 </tbody>
                             </table>
-                            {{ $product->withQueryString()->links() }}
-
+                            {{-- {{ $product->withQueryString()->links() }} --}}
                         </div>
                     </div>
                 </div>
