@@ -189,7 +189,26 @@
 
                 </ul>
             </li><!-- End Components Nav -->
+            <li class="nav-item">
+                <a class="nav-link collapsed {{ request()->routeIs(['customerpayment.create']) ? 'active' : '' }}" data-bs-target="#customerpayment-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-person"></i><span>Accounts</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="customerpayment-nav"
+                    class="nav-content collapse {{ request()->routeIs(['customerpayment.create']) ? 'show' : '' }}"
+                    data-bs-parent="#sidebar-nav">
 
+                    <li class="{{ request()->routeIs('customerpayment.create') ? 'active' : null }}">
+                        <a href="{{ route('customerpayment.create') }}">
+                            <i class="bi bi-circle"></i><span>Create Customer Payment</span>
+                        </a>
+                    </li>
+                    <li class="{{ request()->routeIs('customer-ledger-report') ? 'active' : null }}">
+                        <a href="{{ route('customer-ledger-report') }}">
+                            <i class="bi bi-circle"></i><span>Customer Ledger</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
             <li class="nav-item">
                 <a class="nav-link collapsed {{ request()->routeIs('supplier.index') ? 'active' : '' }}" href="{{ route('supplier.index') }}">
                     <i class="bi bi-person"></i><span>Suppliers</span><i class="bi bi-chevron-down ms-auto"></i>

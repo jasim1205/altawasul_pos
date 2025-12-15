@@ -211,10 +211,10 @@
                     calculateTax();
                 });
                 $('.select2').select2({
-                // width: '75%',
-                placeholder: "Select supplier",
-                // allowClear: true
-            });
+                    // width: '75%',
+                    placeholder: "Select supplier",
+                    // allowClear: true
+                });
 
             });
 

@@ -9,12 +9,15 @@ use App\Models\Sales;
 use App\Models\Stock;
 use App\Models\Company;
 use App\Models\Product;
+use App\Models\Accounts;
 use App\Models\Category;
 use App\Models\Customer;
 use App\Models\CreditSale;
 use App\Models\SaleDetails;
+use App\Models\JournalEntry;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Models\JournalEntryDetail;
 use App\Http\Controllers\Controller;
 
 class SalesController extends Controller
@@ -96,6 +99,44 @@ class SalesController extends Controller
             $sale->paid = $request->paid;
             $sale->status = $request->status;
             $sale->save();
+// ACCOUNTING JOURNAL
+// =====================
+
+// Get account IDs
+$arAccount     = Accounts::where('name','Accounts Receivable')->first();
+$salesAccount  = Accounts::where('name','Sales Income')->first();
+$vatAccount    = Accounts::where('name','Output VAT')->first();
+// Create journal entry
+$journal = JournalEntry::create([
+    'date' => $sale->date,
+    'description' => 'Sale Invoice '.$sale->invoice_no,
+    'reference_type' => 'customer',
+    'reference_id' => $customerId,
+    'source_type' => 'sale',
+    'source_id' => $sale->id,
+]);
+
+// Insert journal details
+JournalEntryDetail::insert([
+    [
+        'journal_entry_id' => $journal->id,
+        'account_id' => $arAccount->id, // Accounts Receivable
+        'debit' => $sale->grand_total_amount,
+        'credit' => 0,
+    ],
+    [
+        'journal_entry_id' => $journal->id,
+        'account_id' => $salesAccount->id, // Sales Income
+        'debit' => 0,
+        'credit' => $sale->total_quantity_amount,
+    ],
+    [
+        'journal_entry_id' => $journal->id,
+        'account_id' => $vatAccount->id,
+        'debit' => 0,
+        'credit' => $sale->total_tax_amount, // Output VAT
+    ],
+]);
             if($sale->save()){
                 $credit = new CreditSale();
                 // $credit->sale_id = $sale->id;
@@ -277,6 +318,7 @@ class SalesController extends Controller
             $sale->status = $request->status;
             $sale->save();
 
+            
             // Return stock quantities from old sale details
             foreach ($oldSaleDetails as $detail) {
                 $stock = Stock::where('product_id', $detail->product_id)->first();

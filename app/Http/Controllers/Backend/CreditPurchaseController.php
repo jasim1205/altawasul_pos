@@ -135,7 +135,7 @@ class CreditPurchaseController extends Controller
             $this->notice::success('Credit Purchase Added Successfully');
             return redirect()->route('creditpurchase.index');
         }catch(\Exception $e){
-            dd($e);
+            // dd($e);
             $this->notice::error('Please Try Again');
             return redirect()->back();
         }

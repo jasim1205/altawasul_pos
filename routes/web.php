@@ -24,6 +24,8 @@ use App\Http\Controllers\Backend\CreditSaleController as creditsale;
 use App\Http\Controllers\FrontendController as frontend;
 use App\Http\Controllers\Backend\ForgotPasswordController;
 use App\Http\Controllers\Backend\ResetPasswordController;
+use App\Http\Controllers\Backend\CustomerPaymentController as customerpayment;
+use App\Http\Controllers\Backend\CustomerLedgerController as customerledger;
 
 /*
 |--------------------------------------------------------------------------
@@ -98,6 +100,8 @@ Route::middleware(['checkrole','prevent-back-history'])->prefix('admin')->group(
     Route::resource('bngpurchase', bngpurchase::class);
     Route::resource('creditpurchase', creditpurchase::class);
     Route::resource('creditsale', creditsale::class);
+    Route::resource('customerpayment', customerpayment::class);
+    Route::get('customer-ledger', [customerledger::class, 'customerLedger'])->name('customer-ledger-report');
 
 
     Route::get('product-report', [product::class, 'reportForm'])->name('product.reportForm');
