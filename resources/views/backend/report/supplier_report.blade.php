@@ -123,13 +123,16 @@
                     tr>
                     <td colspan="4" class="text-end"><strong>Total</strong></td>
                     <td>
+                        @php
+    $reportData = collect($reportData);
+@endphp
                         <strong>
-                            {{ __($reportData->where('credit_cash', 1)->sum('pay_amount')) }}
+                            {{ __($reportData->where('credit_cash', 1)->sum('pay_amount'))??0 }}
                         </strong>
                     </td>
                     <td>
                         <strong>
-                            {{ __($reportData->where('credit_cash', 2)->sum('pay_amount')) }}
+                            {{ __($reportData->where('credit_cash', 2)->sum('pay_amount'))??0 }}
                         </strong>
                     </td>
                     <td>

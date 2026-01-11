@@ -15,9 +15,16 @@ class JournalEntry extends Model
         'description',
         'reference_type',
         'reference_id',
+        'source_type',
+        'source_id',
     ];
     public function journalDetails()
     {
         return $this->hasMany(JournalEntryDetail::class);
+    }
+
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class);
     }
 }

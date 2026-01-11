@@ -30,11 +30,11 @@
             <div class="row">
                 <div class="col-sm-9">
                     <form action="{{ route('customer-ledger-report') }}" method="get">
-                        <div class="d-flex flex-wrap align-items-center     justify-content-between">
+                        <div class="row g-3 align-items-center">
 
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <label class="form-label">Customer</label>
-                                <select name="customer_id" class="form-select" required>
+                                <select name="customer_id" class="select2 form-select" required>
                                     <option value="">-- Select Customer --</option>
                                     @foreach($customers as $customer)
                                         <option value="{{ $customer->id }}"
@@ -44,17 +44,24 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-2">
                                 <label for="from_date" class="col-auto">From Date:</label>
                                 <input class="form-control" type="date" name="from_date"value="{{ request('from_date') }}"
                                     required style="height: 35px">
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-2">
                                 <label for="to_date" class="col-auto">To Date:</label>
                                 <input class="form-control" type="date" name="to_date" value="{{ request('to_date') }}"
                                     required style="height: 35px">
                             </div>
-                            <div class="col-md-3 mt-3">
+                            <div class="col-md-2">
+                                <label for="ledger_type" class="col-auto">Ledger Type</label>
+                                <select name="ledger_type" id="" class="form-control form-control-sm text-uppercase" required>
+                                    <option value="list" selected> List </option>
+                                    <option value="pdf"> PDF </option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
                                 <button type="submit" class="btn btn-primary text-end" style="height: 35px">Generate
                                     Report</button>
                             </div>
@@ -131,4 +138,13 @@
             </div>
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.select2').select2({
+                // width: '75%',
+                placeholder: "Select Customer",
+            });
+        });
+    </script>
 @endsection

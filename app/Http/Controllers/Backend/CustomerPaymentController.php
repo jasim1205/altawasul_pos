@@ -45,8 +45,9 @@ class CustomerPaymentController extends Controller
                 'date'        => now(),
                 'amount'      => $request->amount,
                 'payment_method' => $request->payment_method,
-                'note'        => $request->note,
+                // 'note'        => $request->note,
             ]);
+
             $cashAccount = Accounts::where('name','Cash')->first();
             $arAccount   = Accounts::where('name','Accounts Receivable')->first();
 
@@ -80,6 +81,7 @@ class CustomerPaymentController extends Controller
 
         } catch (\Exception $e) {
             DB::rollBack();
+            // dd($e->getMessage());
             $this->notice::error('Please Try Again');
             return redirect()->back();
         }

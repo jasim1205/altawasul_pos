@@ -73,6 +73,7 @@
                                         <th scope="col">{{ __('#SL') }}</th>
                                         <th>{{ __('Customer') }}</th>
                                         <th>{{ __('Date') }}</th>
+                                        <th>{{ __('Invoice') }}</th>
                                         <th>{{ __('Total Quantity') }}</th>
                                         <th>{{ __('Total Discount') }}</th>
                                         <th>{{ __('Total Tax') }}</th>
@@ -87,6 +88,7 @@
                                             <td class="text-center">{{ __(++$loop->index) }}</td>
                                             <td>{{ __($value->customer?->customer_name) }}</td>
                                             <td>{{ __(date('d-M-Y', strtotime($value->date))) }}</td>
+                                            <td>{{ __($value->invoice_no) }}</td>
                                             <td>{{ __($value->total_quantity) }}</td>
                                             <td>{{ __($value->total_discount) }}</td>
                                             <td>{{ __($value->total_tax) }}</td>

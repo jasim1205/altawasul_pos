@@ -171,6 +171,7 @@ JournalEntryDetail::insert([
                     if($saledetails->tax_type == 'plus') {
                         $saledetails->unit_price = $request->unit_uprice[$key];
                     } else {
+                        // dd( $request->original_uprice[$key]);
                         $saledetails->unit_price = $request->original_uprice[$key];
                     }
                     // $saledetails->unit_price = $request->unit_price[$key];
@@ -267,6 +268,8 @@ JournalEntryDetail::insert([
         $saledetail = SaleDetails::where('sale_id',$sale->id)->get();
         return view('backend.sale.edit',compact('company','category','product','sale','saledetail','customer'));
     }
+
+    
 
     /**
      * Update the specified resource in storage.
@@ -375,6 +378,113 @@ JournalEntryDetail::insert([
         }
     }
 
+
+
+    public function sales_return($id){
+        $sale = Sales::findOrFail($id);
+        $saledetail = SaleDetails::with('product')->where('sale_id',$sale->id)->get();
+        return view('backend.sale.sales_return',compact('sale','saledetail'));
+    }
+
+
+    public function salesReturn(Request $request, $id)
+    {
+        try {
+            DB::beginTransaction();
+
+            $sale = Sales::findOrFail($id);
+
+            // 1️⃣ create sales return
+            $salesReturn = SalesReturn::create([
+                'sale_id' => $sale->id,
+                'customer_id' => $sale->customer_id,
+                'return_date' => now(),
+                'total_return_amount' => 0,
+                'reason' => $request->reason,
+                'invoice_no' => $sale->invoice_no,
+            ]);
+
+            $totalReturn = 0;
+
+            foreach ($request->product_id as $key => $productId) {
+
+                $qty = $request->return_qty[$key];
+
+                if ($qty > 0) {
+
+                    $unitPrice = $request->unit_price[$key];
+                    $amount = $qty * $unitPrice;
+
+                    // 2️⃣ save return details
+                    SalesReturnDetail::create([
+                        'sales_return_id' => $salesReturn->id,
+                        'product_id' => $productId,
+                        'quantity' => $qty,
+                        'unit_price' => $unitPrice,
+                        'amount' => $amount,
+                    ]);
+
+                    // 3️⃣ increase stock
+                    $stock = Stock::where('product_id',$productId)->first();
+                    if ($stock) {
+                        $stock->quantity += $qty;
+                        $stock->save();
+                    }
+
+                    $totalReturn += $amount;
+                }
+            }
+
+            // 4️⃣ update return total
+            $salesReturn->update([
+                'total_return_amount' => $totalReturn
+            ]);
+
+            // 5️⃣ update sale amount
+            $sale->grand_total_amount -= $totalReturn;
+            $sale->save();
+
+            // ======================
+            // ACCOUNTING JOURNAL
+            // ======================
+
+            $arAccount    = Accounts::where('name','Accounts Receivable')->first();
+            $salesAccount = Accounts::where('name','Sales Income')->first();
+
+            $journal = JournalEntry::create([
+                'date' => now(),
+                'description' => 'Sales Return for Invoice '.$sale->invoice_no,
+                'reference_type' => 'customer',
+                'reference_id' => $sale->customer_id,
+                'source_type' => 'sales_return',
+                'source_id' => $salesReturn->id,
+            ]);
+
+            JournalEntryDetail::insert([
+                [
+                    'journal_entry_id' => $journal->id,
+                    'account_id' => $salesAccount->id,
+                    'debit' => $totalReturn,   // reverse income
+                    'credit' => 0,
+                ],
+                [
+                    'journal_entry_id' => $journal->id,
+                    'account_id' => $arAccount->id,
+                    'debit' => 0,
+                    'credit' => $totalReturn, // reduce receivable
+                ],
+            ]);
+
+            DB::commit();
+
+            return redirect()->route('sale.index')
+                ->with('success','Product returned successfully');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            dd($e);
+        }
+    }
 
     /**
      * Remove the specified resource from storage.

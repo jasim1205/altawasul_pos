@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Backend;
 
 use App\Models\Accounts;
 use App\Models\Customer;
+use Barryvdh\DomPDF\Facade\Pdf;
+use App\Models\JournalEntry;
 use Illuminate\Http\Request;
 use App\Models\JournalEntryDetail;
 use Illuminate\Support\Facades\DB;
@@ -17,11 +19,78 @@ class CustomerLedgerController extends Controller
 
         $ledger = collect();
         $openingBalance = 0;
+        $ledgerType = $request->ledger_type;
+        if ($request->filled('customer_id')) {
+
+            $customerId = $request->customer_id;
+            $customer = Customer::findOrFail($customerId);
+            // Accounts Receivable account
+            $arAccount = Accounts::where('name','Accounts Receivable')->firstOrFail();
+
+            // Opening balance (before from_date)
+            if ($request->filled('from_date')) {
+                $openingBalance = JournalEntryDetail::where('account_id', $arAccount->id)
+                    ->whereHas('journalEntry', function ($q) use ($customerId, $request) {
+                        $q->where('reference_type','customer')
+                        ->where('reference_id',$customerId)
+                        ->whereDate('date','<',$request->from_date);
+                    })
+                    ->sum(DB::raw('debit - credit'));
+            }
+
+            
+            // Ledger rows
+            $ledger = JournalEntryDetail::with('journalEntry')
+                ->where('account_id', $arAccount->id)
+                ->whereHas('journalEntry', function ($q) use ($customerId, $request) {
+                    $q->where('reference_type','customer')
+                    ->where('reference_id',$customerId);
+
+                    if ($request->filled('from_date')) {
+                        $q->whereDate('date','>=',$request->from_date);
+                    }
+                    if ($request->filled('to_date')) {
+                        $q->whereDate('date','<=',$request->to_date);
+                    }
+                })
+                ->orderBy('id')
+                ->get();
+                // dd($ledger);
+        }
+
+        if($ledgerType == 'pdf'){
+            return PDF::loadView('backend.accounts.customer_ledger_pdf', compact(
+                'customers',
+                'customer',
+                'ledger',
+                'openingBalance',
+                'ledgerType',
+                'request'
+            ))->setPaper('a4', 'landscape')->stream("customer_ledger_" . now()->format('d-m-Y') . ".pdf");
+            
+        }else{
+            return view('backend.accounts.customer_ledger', compact(
+                'customers',
+                // 'customer',
+                'ledger',
+                'openingBalance',
+                'ledgerType',
+                'request'
+            ));
+        }
+    }
+
+    public function customerLedgerPdf(Request $request)
+    {
+        $customers = Customer::orderBy('customer_name')->get();
+
+        $ledger = collect();
+        $openingBalance = 0;
 
         if ($request->filled('customer_id')) {
 
             $customerId = $request->customer_id;
-
+            $customer = Customer::findOrFail($customerId);
             // Accounts Receivable account
             $arAccount = Accounts::where('name','Accounts Receivable')->firstOrFail();
 
@@ -40,7 +109,7 @@ class CustomerLedgerController extends Controller
             $ledger = JournalEntryDetail::with('journalEntry')
                 ->where('account_id', $arAccount->id)
                 ->whereHas('journalEntry', function ($q) use ($customerId, $request) {
-                    $q->where('reference_type','sale')
+                    $q->where('reference_type','customer')
                     ->where('reference_id',$customerId);
 
                     if ($request->filled('from_date')) {
@@ -52,10 +121,10 @@ class CustomerLedgerController extends Controller
                 })
                 ->orderBy('id')
                 ->get();
-                dd($ledger);
+                // dd($ledger);
         }
 
-        return view('backend.accounts.customer_ledger', compact(
+        return view('backend.accounts.customer_ledger_pdf', compact(
             'customers',
             'ledger',
             'openingBalance'

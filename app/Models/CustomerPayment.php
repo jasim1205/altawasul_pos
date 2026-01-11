@@ -9,4 +9,16 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class CustomerPayment extends Model
 {
     use HasFactory, SoftDeletes;
+
+    protected $fillable = [
+        'customer_id',
+        'date',
+        'amount',
+        'payment_method',
+        // 'note',
+    ];
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class);
+    }
 }

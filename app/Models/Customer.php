@@ -19,4 +19,11 @@ class Customer extends Model
     public function creditSale(){
         return $this->hasMany(CreditSale::class);
     }
+    public function customerPayments(){
+        return $this->hasMany(CustomerPayment::class);
+    }
+
+    public function journalEntries(){
+        return $this->hasMany(JournalEntry::class);
+    }
 }
