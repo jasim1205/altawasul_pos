@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('customer_id')->index();
             $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
             $table->date('return_date');
-            $table->decimal('total_return_amount  ', 15, 2);
+            $table->decimal('total_return_amount',10,2);
             $table->string('reason')->nullable();
             $table->string('invoice_no')->nullable();
             $table->timestamps();

@@ -82,8 +82,8 @@ Route::middleware(['checkrole','prevent-back-history'])->prefix('admin')->group(
     Route::get('sale_invoice/{id}', [sale::class,'invoice'])->name('sale.invoice');
     Route::get('salesreport', [sale::class,'salesReport'])->name('salesreport'); //2nd one is function name
     Route::get('/salegetStockByProduct', [sale::class, 'salegetStockByProduct'])->name('salegetStockByProduct');
-    Route::get('sales/{id}/return', [sale::class, 'sales_return'])->name('sales.return');
-    Route::post('sales/{id}/return', [sale::class, 'sales_return_store'])->name('sales.return.store');
+    Route::get('sales/{id}/return', [sale::class, 'sales_return'])->name('salesReturn');
+    Route::patch('sales/{id}/return', [sale::class, 'salesReturn'])->name('salesReturnStore');
 
     Route::resource('dailyexpense', dailyexpense::class);
     Route::resource('homeexpense', homeexpense::class);

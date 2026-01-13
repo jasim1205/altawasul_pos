@@ -110,6 +110,7 @@
                                                     <a href="{{ route('sale.edit', encryptor('encrypt', $value->id)) }}">
                                                         <i class="fa fa-edit"></i>
                                                     </a>
+                                                    <a href="{{route('salesReturn',$value->id)}}" class="btn btn-warning">Return</a>
                                                     <a href="{{ route('sale.show', encryptor('encrypt', $value->id)) }}">
                                                         <i class="fa fa-eye"></i>
                                                     </a>

@@ -14,10 +14,12 @@ use App\Models\Category;
 use App\Models\Customer;
 use App\Models\CreditSale;
 use App\Models\SaleDetails;
+use App\Models\SalesReturn;
 use App\Models\JournalEntry;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\JournalEntryDetail;
+use App\Models\SalesReturnDetails;
 use App\Http\Controllers\Controller;
 
 class SalesController extends Controller
@@ -381,7 +383,8 @@ JournalEntryDetail::insert([
 
 
     public function sales_return($id){
-        $sale = Sales::findOrFail($id);
+        // $customer = Customer::get();
+        $sale = Sales::with('customer')->findOrFail($id);
         $saledetail = SaleDetails::with('product')->where('sale_id',$sale->id)->get();
         return view('backend.sale.sales_return',compact('sale','saledetail'));
     }
@@ -403,26 +406,32 @@ JournalEntryDetail::insert([
                 'reason' => $request->reason,
                 'invoice_no' => $sale->invoice_no,
             ]);
+            // dd($salesReturn);
 
             $totalReturn = 0;
 
+            if(!isset($request->product_id)){
+                return redirect()->back()->with('error', 'No products selected for return.');
+            }
+
             foreach ($request->product_id as $key => $productId) {
-
-                $qty = $request->return_qty[$key];
-
-                if ($qty > 0) {
-
-                    $unitPrice = $request->unit_price[$key];
-                    $amount = $qty * $unitPrice;
-
                     // 2️⃣ save return details
-                    SalesReturnDetail::create([
+                    // dd($request->all());
+                    $qty        = $request->quantity[$key] ?? 0;
+                    
+                    $unitPrice = $request->unit_uprice[$key] ?? 0;
+                    // dd($unitPrice);
+                    $amount    = $request->amount[$key] ?? 0;
+                
+                    // 2️⃣ save return details
+                    $salesDetails = SalesReturnDetails::create([
                         'sales_return_id' => $salesReturn->id,
-                        'product_id' => $productId,
-                        'quantity' => $qty,
-                        'unit_price' => $unitPrice,
-                        'amount' => $amount,
+                        'product_id'      => $productId,
+                        'quantity'        => $qty,
+                        'unit_price'      => $unitPrice,
+                        'total_amount'    => $amount,
                     ]);
+                    // dd($salesDetails);
 
                     // 3️⃣ increase stock
                     $stock = Stock::where('product_id',$productId)->first();
@@ -430,9 +439,9 @@ JournalEntryDetail::insert([
                         $stock->quantity += $qty;
                         $stock->save();
                     }
-
+                        
+                    //dd($stock);
                     $totalReturn += $amount;
-                }
             }
 
             // 4️⃣ update return total
@@ -441,8 +450,8 @@ JournalEntryDetail::insert([
             ]);
 
             // 5️⃣ update sale amount
-            $sale->grand_total_amount -= $totalReturn;
-            $sale->save();
+            // $sale->grand_total_amount -= $totalReturn;
+            // $sale->save();
 
             // ======================
             // ACCOUNTING JOURNAL
