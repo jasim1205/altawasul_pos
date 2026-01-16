@@ -20,6 +20,10 @@ class SalesReturn extends Model
         'invoice_no'
     ];
 
+    public function sale()
+    {
+        return $this->belongsTo(Sales::class, 'sale_id','id');
+    }
     public function customer()
     {
         return $this->belongsTo(Customer::class);

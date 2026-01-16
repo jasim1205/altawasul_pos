@@ -80,6 +80,7 @@
                                         <th>{{ __('Grand Total Amount') }}</th>
                                         <th>{{ __('Status') }}</th>
                                         <th>{{ __('Action') }}</th>
+                                        <th>{{ __('Return Invoice') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -110,16 +111,16 @@
                                                     <a href="{{ route('sale.edit', encryptor('encrypt', $value->id)) }}">
                                                         <i class="fa fa-edit"></i>
                                                     </a>
+                                                    @if(!\App\Models\SalesReturn::where('sale_id', $value->id)->exists())
                                                     <a href="{{route('salesReturn',$value->id)}}" class="btn btn-warning">Return</a>
+                                                    @endif
                                                     <a href="{{ route('sale.show', encryptor('encrypt', $value->id)) }}">
                                                         <i class="fa fa-eye"></i>
                                                     </a>
                                                     <a href="{{ route('sale.invoice', $value->id) }}">
                                                         {{-- <i class="fa fa-eye"></i> --}}invoice
                                                     </a>
-                                                    {{-- <a href="{{route('invoice',encryptor('encrypt',$value->id))}}">
-                                                    <i class="fa fa-list"></i>
-                                                </a> --}}
+                                                    
                                                     {{-- <form
                                                         action="{{ route('sale.destroy', encryptor('encrypt', $value->id)) }}"
                                                         method="post">
@@ -132,6 +133,13 @@
                                                     </form> --}}
                                                 </div>
 
+                                            </td>
+                                            <td>
+                                                @if(\App\Models\SalesReturn::where('sale_id', $value->id)->exists())
+                                                    <a href="{{ route('sale.ReturnInvoice', $value->id) }}" target="_blank">
+                                                        Return invoice
+                                                    </a>
+                                                @endif
                                             </td>
                                         </tr>
                                     @empty

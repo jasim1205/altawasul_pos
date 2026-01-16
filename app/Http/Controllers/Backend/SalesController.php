@@ -31,7 +31,8 @@ class SalesController extends Controller
     {
         $fromDate = $request->input('from_date')." 00:00:00";
         $toDate = $request->input('to_date')." 23:59:59";
-        $sale = Sales::get();
+        $sale = Sales::with('saleReturn')->get();
+        // dd($sale->saleReturn);
         return view('backend.sale.index',compact('sale','fromDate','toDate'));
     }
 
@@ -101,44 +102,44 @@ class SalesController extends Controller
             $sale->paid = $request->paid;
             $sale->status = $request->status;
             $sale->save();
-// ACCOUNTING JOURNAL
-// =====================
+            // ACCOUNTING JOURNAL
+            // =====================
 
-// Get account IDs
-$arAccount     = Accounts::where('name','Accounts Receivable')->first();
-$salesAccount  = Accounts::where('name','Sales Income')->first();
-$vatAccount    = Accounts::where('name','Output VAT')->first();
-// Create journal entry
-$journal = JournalEntry::create([
-    'date' => $sale->date,
-    'description' => 'Sale Invoice '.$sale->invoice_no,
-    'reference_type' => 'customer',
-    'reference_id' => $customerId,
-    'source_type' => 'sale',
-    'source_id' => $sale->id,
-]);
+            // Get account IDs
+            $arAccount     = Accounts::where('name','Accounts Receivable')->first();
+            $salesAccount  = Accounts::where('name','Sales Income')->first();
+            $vatAccount    = Accounts::where('name','Output VAT')->first();
+            // Create journal entry
+            $journal = JournalEntry::create([
+                'date' => $sale->date,
+                'description' => 'Sale Invoice '.$sale->invoice_no,
+                'reference_type' => 'customer',
+                'reference_id' => $customerId,
+                'source_type' => 'sale',
+                'source_id' => $sale->id,
+            ]);
 
-// Insert journal details
-JournalEntryDetail::insert([
-    [
-        'journal_entry_id' => $journal->id,
-        'account_id' => $arAccount->id, // Accounts Receivable
-        'debit' => $sale->grand_total_amount,
-        'credit' => 0,
-    ],
-    [
-        'journal_entry_id' => $journal->id,
-        'account_id' => $salesAccount->id, // Sales Income
-        'debit' => 0,
-        'credit' => $sale->total_quantity_amount,
-    ],
-    [
-        'journal_entry_id' => $journal->id,
-        'account_id' => $vatAccount->id,
-        'debit' => 0,
-        'credit' => $sale->total_tax_amount, // Output VAT
-    ],
-]);
+            // Insert journal details
+            JournalEntryDetail::insert([
+                [
+                    'journal_entry_id' => $journal->id,
+                    'account_id' => $arAccount->id, // Accounts Receivable
+                    'debit' => $sale->grand_total_amount,
+                    'credit' => 0,
+                ],
+                [
+                    'journal_entry_id' => $journal->id,
+                    'account_id' => $salesAccount->id, // Sales Income
+                    'debit' => 0,
+                    'credit' => $sale->total_quantity_amount,
+                ],
+                [
+                    'journal_entry_id' => $journal->id,
+                    'account_id' => $vatAccount->id,
+                    'debit' => 0,
+                    'credit' => $sale->total_tax_amount, // Output VAT
+                ],
+            ]);
             if($sale->save()){
                 $credit = new CreditSale();
                 // $credit->sale_id = $sale->id;
@@ -233,6 +234,41 @@ JournalEntryDetail::insert([
 
         // Load HTML from the Blade view
         $html = view('backend.sale.invoicePdf', compact('company','category','product','sale','saledetail'))->render();
+
+        // mPDF settings
+        $mpdf = new Mpdf([
+            'mode' => 'utf-8',
+            'format' => 'A4',
+            'orientation' => 'P',  // P = Portrait, L = Landscape
+            // 'margin_left' => 10,
+            // 'margin_right' => 10,
+            // 'margin_top' => 10,
+            // 'margin_bottom' => 10,
+        ]);
+
+        $mpdf->WriteHTML($html);
+
+        // Output inline (like dompdf stream)
+        return $mpdf->Output('invoice_'.$sale->invoice_no.'.pdf', 'I');
+        // dd('ok');
+        // $pdf = Pdf::loadView('backend.sale.invoicePdf', compact('company','category','product','sale','saledetail'));
+        // return $pdf->stream('invoice_'.$sale.'.pdf');
+
+        // return view('backend.sale.invoice',compact('company','category','product','sale','saledetail'));
+    }
+    public function ReturnInvoice($id)
+    {
+        $company = Company::get();
+        $category = Category::get();
+        $product = Product::get();
+        // $saledetail = SaleDetails::where('sale_id',$id)->get();
+        // $sale = Sales::findOrFail(encryptor('decrypt',$id));
+        $sale = Sales::findOrFail($id);
+        $saledetail = $sale->saledetails;
+        $return = SalesReturn::with('SalesReturnDetails')->where('sale_id',$sale->id)->first();
+
+        // Load HTML from the Blade view
+        $html = view('backend.sale.returninvoicePdf', compact('company','category','product','sale','saledetail','return'))->render();
 
         // mPDF settings
         $mpdf = new Mpdf([

@@ -83,6 +83,7 @@ Route::middleware(['checkrole','prevent-back-history'])->prefix('admin')->group(
     Route::get('/getStockByProduct', [purchase::class, 'getStockByProduct'])->name('getStockByProduct');
     Route::resource('sale', sale::class);
     Route::get('sale_invoice/{id}', [sale::class,'invoice'])->name('sale.invoice');
+    Route::get('sale_return_invoice/{id}', [sale::class,'ReturnInvoice'])->name('sale.ReturnInvoice');
     Route::get('salesreport', [sale::class,'salesReport'])->name('salesreport'); //2nd one is function name
     Route::get('/salegetStockByProduct', [sale::class, 'salegetStockByProduct'])->name('salegetStockByProduct');
     Route::get('sales/{id}/return', [sale::class, 'sales_return'])->name('salesReturn');

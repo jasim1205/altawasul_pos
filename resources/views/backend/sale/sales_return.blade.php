@@ -125,16 +125,17 @@
                                                 </td>
                                                 <td>
                                                     <input class="form-control uprice" type="text" name="unit_uprice[]"
-                                                        value="{{ old('unit_price', $sdetail->unit_price) }}">
+                                                        value="{{ old('unit_price', $sdetail->unit_price) }}" readonly>
                                                         {{-- <input type="text" name="original_uprice[]" class="form-control original_uprice" value="{{ old('unit_price', $sdetail->unit_price) }}"> --}}
                                                 </td>
                                                 <td><input class="form-control toquantity" type="text"
                                                         name="quantity[]"
                                                         value="{{ old('quantity', $sdetail->quantity) }}"
                                                        ></td>
-                                                <td><input class="form-control amount" type="text" name="amount[]"
-                                                        value="{{ old('amount', $sdetail->amount) }}"
-                                                       ></td>
+                                                <td>
+                                                    <input class="form-control amount" type="text" name="amount[]"
+                                                        value="{{ old('amount', $sdetail->amount) }}" readonly>
+                                                    </td>
                                                
                                                 <td>
                                                     
@@ -144,7 +145,9 @@
                                     </tbody>
                                     <tfoot>
                                         <th colspan="1">Total</th>
-                                        <th><span class="total_unitprice" id="total_unitprice"></span></th>
+                                        <th>
+                                            {{-- <span class="total_unitprice" id="total_unitprice"></span> --}}
+                                        </th>
                                         <th><span class="total_quantity" id="total_quantity"></span></th>
                                         <th><span class="total_amount" id="total_amount"></span></th><input type="hidden" name="total_quantity" id="total_quantity_hidden">
                                         <input type="hidden" name="total_quantity_amount"
@@ -153,7 +156,7 @@
                                         <input type="hidden" name="total_tax" id="total_tax_hidden">
                                         <input type="hidden" name="total_tax_amount" id="total_tax_amount_hidden">
                                         <input type="hidden" name="total_subamount" id="total_subamount_hidden">
-                                        <input type="hidden" name="grand_total_amount" id="grand_total_amount_hidden">
+                                        <input type="hidden"  name="grand_total_amount" id="grand_total_amount_hidden">
                                     </tfoot>
                                 </table>
                             </div>

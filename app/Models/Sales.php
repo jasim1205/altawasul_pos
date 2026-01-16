@@ -16,4 +16,8 @@ class Sales extends Model
     public function customer(){
         return $this->belongsTo(Customer::class);
     }
+
+    public function saleReturn(){
+        return $this->hasOne(SalesReturn::class,'sale_id')->withDefault();
+    }
 }
