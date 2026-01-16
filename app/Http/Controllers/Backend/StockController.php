@@ -107,7 +107,8 @@ class StockController extends Controller
      */
     public function create()
     {
-        //
+        $product = Product::doesntHave('stock')->get();
+        return view('backend.stock.create', compact('product'));
     }
 
     /**
@@ -115,7 +116,20 @@ class StockController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try{
+            $stock = new Stock;
+            $stock->product_id = $request->product_id;
+            $stock->quantity = $request->quantity;
+            // dd($stock);
+            $stock->save();
+            $this->notice::success('Data successfully Updated');
+            return redirect()->route('stock.create');
+        }catch (Exception $e){
+            $this->notice::error('Something went wrong! Please try again');
+            return redirect()
+                ->route('stock.CREATE', $stock->id)
+                ->withInput();
+        }
     }
 
     /**

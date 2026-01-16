@@ -36,11 +36,11 @@
             </form>
         </div>
 
-        {{-- <div class="ms-auto">
+        <div class="ms-auto">
             <div class="btn-group">
-                <a class="btn btn-primary" href="{{route('product.create')}}"><i class="fa fa-plus"></i></a>
+                <a class="btn btn-primary" href="{{route('stock.create')}}"><i class="fa fa-plus"></i></a>
             </div>
-        </div> --}}
+        </div>
     </div>
     <hr />
     <div class="card">

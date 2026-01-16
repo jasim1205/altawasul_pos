@@ -26,6 +26,8 @@ use App\Http\Controllers\Backend\ForgotPasswordController;
 use App\Http\Controllers\Backend\ResetPasswordController;
 use App\Http\Controllers\Backend\CustomerPaymentController as customerpayment;
 use App\Http\Controllers\Backend\CustomerLedgerController as customerledger;
+use App\Http\Controllers\Backend\ImportantDocumentController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -69,6 +71,7 @@ Route::middleware(['checkrole','prevent-back-history'])->prefix('admin')->group(
     Route::resource('customer', customer::class);
     Route::resource('stock', stock::class);
     Route::resource('purchase', purchase::class);
+    Route::resource('document', ImportantDocumentController::class);
     Route::get('invoice/{id}',[purchase::class, 'invoice'])->name('invoice');
     Route::get('phurchasereport', [purchase::class,'PurchaseReport'])->name('phurchasereport'); //2nd one is function name
     // Route::get('/get-categories-by-company', [product::class,'getCategoriesByCompany'])->name('getCategoriesByCompany');
