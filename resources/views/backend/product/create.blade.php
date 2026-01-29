@@ -84,7 +84,7 @@
                                                 class="star">*</span></span>
                                         <input type="text" class="form-control" name="product_name"
                                             value="{{ old('product_name') }}" placeholder="Enter a product name"
-                                            aria-label="Username" aria-describedby="basic-addon1">
+                                            aria-label="Username" aria-describedby="basic-addon1" required>
                                         @error('product_name')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
@@ -103,10 +103,11 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="input-group mb-3">
-                                        <span class="input-group-text" id="basic-addon1">Origin/Made</span>
+                                        <span class="input-group-text" id="basic-addon1">Origin/Made <span
+                                            class="star">*</span></span>
                                         <input type="text" name="origin" varin class="form-control" id=""
                                             placeholder="Enter a origin" aria-label="Username"
-                                            aria-describedby="basic-addon1" >
+                                            aria-describedby="basic-addon1" required>
                                         @error('origin')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
@@ -117,7 +118,7 @@
                                         <span class="input-group-text" id="basic-addon1">Description <span
                                             class="star">*</span></span>
                                         <input type="text" name="description" class="form-control" id=""
-                                            placeholder="description" aria-label="Username" aria-describedby="basic-addon1">
+                                            placeholder="description" aria-label="Username" aria-describedby="basic-addon1" required>
                                         @error('description')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
@@ -191,10 +192,11 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="input-group mb-3">
-                                        <span class="input-group-text" id="basic-addon1">OEM</span>
+                                        <span class="input-group-text" id="basic-addon1">OEM <span
+                                            class="star">*</span></span>
                                         <input type="text" name="oem" class="form-control" id=""
                                             placeholder="Enter OEM" aria-label="Username" aria-describedby="basic-addon1"
-                                            >
+                                            required>
                                         @error('oem')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror

@@ -232,7 +232,7 @@ class ProductController extends Controller
 
         } catch (\Exception $e) {
             $this->notice::error('Something Wrong! ' . $e->getMessage());
-            return redirect()->route('product.create');
+            return redirect()->route('product.create')->withInput();
         }
     }
 

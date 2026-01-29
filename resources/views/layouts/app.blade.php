@@ -222,6 +222,12 @@
 
             </li>
             <li class="nav-item">
+                <a class="nav-link collapsed {{ request()->routeIs('document.index') ? 'active' : '' }}" href="{{ route('document.index') }}">
+                    <i class="bi bi-menu-button"></i><span>Document</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+
+            </li>
+            <li class="nav-item">
                 <a class="nav-link collapsed {{ request()->routeIs(['purchase.create', 'purchase.index']) ? 'active' : '' }}"  data-bs-target="#purchases-nav" data-bs-toggle="collapse" href="#">
                     <i class="bi bi-menu-button-wide"></i><span>Purchase</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>

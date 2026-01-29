@@ -6,12 +6,15 @@ use DB;
 use App\Models\Stock;
 use App\Models\Company;
 use App\Models\Product;
+use App\Models\Accounts;
 use App\Models\Category;
 use App\Models\Purchase;
 use App\Models\Supplier;
-use Barryvdh\DomPDF\Facade\Pdf;
+use App\Models\JournalEntry;
 use Illuminate\Http\Request;
 use App\Models\PurchaseDetails;
+use Barryvdh\DomPDF\Facade\Pdf;
+use App\Models\JournalEntryDetail;
 use App\Http\Controllers\Controller;
 
 class PurchaseController extends Controller
@@ -149,6 +152,7 @@ class PurchaseController extends Controller
             }
             $purchase->save();
 
+
             // Save purchase details
             if ($request->has('product_id')) {
                 foreach ($request->product_id as $key => $productId) {
@@ -181,6 +185,42 @@ class PurchaseController extends Controller
                     $stock->save();
                 }
             }
+
+            
+            // Accounts
+            $apAccount      = Accounts::where('name','Accounts Payable')->first();
+            $purchaseAcc    = Accounts::where('name','Purchase Expense')->first();
+            $inputVatAcc    = Accounts::where('name','Input VAT')->first();
+
+            // Journal Entry
+            $journal = JournalEntry::create([
+                'date' => $purchase->date,
+                'description' => 'Purchase Invoice '.$purchase->invoice_no,
+                'reference_type' => 'purchase',
+                'reference_id' => $purchase->id,
+                'supplier_id' => $purchase->supplier_id, // 🔑 VERY IMPORTANT
+            ]);
+
+            JournalEntryDetail::insert([
+                [
+                    'journal_entry_id' => $journal->id,
+                    'account_id' => $purchaseAcc->id,
+                    'debit' => $purchase->grand_total_amount,
+                    'credit' => 0,
+                ],
+                [
+                    'journal_entry_id' => $journal->id,
+                    'account_id' => $inputVatAcc->id,
+                    'debit' => $purchase->total_tax_amount,
+                    'credit' => 0,
+                ],
+                [
+                    'journal_entry_id' => $journal->id,
+                    'account_id' => $apAccount->id,
+                    'debit' => 0,
+                    'credit' => $purchase->total_quantity_amount,
+                ],
+            ]);
 
             DB::commit();
             return redirect()->route('purchase.index')->with('success', 'Product successfully purchased');
