@@ -220,6 +220,12 @@
                     </td>
                 </tr>
             @endforelse
+            <tr>
+                <th colspan="2" class="text-end">Total</th>
+                <th class="text-end">{{ number_format($ledger->sum('debit'),2) }}</th>
+                <th class="text-end">{{ number_format($ledger->sum('credit'),2) }}</th>
+                <th class="text-end">{{ number_format($runningBalance,2) }}</th>
+             </tr>
         </tbody>
     </table>
 
