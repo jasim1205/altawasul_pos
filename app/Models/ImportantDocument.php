@@ -11,8 +11,14 @@ class ImportantDocument extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
+        'user_id',
         'name',
         'date',
         'file',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

@@ -40,6 +40,7 @@
                             <thead>
                                 <tr>
                                     <th scope="col">{{__('#SL')}}</th>
+                                    <th>User</th>
                                     <th>Name</th>
                                     <th>Expire Date</th>
                                     <th>File</th>
@@ -50,6 +51,7 @@
                                 @forelse ($document as $value)
                                     <tr>
                                         <td>{{ __(++$loop->index) }}</td>
+                                        <td>{{ __($value->user?->name) }}</td>
                                         <td>{{ __($value->name) }}</td>
                                         <td>{{ __($value->date) }}</td>
                                         <td>

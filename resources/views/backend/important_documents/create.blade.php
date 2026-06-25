@@ -60,6 +60,22 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon1">User</span>
+                                    <select name="user_id" class="form-control">
+                                        <option value="">Select User</option>
+                                        @foreach($user as $item)
+                                            <option value="{{ $item->id }}" @selected(old('user_id', $formType == 'edit' ? $document->user_id : '') == $item->id)>
+                                                {{ $item->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('user_id')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-group mb-3">
                                     <span class="input-group-text" id="basic-addon1">Upload File</span>
                                     <input type="file" name="file" class="form-control" id="name"
                                         placeholder="Upload Document file" />
@@ -67,6 +83,7 @@
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
+                            </div>
                             <div class="col-md-6">
                                 <button type="submit" class="btn btn-primary px-4">Save</button>
                             </div>

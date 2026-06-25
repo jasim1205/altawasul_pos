@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Backend;
 
-use Illuminate\Http\Request;
-use App\Models\ImportantDocument;
 use App\Http\Controllers\Controller;
+use App\Models\ImportantDocument;
+use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
 class ImportantDocumentController extends Controller
@@ -24,7 +25,8 @@ class ImportantDocumentController extends Controller
     public function create()
     {
         $formType = 'create';
-        return view('backend.important_documents.create', compact('formType'));
+        $user = User::select('id', 'name')->get();
+        return view('backend.important_documents.create', compact('formType','user'));
     }
 
     /**
@@ -34,6 +36,7 @@ class ImportantDocumentController extends Controller
     {
         // dd($request->all());
         $request->validate([
+            'user_id' => 'nullable|exists:users,id',
             'file' => 'required|file|mimes:pdf,doc,docx,jpg,png'
         ]);
         try {
@@ -77,7 +80,8 @@ class ImportantDocumentController extends Controller
     {
         // dd($document);
         $formType = 'edit';
-        return view('backend.important_documents.create', compact('document', 'formType'));
+        $user = User::select('id', 'name')->get();
+        return view('backend.important_documents.create', compact('document', 'formType', 'user'));
     }
 
     /**
@@ -87,6 +91,7 @@ class ImportantDocumentController extends Controller
     {
         // file optional, কারণ edit এ নতুন ফাইল না দিলেও চলবে
         $request->validate([
+            'user_id' => 'nullable|exists:users,id',
             'file' => 'nullable|file|mimes:pdf,doc,docx,jpg,png'
         ]);
 

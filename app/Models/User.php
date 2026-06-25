@@ -17,4 +17,8 @@ class User extends Model
     public function role(){
         return $this->belongsTo(Role::class);
     }
+
+    public function important_documents(){
+        return $this->hasMany(ImportantDocument::class);
+    }
 }
