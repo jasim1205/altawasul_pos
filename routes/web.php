@@ -71,6 +71,7 @@ Route::middleware(['checkrole','prevent-back-history'])->prefix('admin')->group(
     Route::resource('customer', customer::class);
     Route::resource('stock', stock::class);
     Route::resource('purchase', purchase::class);
+    Route::get('document/user/pdf', [ImportantDocumentController::class, 'userDocumentsPdf'])->name('document.user.pdf');
     Route::resource('document', ImportantDocumentController::class);
     Route::get('invoice/{id}',[purchase::class, 'invoice'])->name('invoice');
     Route::get('phurchasereport', [purchase::class,'PurchaseReport'])->name('phurchasereport'); //2nd one is function name

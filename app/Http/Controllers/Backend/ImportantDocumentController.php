@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\ImportantDocument;
 use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
@@ -15,8 +16,24 @@ class ImportantDocumentController extends Controller
      */
     public function index()
     {
-        $document = ImportantDocument::all();
-        return view('backend.important_documents.index', compact('document'));
+        $document = ImportantDocument::with('user')->get();
+        $user = User::select('id', 'name')->get();
+        return view('backend.important_documents.index', compact('document', 'user'));
+    }
+
+    public function userDocumentsPdf(Request $request)
+    {
+        $request->validate([
+            'user_id' => 'required|exists:users,id',
+        ]);
+
+        $selectedUser = User::select('id', 'name')->findOrFail($request->user_id);
+        $document = ImportantDocument::where('user_id', $selectedUser->id)->get();
+
+        $pdf = Pdf::loadView('backend.important_documents.user_documents_pdf', compact('document', 'selectedUser'))
+            ->setPaper('a4', 'portrait');
+
+        return $pdf->stream('documents_'.$selectedUser->id.'.pdf');
     }
 
     /**

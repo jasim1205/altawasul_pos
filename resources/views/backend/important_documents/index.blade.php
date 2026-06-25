@@ -8,22 +8,31 @@
         background-color: #198754 !important;
         color: white !important;
     }
+
+    .document-preview {
+        max-width: 80px;
+        max-height: 60px;
+        display: block;
+        margin-bottom: 4px;
+    }
 </style>
 <section class="section">
     <div class="row">
         <div class="col-sm-12 d-flex">
-            {{-- <div class="btn-group">
-            <a class="btn btn-outline-primary" href="{{ route('product.reportForm') }}">Report</a>
-        </div> --}}
+            
             <div class="ms-auto d-flex" style="float: right">
-                {{-- <form action="{{ route('product.index') }}" method="GET">
-                <div class="input-group">
-                    <input type="text" name="search" class="form-control"
-                        placeholder="Search by name, code, or origin" value="{{ request('search') }}">
-                    <button type="submit" class="btn btn-outline-success">Search</button>
-                    <a href="{{ route('product.index') }}" class="btn btn-outline-warning">Reset</a>
-                </div>
-            </form> --}}
+                
+                <form action="{{ route('document.user.pdf') }}" method="GET" target="_blank" class="d-flex mx-1">
+                    <select name="user_id" id="document_user_id" class="form-control">
+                        <option value="">Select User</option>
+                        @foreach($user as $item)
+                            <option value="{{ $item->id }}">{{ $item->name }}</option>
+                        @endforeach
+                    </select>
+                    <button type="submit" id="document_print_btn" class="btn btn-danger ms-1" disabled>
+                        <i class="fa fa-print"></i>
+                    </button>
+                </form>
                 <div class="btn-group mx-1">
                     <a class="btn btn-primary" href="{{ route('document.create') }}"><i class="fa fa-plus"></i></a>
                 </div>
@@ -53,10 +62,20 @@
                                         <td>{{ __(++$loop->index) }}</td>
                                         <td>{{ __($value->user?->name) }}</td>
                                         <td>{{ __($value->name) }}</td>
-                                        <td>{{ __($value->date) }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($value->date)->format('d-m-Y') }}</td>
                                         <td>
                                             {{-- {{dd($value->file)}} --}}
-                                            <a href="{{ url('public/uploads/documents/' . $value->file) }}" target="_blank">{{ __($value->file) }}</a>
+                                            @php
+                                                $extension = strtolower(pathinfo($value->file, PATHINFO_EXTENSION));
+                                                $fileUrl = url('public/uploads/documents/' . $value->file);
+                                            @endphp
+
+                                            @if(in_array($extension, ['jpg', 'jpeg', 'png']))
+                                                <a href="{{ $fileUrl }}" target="_blank">
+                                                    <img src="{{ $fileUrl }}" alt="{{ $value->file }}" class="document-preview">
+                                                </a>
+                                            @endif
+                                            <a href="{{ $fileUrl }}" target="_blank">{{ __($value->file) }}</a>
                                         </td>
                                         
                                         <td class="white-space-nowrap">
@@ -91,4 +110,14 @@
     </div>
 </section>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const userSelect = document.getElementById('document_user_id');
+        const printButton = document.getElementById('document_print_btn');
+
+        userSelect.addEventListener('change', function () {
+            printButton.disabled = !this.value;
+        });
+    });
+</script>
 @endsection
